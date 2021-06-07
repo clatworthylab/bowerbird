@@ -20,18 +20,28 @@
     return(gs)
 }
 
+#' @param ... does nothing.
+#' 
+.emptyFAME <- function(...) {
+    out <- new("FAME",
+               genesets=list(),
+               graph=list())
+    out
+}
+
+
 #' @name misc
 #' @import devtools
 #' @export
 
 init <- function()
 {   
-    setwd("~/Documents/GitHub/scFAME")
+    setwd("~/Documents/GitHub/scFAMoUs")
     requireNamespace('roxygen2')
     requireNamespace('devtools')
     devtools::document()
     setwd('..')
-    devtools::install('scFAME')
-    setwd('scFAME')
+    devtools::install('scFAMoUs')
+    setwd('scFAMoUs')
 }
 

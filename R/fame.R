@@ -1,5 +1,7 @@
+#' @include utilities.R
+#' 
 #' @export
-#' @rdname scFAMoUs
+#' @rdname scfamous
 #' 
 fame <- function(..., geneset = list(), graph=list()){
     old <- S4Vectors:::disableValidity()

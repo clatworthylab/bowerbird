@@ -1,4 +1,4 @@
-Package: scFAMoUs
+Package: scfamous
 Title: A single-cell package for Functional Annotation + gene Module Usage
 Version: 0.0.0.9000
 Authors@R: 
@@ -17,10 +17,10 @@ RoxygenNote: 7.1.1
 Collate: 
     'classes.R'
     'create_graph.R'
+    'utilities.R'
     'fame.R'
     'generics.R'
     'geneset_neighbors.R'
-    'utilities.R'
     'read_geneset.R'
     'read_methods.R'
     'summarize_clusters.R'
