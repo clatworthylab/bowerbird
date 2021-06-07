@@ -34,7 +34,4 @@ Imports:
     FNN,
     S4Vectors,
     devtools,
-    roxygen2
-Suggests:
-    SingleCellExperiment
-    Seurat      
+    roxygen2   
