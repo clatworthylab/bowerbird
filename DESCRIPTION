@@ -1,7 +1,7 @@
 Package: bowerbird
 Title: A single-cell package for Functional Annotation + Gene Module Summarization.
 Version: 0.0.0.9000
-Authors@R: 
+Authors@R:
     person(given = "Zewen Kelvin",
            family = "Tuong",
            role = c("aut", "cre"),
@@ -14,12 +14,27 @@ Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
-Collate: 
+biocViews:
+Collate:
     'utilities.R'
     'bower.R'
     'classes.R'
     'generics.R'
     'graph.R'
+    'io.R'
     'read_geneset.R'
-    'read_methods.R'
     'summarize_clusters.R'
+Imports:
+    textrank,
+    udpipe,
+    dplyr,
+    pbmcapply,
+    superml,
+    igraph,
+    FNN,
+    S4Vectors,
+    devtools,
+    roxygen2
+Suggests:
+    SingleCellExperiment
+    Seurat      
