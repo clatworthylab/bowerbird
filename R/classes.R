@@ -12,10 +12,12 @@ setClassUnion("listORcharacterORdataframe", c("list", "character", "data.frame")
 setClass("BOWER",
     slots=c(
         genesets = "listORcharacterORdataframe",
-        graph = "list" # this should be a list or an igraph object
+        graph = "list", # this should be a list or an igraph object
+        clusters = 'character'
         ),
     prototype = list(
         genesets = list(),
-        graph = list()
+        graph = list(),
+        clusters = c()
         )
 )
