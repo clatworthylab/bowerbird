@@ -20,18 +20,18 @@
     return(gs)
 }
 
-#' @name scFA
+#' @name misc
 #' @import devtools
 #' @export
 
-init_scFA <- function()
+init <- function()
 {   
     setwd("~/Documents/GitHub/scFA")
     requireNamespace('roxygen2')
     requireNamespace('devtools')
     devtools::document()
     setwd('..')
-    devtools::install('scFA')
-    setwd('scFA')
+    devtools::install('scFAME')
+    setwd('scFAME')
 }
 
