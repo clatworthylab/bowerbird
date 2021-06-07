@@ -30,7 +30,8 @@
 .emptyBOWER <- function(...) {
     out <- new("BOWER",
                genesets=list(),
-               graph=list())
+               graph=list(),
+               clusters = c())
     out
 }
 
