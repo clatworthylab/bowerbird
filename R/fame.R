@@ -1,5 +1,5 @@
 #' @export
-#' @rdname scFAME
+#' @rdname scFAMoUs
 #' 
 fame <- function(..., geneset = list(), graph=list()){
     old <- S4Vectors:::disableValidity()
@@ -9,7 +9,7 @@ fame <- function(..., geneset = list(), graph=list()){
     }
 
     if(length(list(...)) == 0){
-        fame <- .emptyFAN()
+        fame <- .emptyFAME()
     }
 
     fame
