@@ -1,5 +1,6 @@
 #' shortcut to initiate building of scFA
 #'
+#' @name scFA
 #' @return for internal use only. runs init scFA
 #' @examples
 #' \donttest{
