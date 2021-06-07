@@ -4,6 +4,9 @@
 #' @slot graph An igraph object that represents the kNN graph.
 #'
 setClassUnion("listORcharacterORdataframe", c("list", "character", "data.frame"))
+setClassUnion("characterORfactorORNULL", c("character", "factor", "NULL"))
+setClass("igraph")
+setClassUnion("listORigraph", c("list", "igraph", "NULL"))
 #' @aliases BOWER
 #' @rdname BOWER
 #' @export
@@ -12,8 +15,8 @@ setClassUnion("listORcharacterORdataframe", c("list", "character", "data.frame")
 setClass("BOWER",
     slots=c(
         genesets = "listORcharacterORdataframe",
-        graph = "list", # this should be a list or an igraph object
-        clusters = 'character'
+        graph = "listORigraph", # this should be a list or an igraph object
+        clusters = 'characterORfactorORNULL'
         ),
     prototype = list(
         genesets = list(),
