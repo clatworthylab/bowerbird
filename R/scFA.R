@@ -1,17 +1,25 @@
 #' shortcut to initiate building of scFA
 #'
-#' @name scFA
-#' @return for internal use only. runs init scFA
+#' @return for internal use only. quickly redocumenting scFA
 #' @examples
 #' \donttest{
-#' scFA()
+#'init_scFA()
 #' }
+#' @import devtools
 #' @export
 
-scFA <- function()
+.init_scFA <- function() {
+	requireNamespace('devtools')
+	devtools::document()
+	setwd('..')
+	devtools::install('scFA')
+	setwd('scFA')
+}
+
+init_scFA <- function()
 {
 	setwd("~/Documents/GitHub/scFA")
-	# requireNamespace('scFA')
 	requireNamespace('roxygen2')
-	scFA::init_scFA()
+	.init_scFA()
 }
+
