@@ -22,5 +22,4 @@ Collate:
     'utilities.R'
     'read_geneset.R'
     'read_methods.R'
-    'scFA.R'
     'summarize_clusters.R'
