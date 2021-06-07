@@ -1,13 +1,13 @@
-Package: scFA
-Title: What the Package Does (One Line, Title Case)
+Package: scFAMoUs
+Title: A single-cell package for Functional Annotation + gene Module Usage
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    person(given = "Zewen Kelvin",
+           family = "Tuong",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+           email = "kt16@sanger.ac.uk",
+           comment = c(ORCID = "0000-0002-6735-6808"))
+Description: A single-cell package for Functional Annotation + gene Module Usage.
 License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
     license
 Encoding: UTF-8
@@ -15,8 +15,9 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Collate: 
-    'class.R'
+    'classes.R'
     'create_graph.R'
+    'fame.R'
     'generics.R'
     'geneset_neighbors.R'
     'utilities.R'
