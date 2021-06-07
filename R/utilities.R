@@ -36,12 +36,12 @@
 
 init <- function()
 {   
-    setwd("~/Documents/GitHub/scFAMoUs")
+    setwd("~/Documents/GitHub/scfamous")
     requireNamespace('roxygen2')
     requireNamespace('devtools')
     devtools::document()
     setwd('..')
-    devtools::install('scFAMoUs')
-    setwd('scFAMoUs')
+    devtools::install('scfamous')
+    setwd('scfamous')
 }
 
