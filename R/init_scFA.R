@@ -8,6 +8,8 @@
 #' }
 #' @import devtools
 #' @export
+#' 
+
 init_scFA <- function() {
 	requireNamespace('devtools')
 	devtools::document()
