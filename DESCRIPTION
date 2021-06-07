@@ -1,5 +1,5 @@
-Package: scfamous
-Title: A single-cell package for Functional Annotation + gene Module Usage
+Package: scflock
+Title: A single-cell package for Functional Annotation + Gene Module Summarization.
 Version: 0.0.0.9000
 Authors@R: 
     person(given = "Zewen Kelvin",
@@ -7,7 +7,7 @@ Authors@R:
            role = c("aut", "cre"),
            email = "kt16@sanger.ac.uk",
            comment = c(ORCID = "0000-0002-6735-6808"))
-Description: A single-cell package for Functional Annotation + gene Module Usage.
+Description: A single-cell package for Functional Annotation + Gene Module Summarization. Because 'Birds of a feather flock together'.
 License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
     license
 Encoding: UTF-8
