@@ -4,7 +4,7 @@
 #' @rdname bower
 #'
 
-bower <- function(genesets = list(), graph=list(), ...){
+bower <- function(genesets = list(), graph=list(), clusters = c(), ...){
     requireNamespace('S4Vectors')
     old <- S4Vectors:::disableValidity()
     if (!isTRUE(old)) {
@@ -15,13 +15,25 @@ bower <- function(genesets = list(), graph=list(), ...){
     if(length(genesets) == 0 & length(graph) == 0){
         out <- .emptyBOWER()
     } else if (length(graph) > 0){
-        if (length(geneset) > 0){
-            out <- new('BOWER', genesets = read_geneset(genesets, ...), graph = graph)
+        if (length(genesets) > 0){
+            if (length(clusters) > 0){
+                out <- new('BOWER', genesets = read_geneset(genesets, ...), graph = graph, clusters = clusters)
+            } else {
+                out <- new('BOWER', genesets = read_geneset(genesets, ...), graph = graph, clusters = c())
+            }            
         } else {
-            out <- new('BOWER', genesets = list(), graph = graph)
+            if (length(clusters) > 0){
+                out <- new('BOWER', genesets = list(), graph = graph, clusters = clusters)
+            } else {
+                out <- new('BOWER', genesets = list(), graph = graph, clusters = c())
+            }
         }
     } else {
-        out <- new('BOWER', genesets = read_geneset(genesets, ...), graph = list())
+        if (length(clusters) > 0){
+            out <- new('BOWER', genesets = read_geneset(genesets, ...), graph = list(), clusters = clusters)
+        } else {
+            out <- new('BOWER', genesets = read_geneset(genesets, ...), graph = list(), clusters = c())
+        }
     }
 
     out
