@@ -4,24 +4,25 @@
 #' @rdname bower
 #'
 
-bower <- function(..., geneset = list(), graph=list()){
+bower <- function(genesets = list(), graph=list(), ...){
+    requireNamespace('S4Vectors')
     old <- S4Vectors:::disableValidity()
     if (!isTRUE(old)) {
         S4Vectors:::disableValidity(TRUE)
         on.exit(S4Vectors:::disableValidity(old))
     }
 
-    if(length(list(...)) == 0){
-        bower <- .foolseldom()
+    if(length(genesets) == 0 & length(graph) == 0){
+        out <- .emptyBOWER()
     } else if (length(graph) > 0){
         if (length(geneset) > 0){
-            bower <- new('BOWER', geneset = read_geneset(geneset, ...), graph = graph)
+            out <- new('BOWER', genesets = read_geneset(genesets, ...), graph = graph)
         } else {
-            bower <- new('BOWER', geneset = list(), graph = graph)
-        }         
+            out <- new('BOWER', genesets = list(), graph = graph)
+        }
     } else {
-        bower <- new('BOWER', geneset = read_geneset(geneset, ...), graph = list())
+        out <- new('BOWER', genesets = read_geneset(genesets, ...), graph = list())
     }
 
-    bower
+    out
 }
