@@ -1,14 +1,14 @@
-#' The FAME container class
+#' The BOWER container class
 #'
 #' @slot genesets A list of containing vectors of genes.
 #' @slot graph An igraph object that represents the kNN graph.
 #'
-#' @aliases FAME
-#' @rdname FAME
+#' @aliases BOWER
+#' @rdname BOWER
 #' @export
 #'
 
-setClass("FAME",
+setClass("BOWER",
     slots=c(
         genesets = "list",
         graph = "list" # this should be a list or an igraph object

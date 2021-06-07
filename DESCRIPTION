@@ -1,4 +1,4 @@
-Package: scflock
+Package: bowerbird
 Title: A single-cell package for Functional Annotation + Gene Module Summarization.
 Version: 0.0.0.9000
 Authors@R: 
@@ -7,7 +7,7 @@ Authors@R:
            role = c("aut", "cre"),
            email = "kt16@sanger.ac.uk",
            comment = c(ORCID = "0000-0002-6735-6808"))
-Description: A single-cell package for Functional Annotation + Gene Module Summarization. Because 'Birds of a feather flock together'.
+Description: A single-cell package for Functional Annotation + Gene Module Summarization. Bowerbirds are famous for the elaborate and sometimes whimsical (blue) structures that males build to court females.
 License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
     license
 Encoding: UTF-8

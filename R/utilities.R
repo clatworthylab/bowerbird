@@ -27,8 +27,8 @@
 #' @param ... does nothing.
 #' 
 
-.emptyFAME <- function(...) {
-    out <- new("FAME",
+.emptyBOWER <- function(...) {
+    out <- new("BOWER",
                genesets=list(),
                graph=list())
     out
@@ -40,12 +40,12 @@
 
 init <- function()
 {   
-    setwd("~/Documents/GitHub/scfamous")
+    setwd("~/Documents/GitHub/bowerbird")
     requireNamespace('roxygen2')
     requireNamespace('devtools')
     devtools::document()
     setwd('..')
-    devtools::install('scfamous')
-    setwd('scfamous')
+    devtools::install('bowerbird')
+    setwd('bowerbird')
 }
 

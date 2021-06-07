@@ -1,10 +1,10 @@
 #' @include utilities.R
 #'
 #' @export
-#' @rdname scfamous
+#' @rdname bower
 #'
 
-fame <- function(..., geneset = list(), graph=list()){
+bower <- function(..., geneset = list(), graph=list()){
     old <- S4Vectors:::disableValidity()
     if (!isTRUE(old)) {
         S4Vectors:::disableValidity(TRUE)
@@ -12,16 +12,16 @@ fame <- function(..., geneset = list(), graph=list()){
     }
 
     if(length(list(...)) == 0){
-        fame <- .emptyFAME()
+        bower <- .foolseldom()
     } else if (length(graph) > 0){
         if (length(geneset) > 0){
-            fame <- new('FAME', geneset = read_geneset(geneset, ...), graph = graph)
+            bower <- new('BOWER', geneset = read_geneset(geneset, ...), graph = graph)
         } else {
-            fame <- new('FAME', geneset = list(), graph = graph)
+            bower <- new('BOWER', geneset = list(), graph = graph)
         }         
     } else {
-        fame <- new('FAME', geneset = read_geneset(geneset, ...), graph = list())
+        bower <- new('BOWER', geneset = read_geneset(geneset, ...), graph = list())
     }
 
-    fame
+    bower
 }
