@@ -4,11 +4,11 @@
 #' @return for internal use only. quickly redocumenting scFA
 #' @examples
 #' \donttest{
-#' init() # leaves folder, install, and change back to folder
+#' init_scFA() # leaves folder, install, and change back to folder
 #' }
 #' @import devtools
 #' @export
-init <- function() {
+init_scFA <- function() {
 	requireNamespace('devtools')
 	devtools::document()
 	setwd('..')
