@@ -15,10 +15,10 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Collate: 
+    'utilities.R'
+    'bower.R'
     'classes.R'
     'create_graph.R'
-    'utilities.R'
-    'fame.R'
     'generics.R'
     'geneset_neighbors.R'
     'read_geneset.R'
