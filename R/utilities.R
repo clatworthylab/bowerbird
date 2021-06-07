@@ -4,11 +4,14 @@
 
 #' @param x vector.
 #' 
+
 .is_blank <- function(x) x == ""
+
 
 #' @param gs list of vectors.
 #' @param min_size minimum size of geneset otherwise filter out.
 #' 
+
 .filter_geneset <- function(gs, min_size) {
     gs <- lapply(gs, function(x) x[!.is_blank(x)])
     if (length(which(is.na(gs))) > 0){
@@ -20,8 +23,10 @@
     return(gs)
 }
 
+
 #' @param ... does nothing.
 #' 
+
 .emptyFAME <- function(...) {
     out <- new("FAME",
                genesets=list(),
@@ -30,7 +35,6 @@
 }
 
 
-#' @name misc
 #' @import devtools
 #' @export
 
