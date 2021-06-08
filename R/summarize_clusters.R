@@ -19,6 +19,7 @@
 
 summarize_clusters <- function(graph, cluster, pattern = NULL, sep = NULL, ncpus = NULL){	
   requireNamespace('igraph')
+  requireNamespace('igraph')
 	if (is.null(pattern)){
 		pattern = '^GO_|^KEGG_|^REACTOME_|^HALLMARK_|POSITIVE_|NEGATIVE_|REGULATION_OF|^GOBP_'
 	} 
@@ -29,7 +30,6 @@ summarize_clusters <- function(graph, cluster, pattern = NULL, sep = NULL, ncpus
 		igraph::V(graph)$cluster <- cluster
 	}
 	if (!is.null(ncpus)){
-		require(parallel)
 		n_cpus = parallel::detectCores()
 	}
 
