@@ -5,9 +5,12 @@ A single-cell package for Functional Annotation + Gene Module Summarization.
 
 I think this is vaguely similar to my attempts to visualise pathway analyses and their associated with celltype identities/states...
 
+![img/logo.png](img/logo.png)
 <a href="https://blog.nature.org/science/2021/01/04/bowerbirds-meet-the-bird-worlds-kleptomaniac-love-architects/">
 <img src="https://blog.nature.org/science/files/2020/11/32487196918_8dd537c82a_k.jpg" alt="bower" width="400"/>
 </a>
+Picture credits: 
+A satin bowerbird’s bower, decorated with blue objects. © Stefan Marks / [Flickr](https://www.flickr.com/photos/stefan_marks/32487196918/)
 
 ## Installation
 ```R
