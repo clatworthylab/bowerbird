@@ -13,11 +13,13 @@
 find_clusters(x, ...)
 }
 \arguments{
-\item{bower}{bower class or igraph object.}
+\item{bower}{BOWER class..}
 
 \item{resolution}{value for leiden clustering.}
 
 \item{...}{Arguments passed to other methods.}
+
+\item{gr}{igraph object.}
 
 \item{x}{either a BOWER class or an igraph object.}
 }
@@ -27,9 +29,6 @@ Cluster assignment for each geneset.
 Return leiden clustering assignment for each geneset.
 }
 \description{
-clusters
-}
-\details{
 Performs clustering of SNN graph of genesets.
 }
 \examples{

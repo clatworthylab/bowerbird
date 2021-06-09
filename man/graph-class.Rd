@@ -5,5 +5,5 @@
 \alias{graph-class}
 \title{graph-class}
 \description{
-list or igraph or NULL
+igraph or NULL
 }
