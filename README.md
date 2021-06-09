@@ -27,8 +27,9 @@ bwr <- snn_graph(bwr)
 bwr <- find_clusters(bwr)
 bwr <- summarize_clusters(bwr)
 bwr
-# Number of genesets:  50 
-# Geneset KNN Graph: 
+# BOWER class
+# number of genesets:  50 
+# genesets kNN Graph: 
 # IGRAPH 5c4d1b0 UNW- 50 124 -- 
 # + attr: name (v/c), cluster (v/n), terms (v/c), labels (v/c), weight (e/n)
 # + edges from 5c4d1b0 (vertex names):
@@ -41,7 +42,7 @@ bwr
 #  [7] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_EPITHELIAL_MESENCHYMAL_TRANSITION
 #  [8] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_INFLAMMATORY_RESPONSE            
 # + ... omitted several edges
-# Number of geneset clusters:  10 
+# number of geneset clusters:  10 
 ```
 
 ## Examples of different ways of loading in genesets
