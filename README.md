@@ -7,7 +7,7 @@
 
 ## installation
 ```R
-devtools::install_github('clatworthylab/bowerbird')
+devtools::install_github('clatworthylab/bowerbird', auth_token = "insert_your_personal_github_access_token")
 ```
 
 ## Quick Usage
