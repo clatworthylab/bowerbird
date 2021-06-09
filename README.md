@@ -9,8 +9,6 @@ I think this is vaguely similar to my attempts to visualise pathway analyses and
 <img src="https://blog.nature.org/science/files/2020/11/32487196918_8dd537c82a_k.jpg" alt="bower" width="400"/>
 </a>
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/E1zmfTr2d4c" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
 ## Installation
 ```R
 devtools::install_github('clatworthylab/bowerbird', auth_token = "insert_your_personal_github_access_token")
@@ -24,6 +22,7 @@ bwr <- bower('h.all.v7.4.symbols.gmt') # this performs a read_geneset step inter
 bwr <- snn_graph(bwr)
 bwr <- find_clusters(bwr)
 bwr <- summarize_clusters(bwr)
+bwr
 ```
 
 ## Different ways of loading in genesets
