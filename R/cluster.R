@@ -4,10 +4,11 @@
 #' Clusters SNN graph using leiden algorithm.
 #'
 #' @name find_clusters
-#' @param bower bower class or igraph object.
+#' @param bower BOWER class..
+#' @param gr igraph object.
 #' @param resolution value for leiden clustering.
 #' @param ... passed to leiden::leiden.
-#' @details
+#' @description
 #' Performs clustering of SNN graph of genesets.
 #' @return Cluster assignment for each geneset.
 #' @examples
