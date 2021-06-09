@@ -18,17 +18,17 @@
 #' @import superml
 #' @export
 
-snn_graph.BOWER <- function(gs, max_features = 100, remove_stopwords = FALSE, k = 5, ...){
+snn_graph.BOWER <- function(bower, max_features = 100, remove_stopwords = FALSE, k = 5, ...){
     tfv <- TfIdfVectorizer$new(max_features = max_features, remove_stopwords = remove_stopwords, ...)
-    tfv_mat <- tfv$fit_transform(gs@genesets)
-    rownames(tfv_mat) <- names(gs@genesets)
+    tfv_mat <- tfv$fit_transform(bower@genesets)
+    rownames(tfv_mat) <- names(bower@genesets)
 
     requireNamespace('FNN')
     # make a SNN graph
     knn_idx <- FNN::get.knn(tfv_mat, k = k)$nn.index
-    rownames(knn_idx) <- names(gs@genesets)
-    snn <-  matrix(0, ncol = length(names(gs@genesets)), nrow = length(names(gs@genesets)))
-    colnames(snn) <- rownames(snn) <- names(gs@genesets)
+    rownames(knn_idx) <- names(bower@genesets)
+    snn <-  matrix(0, ncol = length(names(bower@genesets)), nrow = length(names(bower@genesets)))
+    colnames(snn) <- rownames(snn) <- names(bower@genesets)
 
     for(i in rownames(knn_idx)){
         i_vec <- knn_idx[i, ]
@@ -38,8 +38,8 @@ snn_graph.BOWER <- function(gs, max_features = 100, remove_stopwords = FALSE, k 
             snn[i, j] <- length(intersect(i_vec, j_vec))/length(union(i_vec, j_vec))
         }
     }
-    gs@graph <- .create_graph(snn)
-    return(gs)
+    bower@graph <- .create_graph(snn)    
+    return(bower)
 }
 
 #' @name snn_graph

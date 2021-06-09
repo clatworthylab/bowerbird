@@ -17,24 +17,28 @@ bower <- function(genesets = list(), graph=list(), clusters = c(), ...){
     } else if (length(graph) > 0){
         if (length(genesets) > 0){
             if (length(clusters) > 0){
-                out <- new('BOWER', genesets = read_geneset(genesets, ...), graph = graph, clusters = clusters)
+                out <- new('BOWER', genesets = read_geneset(genesets, ...), graph = graph, clusters = clusters, ...)
             } else {
-                out <- new('BOWER', genesets = read_geneset(genesets, ...), graph = graph, clusters = c())
+                out <- new('BOWER', genesets = read_geneset(genesets, ...), graph = graph, clusters = c(), ...)
             }            
         } else {
             if (length(clusters) > 0){
-                out <- new('BOWER', genesets = list(), graph = graph, clusters = clusters)
+                out <- new('BOWER', genesets = list(), graph = graph, clusters = clusters, ...)
             } else {
-                out <- new('BOWER', genesets = list(), graph = graph, clusters = c())
+                out <- new('BOWER', genesets = list(), graph = graph, clusters = c(), ...)
             }
         }
     } else {
         if (length(clusters) > 0){
-            out <- new('BOWER', genesets = read_geneset(genesets, ...), graph = list(), clusters = clusters)
+            out <- new('BOWER', genesets = read_geneset(genesets, ...), graph = list(), clusters = clusters, ...)
         } else {
-            out <- new('BOWER', genesets = read_geneset(genesets, ...), graph = list(), clusters = c())
+            out <- new('BOWER', genesets = read_geneset(genesets, ...), graph = list(), clusters = c(), ...)
         }
     }
 
-    out
+    if (length(out@graph) > 0){
+        out@.graph_data <- .graph_to_data(out@graph)
+    }
+    
+    return(out)
 }

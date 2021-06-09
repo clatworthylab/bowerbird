@@ -2,7 +2,10 @@
 
 S3method(snn_graph,BOWER)
 S3method(snn_graph,list)
+S3method(summarize_clusters,BOWER)
+S3method(summarize_clusters,igraph)
 export(bower)
+export(closest_to_centroid.BOWER)
 export(init)
 export(read_geneset)
 export(snn_graph)

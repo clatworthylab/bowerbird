@@ -8,22 +8,22 @@
 \usage{
 snn_graph(x, ...)
 
-\method{snn_graph}{BOWER}(gs, max_features = 100, remove_stopwords = FALSE, k = 5, ...)
+\method{snn_graph}{BOWER}(bower, max_features = 100, remove_stopwords = FALSE, k = 5, ...)
 
 \method{snn_graph}{list}(gs, max_features = 100, remove_stopwords = FALSE, k = 5, ...)
 }
 \arguments{
-\item{x}{either a list or a BOWER class}
+\item{x}{either a BOWER class or a list.}
 
 \item{...}{passed to superml::TfIdfVectorizer}
-
-\item{gs}{genesets in list.}
 
 \item{max_features}{use top features sorted by count to be used in bag of words matrix. The default value is set to 100.}
 
 \item{remove_stopwords}{a list of stopwords to use, by default it uses its inbuilt list of standard stopwords. The default value is FALSE.}
 
 \item{k}{the maximum number of nearest neighbors to search. The default value is set to 5.}
+
+\item{gs}{genesets in list.}
 }
 \value{
 Returns a SNN geneset graph.

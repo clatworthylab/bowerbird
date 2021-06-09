@@ -1,26 +1,55 @@
 #' The BOWER container class
 #'
+
+#' @title genesets-class
+#' @rdname genesets-class
+#' @description list or character or data.frame
+setClassUnion("genesets", c("list", "character", "data.frame"))
+
+#' @title clusters-class
+#' @rdname clusters-class
+#' @description character or factor or NULL
+setClassUnion("clusters", c("character", "factor", "NULL"))
+
+setClass("igraph")
+#' @title graph-class
+#' @rdname graph-class
+#' @description list or igraph or NULL
+setClassUnion("graph", c("list", "igraph", "NULL"))
+
+setClassUnion("hidden", c("data.frame", "NULL"))
+
 #' @slot genesets A list of containing vectors of genes.
 #' @slot graph An igraph object that represents the kNN graph.
+#' @slot clusters A vector holding the cluster labels for each geneset.
+#' @slot .graph_data Hidden slot for graph in dataframe format.
 #'
-setClassUnion("listORcharacterORdataframe", c("list", "character", "data.frame"))
-setClassUnion("characterORfactorORNULL", c("character", "factor", "NULL"))
-setClass("igraph")
-setClassUnion("listORigraph", c("list", "igraph", "NULL"))
+#' @title BOWER
 #' @aliases BOWER
 #' @rdname BOWER
 #' @export
 #'
-
 setClass("BOWER",
     slots=c(
-        genesets = "listORcharacterORdataframe",
-        graph = "listORigraph", # this should be a list or an igraph object
-        clusters = 'characterORfactorORNULL'
+        genesets = "genesets",
+        graph = "graph", # this should be a list or an igraph object
+        clusters = 'clusters',
+        .graph_data = "hidden" # hidden slot for graph in dataframe format
         ),
     prototype = list(
         genesets = list(),
         graph = list(),
-        clusters = c()
+        clusters = c(),
+        .graph_data = NULL
         )
-)
+    )
+
+setMethod("show","BOWER",function(object) {
+    cat("Number of genesets: ", length(object@genesets),"\n")
+    cat("Graph: ", object@graph,"\n")
+    if (!is.null(object@clusters)){
+        cat("unqiue clusters: ", unique(object@clusters),"\n")
+    }
+})
+
+
