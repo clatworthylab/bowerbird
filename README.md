@@ -10,7 +10,7 @@ A single-cell package for Functional Annotation + Gene Module Summarization.
 Picture credits: 
 A satin bowerbird’s bower, decorated with blue objects. © Stefan Marks / [Flickr](https://www.flickr.com/photos/stefan_marks/32487196918/)
 
-I think this is vaguely similar to my attempts to visualise pathway analyses and their associated with celltype identities/states...
+I'm not sure if this mating ritual is in anyway similar to my attempts to visualise pathway analyses and their association with celltype identities/states... who cares. It's just a name.
 
 ## Installation
 ```R
