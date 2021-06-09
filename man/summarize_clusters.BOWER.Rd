@@ -2,9 +2,7 @@
 % Please edit documentation in R/summarize_clusters.R
 \name{summarize_clusters.BOWER}
 \alias{summarize_clusters.BOWER}
-\title{summarize_clusters
-
-Summarize the terms of the cluster using pagerank algorithm}
+\title{summarize}
 \usage{
 \method{summarize_clusters}{BOWER}(
   bower,
@@ -31,13 +29,13 @@ Summarize the terms of the cluster using pagerank algorithm}
 Returns a matrix of tf-idf score of tokens.
 }
 \description{
-summarize_clusters
-
-Summarize the terms of the cluster using pagerank algorithm
+summarize
 }
 \details{
 Given a list of text, it creates a sparse matrix consisting of tf-idf score for tokens from the text. See \verb{https://github.com/saraswatmks/superml/blob/master/R/TfidfVectorizer.R}. A k shortest-nearest neighbor graph is then computed using the overlap of of the terms.
 }
 \examples{
+\donttest{
 terms <- summarize_clusters(mat)
+}
 }

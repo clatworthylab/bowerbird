@@ -13,8 +13,10 @@
 #' Given a list of text, it creates a sparse matrix consisting of tf-idf score for tokens from the text. See `https://github.com/saraswatmks/superml/blob/master/R/TfidfVectorizer.R`. A k shortest-nearest neighbor graph is then computed using the overlap of of the terms.
 #' @return Returns a matrix of tf-idf score of tokens.
 #' @examples
+#' \donttest{
 #' gs <- scFA::read_geneset('geneset.gmt')
 #' mat <- snn_graph(gs)
+#' }
 #' @import superml
 #' @export
 

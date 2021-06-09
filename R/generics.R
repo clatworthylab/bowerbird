@@ -22,10 +22,32 @@ snn_graph <- function(x, ...) {
 #' @param x either a BOWER class or an igraph object.
 #' @param ... Arguments passed to other methods.
 #
-#' @return Returns a SNN geneset graph.
+#' @return Summarizes labels for genesets.
 #' @export
 #'
 
 summarize_clusters <- function(x, ...) {
     UseMethod(generic = "summarize_clusters")
+}
+
+#' @param x either a BOWER class or an igraph object.
+#' @param ... Arguments passed to other methods.
+#
+#' @return Return leiden clustering assignment for each geneset.
+#' @export
+#'
+
+find_clusters <- function(x, ...) {
+    UseMethod(generic = "find_clusters")
+}
+
+#' @param x BOWER class.
+#' @param ... Arguments passed to other methods.
+#
+#' @return Set cluster labels for each gene set
+#' @export
+#'
+
+set_clusters <- function(x, ...) {
+    UseMethod(generic = "set_clusters")
 }

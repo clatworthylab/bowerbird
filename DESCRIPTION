@@ -19,6 +19,7 @@ Collate:
     'utilities.R'
     'bower.R'
     'classes.R'
+    'cluster.R'
     'generics.R'
     'graph.R'
     'io.R'
@@ -33,5 +34,7 @@ Imports:
     igraph,
     FNN,
     S4Vectors,
+    ggraph,
+    leiden,
     devtools,
-    roxygen2   
+    roxygen2

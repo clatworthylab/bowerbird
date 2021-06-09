@@ -9,15 +9,17 @@ setClassUnion("genesets", c("list", "character", "data.frame"))
 #' @title clusters-class
 #' @rdname clusters-class
 #' @description character or factor or NULL
-setClassUnion("clusters", c("character", "factor", "NULL"))
+setClassUnion("clusters", c("character", "factor", "numeric", "NULL"))
 
 setClass("igraph")
 #' @title graph-class
 #' @rdname graph-class
 #' @description list or igraph or NULL
-setClassUnion("graph", c("list", "igraph", "NULL"))
+setClassUnion("graph", c("igraph", "NULL"))
 
-setClassUnion("hidden", c("data.frame", "NULL"))
+setClass("layout_tbl_graph")
+setClass("layout_ggraph")
+setClassUnion("hidden", c("data.frame", "layout_tbl_graph", "layout_ggraph", "NULL"))
 
 #' @slot genesets A list of containing vectors of genes.
 #' @slot graph An igraph object that represents the kNN graph.
@@ -38,17 +40,20 @@ setClass("BOWER",
         ),
     prototype = list(
         genesets = list(),
-        graph = list(),
-        clusters = c(),
+        graph = NULL,
+        clusters = NULL,
         .graph_data = NULL
         )
     )
 
 setMethod("show","BOWER",function(object) {
     cat("Number of genesets: ", length(object@genesets),"\n")
-    cat("Graph: ", object@graph,"\n")
+    if (!is.null(object@graph)){
+        cat("Graph: \n")
+        print(object@graph)
+    }
     if (!is.null(object@clusters)){
-        cat("unqiue clusters: ", unique(object@clusters),"\n")
+        cat("Unqiue clusters: ", length(unique(object@clusters)),"\n")
     }
 })
 
