@@ -5,10 +5,7 @@ A single-cell package for Functional Annotation + Gene Module Summarization.
 
 I think this is vaguely similar to my attempts to visualise pathway analyses and their associated with celltype identities/states...
 
-<img src="img/logo.png" alt="bower" width="100"/>
-<a href="https://blog.nature.org/science/2021/01/04/bowerbirds-meet-the-bird-worlds-kleptomaniac-love-architects/">
-<img src="https://blog.nature.org/science/files/2020/11/32487196918_8dd537c82a_k.jpg" alt="bower" width="400"/>
-</a>
+<a href="https://blog.nature.org/science/2021/01/04/bowerbirds-meet-the-bird-worlds-kleptomaniac-love-architects/"><img src="https://blog.nature.org/science/files/2020/11/32487196918_8dd537c82a_k.jpg" alt="bower" width="400"/></a> <img src="img/logo.png" alt="bower" width="200"/> 
 
 Picture credits: 
 A satin bowerbird’s bower, decorated with blue objects. © Stefan Marks / [Flickr](https://www.flickr.com/photos/stefan_marks/32487196918/)
@@ -44,9 +41,9 @@ bwr
 # Number of geneset clusters:  10 
 ```
 
-## Different ways of loading in genesets
+## Examples of different ways of loading in genesets
 
-Doing some manual editing of a predefined geneset.
+Example 1) Doing some manual editing of a predefined geneset.
 ```R
 library(bowerbird)
 # download from msigdb website
@@ -63,7 +60,7 @@ bwr <- find_clusters(bwr)
 bwr <- summarize_clusters(bwr)
 ```
 
-Extracting from `msigdbr`.
+Example 2) Extracting from `msigdbr`.
 ```R
 library(bowerbird)
 library(msigdbr)
