@@ -35,7 +35,7 @@ summarize_clusters.BOWER <- function(bower, cluster = NULL, pattern = NULL, sep 
 		igraph::V(bower@graph)$cluster <- cl
 	} else {
 		cl <- bower@clusters
-		igraph::V(bower@graph)$cluster <- bower@clusters
+		igraph::V(bower@graph)$cluster <- cl
 	}
 
 	if (is.null(ncpus)){
@@ -81,7 +81,7 @@ summarize_clusters.BOWER <- function(bower, cluster = NULL, pattern = NULL, sep 
   # and also only create a label for the centroid node
   data = .graph_to_data(bower@graph)
   data$`_orig_index` = row.names(data)
-  data <- split(data, terms)
+  data <- split(data, data$terms)
   datax <- lapply(data, function(x) {
     centroid <- .closest_to_centroid(x, 'x', 'y')$`_orig_index`
     return(centroid)})
@@ -154,7 +154,7 @@ summarize_clusters.igraph <- function(graph, cluster = NULL, pattern = NULL, sep
   # and also only create a label for the centroid node
   data = .graph_to_data(graph)
   data$`_orig_index` = row.names(data)
-  data <- split(data, terms)
+  data <- split(data, data$terms)
   datax <- lapply(data, function(x) {
     centroid <- .closest_to_centroid(x, 'x', 'y')$`_orig_index`
     return(centroid)})
