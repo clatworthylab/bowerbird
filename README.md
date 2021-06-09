@@ -1,11 +1,16 @@
 # bowerbird
- A single-cell package for Functional Annotation + Gene Module Summarization. 
+A single-cell package for Functional Annotation + Gene Module Summarization. 
  
- Bowerbirds are famous for the elaborate and sometimes whimsical structures that males build to court females.
+*Bowerbirds are famous for the elaborate and sometimes whimsical structures that males build to court females.*
 
-<img src="https://archinect.imgix.net/uploads/vc/vco5znw3f06d9gdu.jpg" alt="bower" width="400"/>
+I think this is vaguely similar to my attempts to visualise pathway analyses and their associated with celltype identities/states...
 
-## installation
+<a href="https://blog.nature.org/science/2021/01/04/bowerbirds-meet-the-bird-worlds-kleptomaniac-love-architects/">
+<img src="https://blog.nature.org/science/files/2020/11/32487196918_8dd537c82a_k.jpg" alt="bower" width="400"/>
+</a>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/E1zmfTr2d4c" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+## Installation
 ```R
 devtools::install_github('clatworthylab/bowerbird', auth_token = "insert_your_personal_github_access_token")
 ```
