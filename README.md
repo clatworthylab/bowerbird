@@ -14,6 +14,7 @@ I'm not sure if this mating ritual is in anyway similar to my attempts to visual
 
 ## Installation
 ```R
+# because currently private, requires specifying personal github access token
 devtools::install_github('clatworthylab/bowerbird', auth_token = "insert_your_personal_github_access_token")
 ```
 
