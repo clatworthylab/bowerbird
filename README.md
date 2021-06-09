@@ -23,6 +23,21 @@ bwr <- snn_graph(bwr)
 bwr <- find_clusters(bwr)
 bwr <- summarize_clusters(bwr)
 bwr
+# Number of genesets:  50 
+# Geneset KNN Graph: 
+# IGRAPH 5c4d1b0 UNW- 50 124 -- 
+# + attr: name (v/c), cluster (v/n), terms (v/c), labels (v/c), weight (e/n)
+# + edges from 5c4d1b0 (vertex names):
+#  [1] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_HYPOXIA                          
+#  [2] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_TGF_BETA_SIGNALING               
+#  [3] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_IL6_JAK_STAT3_SIGNALING          
+#  [4] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_APOPTOSIS                        
+#  [5] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_MYOGENESIS                       
+#  [6] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_COMPLEMENT                       
+#  [7] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_EPITHELIAL_MESENCHYMAL_TRANSITION
+#  [8] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_INFLAMMATORY_RESPONSE            
+# + ... omitted several edges
+# Number of geneset clusters:  10 
 ```
 
 ## Different ways of loading in genesets
