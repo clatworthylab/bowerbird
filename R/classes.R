@@ -49,11 +49,11 @@ setClass("BOWER",
 setMethod("show","BOWER",function(object) {
     cat("Number of genesets: ", length(object@genesets),"\n")
     if (!is.null(object@graph)){
-        cat("Graph: \n")
+        cat("Geneset KNN Graph: \n")
         print(object@graph)
     }
     if (!is.null(object@clusters)){
-        cat("Unqiue clusters: ", length(unique(object@clusters)),"\n")
+        cat("Number of geneset clusters: ", length(unique(object@clusters)),"\n")
     }
 })
 
