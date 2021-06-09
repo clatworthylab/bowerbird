@@ -14,7 +14,7 @@ setClassUnion("clusters", c("character", "factor", "numeric", "NULL"))
 setClass("igraph")
 #' @title graph-class
 #' @rdname graph-class
-#' @description list or igraph or NULL
+#' @description igraph or NULL
 setClassUnion("graph", c("igraph", "NULL"))
 
 setClass("layout_tbl_graph")
