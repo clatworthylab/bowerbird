@@ -16,6 +16,8 @@ I'm not sure if this mating ritual is in anyway similar to my attempts to visual
 ```R
 # because currently private, requires specifying personal github access token
 devtools::install_github('clatworthylab/bowerbird', auth_token = "insert_your_personal_github_access_token")
+
+# or clone this repo and do devtools::install('path/of/folder/to/bowerbird')
 ```
 
 ## Quick Usage
