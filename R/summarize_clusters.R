@@ -9,7 +9,7 @@
 #' @param pattern search pattern to remove from the terms. Unless specified, will default to built-in pattern. 
 #' @param sep separator used/found in gene set names to be changed to blank spaces. Default value is underscore ('_').
 #' @param ncpus number of cores used for parallelizing reconstruction.
-#' @param ... passed to igraph::graph_from_adjacency_matrix.
+#' @param ... passed to textrank::textrank_sentences.
 #' @details
 #' Given a list of text, it creates a sparse matrix consisting of tf-idf score for tokens from the text. See `https://github.com/saraswatmks/superml/blob/master/R/TfidfVectorizer.R`. A k shortest-nearest neighbor graph is then computed using the overlap of of the terms.
 #' @return Returns a matrix of tf-idf score of tokens.
@@ -21,7 +21,7 @@
 #' @export
 #'
 
-summarize_clusters.BOWER <- function(bower, cluster = NULL, pattern = NULL, sep = NULL, ncpus = NULL){	
+summarize_clusters.BOWER <- function(bower, cluster = NULL, pattern = NULL, sep = NULL, ncpus = NULL, ...){	
   requireNamespace('igraph')
   requireNamespace('parallel')
 	if (is.null(pattern)){
@@ -60,7 +60,7 @@ summarize_clusters.BOWER <- function(bower, cluster = NULL, pattern = NULL, sep 
 		sentences <- unique(annt[, c("textrank_id", "sentence")])
 		if (nrow(sentences) > 1){
       terminology <- annt[, c("textrank_id", "lemma")]  
-      tr <- textrank_sentences(data = sentences, terminology = terminology)
+      tr <- textrank_sentences(data = sentences, terminology = terminology, ...)
     } else {
       sentences <- rbind(sentences, sentences)
       sentences$textrank_id <- c(1,2)
@@ -68,7 +68,7 @@ summarize_clusters.BOWER <- function(bower, cluster = NULL, pattern = NULL, sep 
       terminology2 <- annt[, c("textrank_id", "lemma")]
       terminology2$textrank_id <- 2
       terminology <- rbind(terminology1, terminology2)
-      tr <- textrank_sentences(data = sentences, terminology = terminology)
+      tr <- textrank_sentences(data = sentences, terminology = terminology, ...)
     }
 		s <- summary(tr, n = 1, keep.sentence.order = TRUE)
 		s <- gsub('[.]', '', s)
@@ -95,7 +95,7 @@ summarize_clusters.BOWER <- function(bower, cluster = NULL, pattern = NULL, sep 
 }
 
 #' @export
-summarize_clusters.igraph <- function(graph, cluster = NULL, pattern = NULL, sep = NULL, ncpus = NULL){	
+summarize_clusters.igraph <- function(graph, cluster = NULL, pattern = NULL, sep = NULL, ncpus = NULL, ...){	
   requireNamespace('igraph')
   requireNamespace('parallel')
 	if (is.null(pattern)){
@@ -134,7 +134,7 @@ summarize_clusters.igraph <- function(graph, cluster = NULL, pattern = NULL, sep
 		sentences <- unique(annt[, c("textrank_id", "sentence")])
 		if (nrow(sentences) > 1){
       terminology <- annt[, c("textrank_id", "lemma")]  
-      tr <- textrank_sentences(data = sentences, terminology = terminology)
+      tr <- textrank_sentences(data = sentences, terminology = terminology, ...)
     } else {
       sentences <- rbind(sentences, sentences)
       sentences$textrank_id <- c(1,2)
@@ -142,7 +142,7 @@ summarize_clusters.igraph <- function(graph, cluster = NULL, pattern = NULL, sep
       terminology2 <- annt[, c("textrank_id", "lemma")]
       terminology2$textrank_id <- 2
       terminology <- rbind(terminology1, terminology2)
-      tr <- textrank_sentences(data = sentences, terminology = terminology)
+      tr <- textrank_sentences(data = sentences, terminology = terminology, ...)
     }
 		s <- summary(tr, n = 1, keep.sentence.order = TRUE)
 		s <- gsub('[.]', '', s)
