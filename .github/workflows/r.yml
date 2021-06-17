@@ -10,10 +10,15 @@ name: R
 
 on:
   push:
-    branches: [ master ]
+    branches:
+      - "master"
   pull_request:
-    branches: [ master ]
+    branches:
+      - "*"
 
+env:
+  cache-version: 'cache-v1'
+  
 jobs:
   build:
     strategy:
@@ -41,11 +46,18 @@ jobs:
         with:
           r-version: ${{ matrix.config.r-version}}
       
-      - name: Install dependencies
+      - name: Setup r-lib/remotes      
         run: |
-          install.packages(c("remotes", "rcmdcheck"))
-          remotes::install_deps(dependencies = TRUE)
+          install.packages('remotes')
         shell: Rscript {0}
+      
+      - id: bioc
+        name: Check bioc version
+        run: |
+          echo "##[set-output name=mainbiocversion;]$(Rscript -e 'cat(unlist(tools:::.BioC_version_associated_with_R_version()))' | awk '{print $1}')"
+          echo "##[set-output name=subbiocversion;]$(Rscript -e 'cat(unlist(tools:::.BioC_version_associated_with_R_version()))' | awk '{print $2}')"
+          echo "##[set-output name=biocversion;]$(Rscript -e 'cat(as.character(tools:::.BioC_version_associated_with_R_version()))' | awk '{print $1}')"
+        shell: bash -l {0}
         
       - name: Install ubuntu system dependencies
         if: matrix.config.os == 'ubuntu-latest'
@@ -58,7 +70,29 @@ jobs:
         if: matrix.config.os == 'macos-latest'
         run: |
           brew install cairo pkg-config autoconf automake libtool
-          
+      
+      - name: Cache ubuntu R packages
+        if: "!contains(github.event.head_commit.message, '/nocache') && matrix.config.os == 'ubuntu-latest'"
+        uses: actions/cache@v2
+        with:
+          path: /home/runner/work/_temp/Library
+          key: ${{ env.cache-version }}-${{ matrix.config.os }}-biocversion-RELEASE_${{ steps.bioc.outputs.mainbiocversion}}_${{ steps.bioc.outputs.subbiocversion}}-r-${{ matrix.config.r-version}}-${{ hashFiles('.github/depends.Rds') }}
+          restore-keys: ${{ env.cache-version }}-${{ matrix.config.os }}-biocversion-RELEASE_${{ steps.bioc.outputs.mainbiocversion}}_${{ steps.bioc.outputs.subbiocversion}}-r-${{ matrix.config.r-version}}-
+
+      - name: Cache macOS R packages
+        if: "!contains(github.event.head_commit.message, '/nocache') && matrix.config.os != 'ubuntu-latest'"
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.R_LIBS_USER }}
+          key: ${{ env.cache-version }}-${{ matrix.config.os }}-biocversion-RELEASE_${{ steps.bioc.outputs.mainbiocversion}}_${{ steps.bioc.outputs.subbiocversion}}-r-${{ matrix.config.r-version}}-${{ hashFiles('.github/depends.Rds') }}
+          restore-keys: ${{ env.cache-version }}-${{ matrix.config.os }}-biocversion-RELEASE_${{ steps.bioc.outputs.mainbiocversion}}_${{ steps.bioc.outputs.subbiocversion}}-r-${{ matrix.config.r-version}}-
+      
+      - name: Install dependencies
+        run: |
+          install.packages("rcmdcheck")
+          remotes::install_deps(dependencies = TRUE)
+        shell: Rscript {0}
+        
       - name: Check
         run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "error")
         shell: Rscript {0}
