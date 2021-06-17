@@ -24,6 +24,7 @@ jobs:
           - { r-version: 4.1, os: ubuntu-latest }
           - { r-version: 4.0, os: macos-latest }
           - { r-version: 4.1, os: macos-latest }
+    runs-on: ${{ matrix.config.os }}
 
     steps:
       - uses: actions/checkout@v2
