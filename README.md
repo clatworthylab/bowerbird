@@ -1,3 +1,5 @@
+[![R](https://github.com/clatworthylab/bowerbird/actions/workflows/r.yml/badge.svg?branch=master)](https://github.com/clatworthylab/bowerbird/actions/workflows/r.yml)
+
 # bowerbird
 A single-cell package for Functional Annotation + Gene Module Summarization. 
  
