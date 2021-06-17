@@ -16,17 +16,35 @@ on:
 
 jobs:
   build:
-    runs-on: macOS-latest
     strategy:
+      max-parallel: 5
       matrix:
-        r-version: [4.0, 4.1]
+        config:
+          - { r-version: 4.0, os: ubuntu-latest }
+          - { r-version: 4.1, os: ubuntu-latest }
+          - { r-version: 4.0, os: macos-latest }
+          - { r-version: 4.1, os: macos-latest }
 
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+      
       - name: Set up R ${{ matrix.r-version }}
         uses: r-lib/actions/setup-r@ffe45a39586f073cc2e9af79c4ba563b657dc6e3
         with:
           r-version: ${{ matrix.r-version }}
+      - name: Install ubuntu system dependencies
+        if: matrix.config.os == 'ubuntu-latest'
+        run: |
+          sudo apt-get install libcurl4-openssl-dev
+          sysreqs=$(Rscript -e 'cat("apt-get update -y && apt-get install -y", paste(gsub("apt-get install -y ", "", remotes::system_requirements("ubuntu", "20.04", package = c("textrank","udpipe","dplyr","pbmcapply","superml","igraph","FNN","S4Vectors","ggraph","leiden","devtools","roxygen2"))), collapse = " "))')
+          echo $sysreqs
+          sudo -s eval "$sysreqs"
+      - name: Install macOS system dependencies
+        if: matrix.config.os == 'macos-latest'
+        run: |
+          brew install cairo pkg-config autoconf automake libtool
+          
       - name: Install dependencies
         run: |
           install.packages(c("remotes", "rcmdcheck"))
