@@ -17,6 +17,12 @@ setClass("igraph")
 #' @description igraph or NULL
 setClassUnion("graph", c("igraph", "NULL"))
 
+#' @title coregenes-class
+#' @rdname coregenes-class
+#' @description list or NULL
+setClassUnion("coregenes", c("list", "NULL"))
+
+
 setClass("layout_tbl_graph")
 setClass("layout_ggraph")
 setClassUnion("hidden", c("data.frame", "layout_tbl_graph", "layout_ggraph", "NULL"))
@@ -36,12 +42,14 @@ setClass("BOWER",
         genesets = "genesets",
         graph = "graph", # this should be a list or an igraph object
         clusters = 'clusters',
+        coregenes = "coregenes",
         .graph_data = "hidden" # hidden slot for graph in dataframe format
         ),
     prototype = list(
         genesets = list(),
         graph = NULL,
         clusters = NULL,
+        coregenes = NULL,
         .graph_data = NULL
         )
     )
@@ -56,6 +64,15 @@ setMethod("show","BOWER",function(object) {
     if (!is.null(object@clusters)){
         cat("number of geneset clusters: ", length(unique(object@clusters)),"\n")
     }
+    if (!is.null(object@coregenes)){
+        cathead <- function(x){
+            return(cat(head(x), "...\n"))
+        }
+        cat("Core genes:\n")
+        cat("\tFirst six genes shown\n")
+        for (i in seq_along(object@coregenes)){
+            cat("\t",names(object@coregenes)[i], ": ")
+            cathead(object@coregenes[[i]])
+        }
+    }
 })
-
-

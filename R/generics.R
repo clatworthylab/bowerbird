@@ -51,3 +51,14 @@ find_clusters <- function(x, ...) {
 set_clusters <- function(x, ...) {
     UseMethod(generic = "set_clusters")
 }
+
+#' @param x a BOWER class.
+#' @param ... Arguments passed to other methods.
+#
+#' @return Return leiden clustering assignment for each geneset.
+#' @export
+#'
+
+extract_core <- function(x, ...) {
+    UseMethod(generic = "extract_core")
+}

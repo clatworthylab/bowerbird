@@ -20,6 +20,7 @@ Collate:
     'bower.R'
     'classes.R'
     'cluster.R'
+    'extract.R'
     'generics.R'
     'graph.R'
     'io.R'
@@ -35,6 +36,7 @@ Imports:
     FNN,
     S4Vectors,
     ggraph,
-    leiden,
+    leiden
+Suggests:
     devtools,
     roxygen2

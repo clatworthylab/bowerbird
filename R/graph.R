@@ -68,4 +68,3 @@ snn_graph.list <- function(gs, max_features = 100, remove_stopwords = FALSE, k =
     }
     return(.create_graph(snn))
 }
-
