@@ -1,13 +1,14 @@
+#' @title misc
 #########################
 # Miscellaneous functions
 #########################
-
+#' @rdname misc
 #' @param x vector.
 #' 
 
 .is_blank <- function(x) x == ""
 
-
+#' @rdname misc
 #' @param gs list of vectors.
 #' @param min_size minimum size of geneset otherwise filter out.
 #' 
@@ -23,7 +24,7 @@
     return(gs)
 }
 
-
+#' @rdname misc
 #' @param ... does nothing.
 #' 
 
@@ -36,7 +37,7 @@
     out
 }
 
-
+#' @rdname misc
 #' @param snn KNN graph.
 #' @param mode Character scalar, specifies how igraph should interpret the supplied matrix. See also the weighted argument, the interpretation depends on that too. Possible values are: directed, undirected, upper, lower, max, min, plus. See ?igraph::graph_from_adjacency_matrix.
 #' @param weighted This argument specifies whether to create a weighted graph from an adjacency matrix. If it is NULL then an unweighted graph is created and the elements of the adjacency matrix gives the number of edges between the vertices. If it is a character constant then for every non-zero matrix entry an edge is created and the value of the entry is added as an edge attribute named by the weighted argument. If it is TRUE then a weighted graph is created and the name of the edge attribute will be weight. See ?igraph::graph_from_adjacency_matrix.
@@ -50,6 +51,7 @@
     return(gr)
 }
 
+#' @rdname misc
 #' @param gr igraph
 #' @param ... passed to ggraph::ggraph.
 #' 
@@ -64,13 +66,13 @@
     return(g$data)
 }
 
+#' @rdname misc
 #' @param gr data matrix or data.frame that contains at least two columns.
 #' @param x_column name of x column/axis.
 #' @param y_column name of y column/axis.
 #' @param n (numeric) number of points that are close to the centroid to be detected. Default = 1.
 #' @param id_column (character or numeric) name or numeric index of the column in data containing identifiers of one or distinct sets of points. If, NULL, the default, only one set is assumed.
 #' 
-
 .closest_to_centroid <- function(data, x_column, y_column, n = 1, id_column = NULL) {
   # adapted from https://rdrr.io/github/claununez/biosurvey/src/R/selection_helpers.R
   requireNamespace('stats')
@@ -165,3 +167,95 @@
   })
   return(do.call(rbind, ucent))
 }
+
+#' @rdname misc
+#' @param sce Single cell object. Accepts either a Seurat object of SingleCellExperiment object.
+#' @param mode mode of conversion. Accepts one of AUCell, SingleCellExperiment, Seurat, scanpy.
+#' @param sce_assay name of assay in SingleCellExperiment object.
+#' @param seurat_assay name of assay in Seurat object.
+#' @return appropriate single cell object for enrichment analysis
+#' 
+.typecheck <- function(sce, mode, sce_assay = 'logcounts', seurat_assay = 'RNA'){
+  cls <- class(sce)
+  requireNamespace(c('Seurat', 'SummarizedExperiment'))
+  if (mode[1] == 'AUCell' | mode[1] == 'SingleCellExperiment'){
+    if (cls == 'Seurat'){
+      scex <- Seurat::as.SingleCellExperiment(kidneyimmune)
+    } else if (cls == 'SingleCellExperiment') {
+      scex <- sce
+    }
+  } else if (mode[1] == 'Seurat'){
+    if (cls == 'SingleCellExperiment'){
+      scex <- Seurat::as.Seurat(kidneyimmune)
+    } else if (cls == 'Seurat') {
+      scex <- sce
+    }
+  } else if (mode[1] == 'scanpy'){
+    requireNamespace(c('Matrix', 'reticulate'))
+    sc <- tryCatch(reticulate::import('scanpy'), error = function(e) stop('Please install scanpy to use this mode.'))
+    if (cls == 'SingleCellExperiment'){
+      if (sce_assay %in% names(SummarizedExperiment::assays(sce))){
+        mat <- SummarizedExperiment::assays(sce)[[sce_assay]]
+      } else {
+        stop(paste0(sce_assay, ' not found in SingleCellExperiment object.'))
+      }
+    } else if (cls == 'Seurat'){
+      if (seurat_assay %in% names(sce)){
+        mat <- sce[[seurat_assay]]@data
+      } else {
+        stop(paste0(seurat_assay, ' not found in Seurat object.'))
+      }
+    }
+    if (!"dgCMatrix" %in% class(mat)){
+      mat <- Matrix::Matrix(mat, sparse = TRUE)
+    }
+    obs <- data.frame(row.names = colnames(mat), barcode = colnames(mat))
+    var <- data.frame(row.names = rownames(mat), gene_ids = rownames(mat))
+    scex <- sc$AnnData(X = Matrix::t(mat), obs = obs, var = var)
+    scex$raw <- scex
+  }
+  return(scex)
+}
+
+#' @rdname misc
+#' @param deg deg table. must at least have a column for gene symbol, log fold changes and pvalues.
+#' @param gene_symbol_column gene_symbol_column
+#' @param logfoldchanges_column logfoldchanges_column
+#' @param pvals_column pvals_column
+#' @param remove_mito_ribo boolean. whether or not to remove mitochondial and ribosomal genes from consideration. Default is TRUE.
+#' @return srted ranked gene list.
+#' 
+.makeRankGeneList <- function(deg, gene_symbol_column, logfoldchanges_column, pvals_column, remove_mito_ribo = TRUE){
+    if (remove_mito_ribo) {
+      y <- grepl('^RPS|^RPL|^MRPL|^MRPS|^MT-|^Rps|^Rpl|^Mrpl|^Mrps|^mt-', deg[,gene_symbol_column])
+      deg <- deg[!y, ]
+    } 
+    deg <- deg[, c(gene_symbol_column, logfoldchanges_column, pvals_column)]
+    deg$nedegog10pval <- -log10(deg[, pvals_column])
+    rank <- unlist(deg$nedegog10pval * sign(deg[,logfoldchanges_column]))
+    rank[rank == Inf] = 300
+    rank[rank == -Inf] = -300
+    names(rank) <- deg[,gene_symbol_column]
+    rank <- rev(sort(rank))    
+    return(rank)
+}
+
+#' @rdname misc
+#' @param x numerical vector
+#' 
+range01 <- function(x){(x-min(x))/(max(x)-min(x))}
+
+#' @rdname misc
+#' @param res fgsea result data.frame.
+#' @param query column name in fgsea results.
+#' 
+.retrieve_gsea <- function(res, query){
+    tmp <- lapply(res, function(x) data.frame(pathway = x[,'pathway'], query = x[,query]))
+    for (i in seq_along(tmp)){
+      colnames(tmp[[i]]) <- c('pathway', names(tmp)[i])  
+    }
+    tmp <- Reduce(function(...) merge(..., by='pathway', all.x=TRUE), tmp)
+    row.names(tmp) <- tmp$pathway
+    tmp <- tmp[, -1]
+    return(tmp)
+  }

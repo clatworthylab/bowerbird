@@ -22,6 +22,10 @@ setClassUnion("graph", c("igraph", "NULL"))
 #' @description list or NULL
 setClassUnion("coregenes", c("list", "NULL"))
 
+#' @title scores-class
+#' @rdname scores-class
+#' @description data.frame, matrix, list or NULL
+setClassUnion("scores", c("data.frame", "matrix", "list", "NULL"))
 
 setClass("layout_tbl_graph")
 setClass("layout_ggraph")
@@ -30,6 +34,8 @@ setClassUnion("hidden", c("data.frame", "layout_tbl_graph", "layout_ggraph", "NU
 #' @slot genesets A list of containing vectors of genes.
 #' @slot graph An igraph object that represents the kNN graph.
 #' @slot clusters A vector holding the cluster labels for each geneset.
+#' @slot coregenes A list of containing vectors of core genes.
+#' @slot scores A dataframe of geneset testing results.
 #' @slot .graph_data Hidden slot for graph in dataframe format.
 #'
 #' @title BOWER
@@ -43,6 +49,7 @@ setClass("BOWER",
         graph = "graph", # this should be a list or an igraph object
         clusters = 'clusters',
         coregenes = "coregenes",
+        scores = "scores", # not hidden but use the same class
         .graph_data = "hidden" # hidden slot for graph in dataframe format
         ),
     prototype = list(
@@ -50,6 +57,7 @@ setClass("BOWER",
         graph = NULL,
         clusters = NULL,
         coregenes = NULL,
+        scores = NULL,
         .graph_data = NULL
         )
     )

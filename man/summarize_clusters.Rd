@@ -3,12 +3,22 @@
 \name{summarize_clusters}
 \alias{summarize_clusters}
 \alias{summarize_clusters.BOWER}
+\alias{summarize_clusters.igraph}
 \title{summarize_clusters}
 \usage{
 summarize_clusters(x, ...)
 
 \method{summarize_clusters}{BOWER}(
   bower,
+  cluster = NULL,
+  pattern = NULL,
+  sep = NULL,
+  ncpus = NULL,
+  ...
+)
+
+\method{summarize_clusters}{igraph}(
+  graph,
   cluster = NULL,
   pattern = NULL,
   sep = NULL,
@@ -37,6 +47,8 @@ Summarizes labels for genesets.
 Returns a matrix of tf-idf score of tokens.
 }
 \description{
+summarize_clusters
+
 summarize_clusters
 }
 \details{

@@ -17,6 +17,10 @@ BOWER
 
 \item{\code{clusters}}{A vector holding the cluster labels for each geneset.}
 
+\item{\code{coregenes}}{A list of containing vectors of core genes.}
+
+\item{\code{scores}}{A dataframe of geneset testing results.}
+
 \item{\code{.graph_data}}{Hidden slot for graph in dataframe format.}
 }}
 

@@ -94,6 +94,8 @@ summarize_clusters.BOWER <- function(bower, cluster = NULL, pattern = NULL, sep 
 	return(bower)
 }
 
+#' @title summarize_clusters
+#' @name summarize_clusters
 #' @export
 summarize_clusters.igraph <- function(graph, cluster = NULL, pattern = NULL, sep = NULL, ncpus = NULL, ...){	
   requireNamespace('igraph')

@@ -3,7 +3,7 @@
 #
 #' @return Returns a list of gene sets.
 #'
-
+#' @rdname misc
 .read_geneset <- function(x, ...) {
     UseMethod(generic = "read_geneset")
 }
@@ -61,4 +61,15 @@ set_clusters <- function(x, ...) {
 
 extract_core <- function(x, ...) {
     UseMethod(generic = "extract_core")
+}
+
+#' @param x a BOWER class.
+#' @param ... Arguments passed to other methods.
+#
+#' @return Return geneset testing results.
+#' @export
+#'
+
+enrich_genesets <- function(...) {
+    UseMethod(generic = "enrich_genesets")
 }

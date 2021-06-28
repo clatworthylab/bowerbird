@@ -20,7 +20,8 @@ Collate:
     'bower.R'
     'classes.R'
     'cluster.R'
-    'extract.R'
+    'enrich_genesets.R'
+    'extract_core.R'
     'generics.R'
     'graph.R'
     'io.R'
@@ -36,8 +37,13 @@ Imports:
     FNN,
     S4Vectors,
     ggraph,
-    leiden
+    leiden,
+    fgsea
 Suggests:
+    SingleCellExperiment,
+    SummarizedExperiment,
+    AUCell,
+    Seurat,
     devtools,
     roxygen2,
     parallel

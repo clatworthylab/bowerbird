@@ -6,6 +6,7 @@
 
 #' Reads various geneset file formats and returns a list of vectors containing gene names.
 #'
+#' @name read_geneset
 #' @param x file,
 #' @param min_size minimum size of geneset otherwise filter out.
 #' @return Returns a list of gene sets
