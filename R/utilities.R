@@ -165,19 +165,3 @@
   })
   return(do.call(rbind, ucent))
 }
-
-
-#' @import devtools
-#' @export
-
-init <- function()
-{   
-    setwd("~/Documents/GitHub/bowerbird")
-    requireNamespace('roxygen2')
-    requireNamespace('devtools')
-    devtools::document()
-    setwd('..')
-    devtools::install('bowerbird')
-    setwd('bowerbird')
-}
-

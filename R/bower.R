@@ -1,3 +1,4 @@
+#' @title bower
 #' @include utilities.R
 #'
 #' @export

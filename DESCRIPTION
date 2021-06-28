@@ -1,6 +1,6 @@
 Package: bowerbird
 Title: A single-cell package for Functional Annotation + Gene Module Summarization.
-Version: 0.0.0.9000
+Version: 0.0.1
 Authors@R:
     person(given = "Zewen Kelvin",
            family = "Tuong",
@@ -20,6 +20,7 @@ Collate:
     'bower.R'
     'classes.R'
     'cluster.R'
+    'extract.R'
     'generics.R'
     'graph.R'
     'io.R'
@@ -35,6 +36,7 @@ Imports:
     FNN,
     S4Vectors,
     ggraph,
-    leiden,
+    leiden
+Suggests:
     devtools,
     roxygen2

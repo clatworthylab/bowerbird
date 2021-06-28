@@ -30,6 +30,7 @@ bwr <- bower('h.all.v7.4.symbols.gmt') # this performs a read_geneset step inter
 bwr <- snn_graph(bwr)
 bwr <- find_clusters(bwr)
 bwr <- summarize_clusters(bwr)
+bwr <- extract_core(bwr) # new function to extract the outersecting genes
 bwr
 # BOWER class
 # number of genesets:  50 
@@ -66,6 +67,7 @@ bwr <- bower(geneset)
 bwr <- snn_graph(bwr)
 bwr <- find_clusters(bwr)
 bwr <- summarize_clusters(bwr)
+bwr <- extract_core(bwr)
 ```
 
 Example 2) Extracting from `msigdbr`.
@@ -84,6 +86,7 @@ bwr <- bower(gs_list)
 bwr <- snn_graph(bwr)
 bwr <- find_clusters(bwr)
 bwr <- summarize_clusters(bwr)
+bwr <- extract_core(bwr)
 ```
 
 ## Downstream analysis e.g. with AUCell
