@@ -162,7 +162,7 @@ bwr <- enrich_genesets(kidneyimmune, bwr, groupby = 'celltype', mode = 'scanpy')
 
 Visualise as a network plot.
 
-```{r, fig.width=30, fig.height=18}
+```{r, fig.width=30, fig.height=35}
 library(ggraph)
 library(ggplot2)
 plot_list <- lapply(colnames(bwr@scores), function(ds){
@@ -172,15 +172,16 @@ plot_list <- lapply(colnames(bwr@scores), function(ds){
     geom_edge_link(aes(width = weight), alpha = .25) +
     geom_node_point(aes(color = score, size = geneset_size)) + 
     scale_size_area(max_size = 8) +
-    geom_node_text(aes(label = labels), size = 3) +
+    geom_node_text(aes(label = labels), size = 4) +
     theme_bw() +
     theme_void() +
     scale_color_viridis() +
     scale_edge_width(range = c(0, 1)) +
-    ggtitle(ds)
+    ggtitle(ds) +
+    theme(plot.title = element_text(size = 8, face = "bold"))
 })
 names(plot_list) <- colnames(bwr@scores)
-cowplot::plot_grid(plotlist = plot_list, scale = 0.9)
+cowplot::plot_grid(plotlist = plot_list, scale = 0.9, ncol = 3)
 ```
 
 ## Running `fgsea` on deg tables in a list as an alternative to the single-cell methods.
@@ -195,7 +196,7 @@ bwr <- enrich_genesets(degs, bwr, gene_symbol = 'gene', logfoldchanges = 'avg_lo
 
 Coloured by adjusted p value.
 
-```{r, message=FALSE, warning=FALSE, fig.width=30, fig.height=20}
+```{r, message=FALSE, warning=FALSE, fig.width=30, fig.height=35}
 plot_list <- lapply(colnames(bwr@scores$NES), function(ds){
   set.seed(100)
   padj <- bwr@scores$padj[, ds]
@@ -205,20 +206,20 @@ plot_list <- lapply(colnames(bwr@scores$NES), function(ds){
     geom_edge_link(aes(width = weight), alpha = .25) +
     geom_node_point(aes(color = padj, size = geneset_size)) + 
     scale_size_area(max_size = 8) +
-    geom_node_text(aes(label = labels), size = 3) +
+    geom_node_text(aes(label = labels), size = 4) +
     theme_bw() +
     theme_void() +
     scale_color_viridis(na.value = '#e7e7e7') +
     scale_edge_width(range = c(0, 1)) +
-    ggtitle(ds) + theme(legend.position = 'none')
+    ggtitle(ds) + theme(legend.position = 'none', plot.title = element_text(size = 8, face = "bold"))
 })
 names(plot_list) <- colnames(bwr@scores$NES)
-cowplot::plot_grid(plotlist = plot_list, scale = 0.9)
+cowplot::plot_grid(plotlist = plot_list, scale = 0.9, ncol = 3)
 ```
 
 Coloured by normalized enrichment score.
 
-```{r, message=FALSE, warning=FALSE, fig.width=30, fig.height=20}
+```{r, message=FALSE, warning=FALSE, fig.width=30, fig.height=35}
 plot_list <- lapply(colnames(bwr@scores$NES), function(ds){
   set.seed(100)
   NES <- bwr@scores$NES[, ds]
@@ -227,15 +228,15 @@ plot_list <- lapply(colnames(bwr@scores$NES), function(ds){
     geom_edge_link(aes(width = weight), alpha = .25) +
     geom_node_point(aes(color = NES, size = geneset_size)) +
     scale_size_area(max_size = 8) +
-    geom_node_text(aes(label = labels), size = 3) +
+    geom_node_text(aes(label = labels), size = 4) +
     theme_bw() +
     theme_void() +
     scale_color_viridis() +
     scale_edge_width(range = c(0, 1)) +
-    ggtitle(ds) + theme(legend.position = 'none')
+    ggtitle(ds) + theme(legend.position = 'none', plot.title = element_text(size = 8, face = "bold"))
 })
 names(plot_list) <- colnames(bwr@scores$NES)
-cowplot::plot_grid(plotlist = plot_list, scale = 0.9)
+cowplot::plot_grid(plotlist = plot_list, scale = 0., ncol = 3)
 ```
 
 ## Using `core` genes for enrichment
