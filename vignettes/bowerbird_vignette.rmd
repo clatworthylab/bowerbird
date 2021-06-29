@@ -134,8 +134,6 @@ bwr <- enrich_genesets(kidneyimmune, bwr, groupby = 'celltype', mode = 'scanpy')
 Visualise as a network plot.
 
 ```{r, fig.width=30, fig.height=18}
-
-# plot
 library(ggraph)
 library(ggplot2)
 plot_list <- lapply(colnames(bwr@scores), function(ds){
@@ -192,7 +190,6 @@ cowplot::plot_grid(plotlist = plot_list, scale = 0.9)
 Coloured by normalized enrichment score.
 
 ```{r, message=FALSE, warning=FALSE, fig.width=30, fig.height=20}
-# color by NES
 plot_list <- lapply(colnames(bwr@scores$NES), function(ds){
   set.seed(100)
   NES <- bwr@scores$NES[, ds]
