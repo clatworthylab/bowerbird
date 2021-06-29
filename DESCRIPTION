@@ -53,6 +53,7 @@ Suggests:
     doParallel,
     doRNG,
     ktplots,
-    rmarkdown
+    rmarkdown,
+    limma
 Remotes:
     zktuong/ktplots

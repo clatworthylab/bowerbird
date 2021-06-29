@@ -170,7 +170,7 @@ pheatmap::pheatmap(bwr@scores$NES)
 ## Using core genes for enrichment
 same function as above, just specifying `core = TRUE`.
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
-bwr <- enrich_genesets(kidneyimmune, bwr, core = TRUE, groupby = 'celltype') # if mode is not specified, defaults to AUCell.
+bwr <- enrich_genesets(kidneyimmune, bwr, core = TRUE, groupby = 'celltype', mode = 'AUCell')
 # output can also be plotted via ggraph as above but i'm using heatmap for convenience.
 pheatmap::pheatmap(bwr@scores)
 ```
