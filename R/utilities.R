@@ -14,14 +14,14 @@
 #' 
 
 .filter_geneset <- function(gs, min_size) {
-    gs <- lapply(gs, function(x) x[!.is_blank(x)])
-    if (length(which(is.na(gs))) > 0){
-        gs <- gs[!is.na(gs)]
-    }
-    if (length(which(lapply(gs, length) <= min_size)) > 0) {
-        gs <- gs[-which(lapply(gs, length) <= min_size)]
-    }
-    return(gs)
+  gs <- lapply(gs, function(x) x[!.is_blank(x)])
+  if (length(which(is.na(gs))) > 0){
+    gs <- gs[!is.na(gs)]
+  }
+  if (length(which(lapply(gs, length) <= min_size)) > 0) {
+    gs <- gs[-which(lapply(gs, length) <= min_size)]
+  }
+  return(gs)
 }
 
 #' @rdname misc
@@ -29,12 +29,12 @@
 #' 
 
 .emptyBOWER <- function(...) {
-    out <- new("BOWER",
-               genesets=list(),
-               graph=NULL,
-               clusters=NULL,
-               .graph_data=NULL)
-    out
+  out <- new("BOWER",
+   genesets=list(),
+   graph=NULL,
+   clusters=NULL,
+   .graph_data=NULL)
+  out
 }
 
 #' @rdname misc
@@ -45,10 +45,10 @@
 #'
 
 .create_graph <- function(snn, mode = 'undirected', weighted = TRUE, ...) {
-    requireNamespace('igraph')
-    gr <- igraph::graph_from_adjacency_matrix(snn, mode= "undirected", weighted = TRUE, ...)
-    gr <- igraph::simplify(gr)
-    return(gr)
+  requireNamespace('igraph')
+  gr <- igraph::graph_from_adjacency_matrix(snn, mode= "undirected", weighted = TRUE, ...)
+  gr <- igraph::simplify(gr)
+  return(gr)
 }
 
 #' @rdname misc
@@ -56,14 +56,14 @@
 #' @param ... passed to ggraph::ggraph.
 #' 
 .graph_to_data <- function(gr, ...) {
-    requireNamespace('ggraph')
-    if (length(list(...)) == 0){
-        g <- ggraph::ggraph(gr, 'igraph', algorithm = 'fr')
-    } else {
-        g <- ggraph::ggraph(gr, ...)
-    }
+  requireNamespace('ggraph')
+  if (length(list(...)) == 0){
+    g <- ggraph::ggraph(gr, 'igraph', algorithm = 'fr')
+  } else {
+    g <- ggraph::ggraph(gr, ...)
+  }
 
-    return(g$data)
+  return(g$data)
 }
 
 #' @rdname misc
@@ -122,11 +122,11 @@
         ## Process for more than 20 points
         covm <- stats::cov(gblock[, c(x_column, y_column)])
         ndim <- length(cent); sigma_i <- solve(covm) / stats::qchisq(level,
-                                                                     df = ndim)
+         df = ndim)
         stds <- 1 / sqrt(eigen(sigma_i)$values)
         hl <- cent + stds; ll <- cent - stds
         c1 <- gblock[, x_column] >= ll[1] & gblock[, x_column] <= hl[1] &
-          gblock[, y_column] >= ll[2] & gblock[, y_column] <= hl[2]
+        gblock[, y_column] >= ll[2] & gblock[, y_column] <= hl[2]
         con <- sum(c1)
 
         if (con <= 2) {
@@ -134,8 +134,8 @@
           while (con == 0) {
             if (level > 0.98) {
                 ## Distance in E space
-                ds <- stats::mahalanobis(x = gblock[, c(x_column, y_column)], center = cent, cov = covm, tol = 0.0000009)
-                break()
+              ds <- stats::mahalanobis(x = gblock[, c(x_column, y_column)], center = cent, cov = covm, tol = 0.0000009)
+              break()
             }
             ## Dtecting whether closest point was detected or not
             level <- level + 0.01
@@ -144,7 +144,7 @@
             hl <- cent + stds
             ll <- cent - stds
             c1 <- gblock[, x_column] >= ll[1] & gblock[, x_column] <= hl[1] &
-              gblock[, y_column] >= ll[2] & gblock[, y_column] <= hl[2]
+            gblock[, y_column] >= ll[2] & gblock[, y_column] <= hl[2]
             con <- sum(c1)
             if (con > 0) {
               break()
@@ -159,8 +159,8 @@
       if (level > 0.98) {
         return(gblock[which(ds == sort(ds)[1:n])[1:n], ])
       }
-        ds <- as.matrix(stats::dist(rbind(cent, gblock[c1, c(x_column, y_column)])))[-1, 1]
-        return(gblock[which(ds %in% sort(ds)[1:n])[1:n], ])
+      ds <- as.matrix(stats::dist(rbind(cent, gblock[c1, c(x_column, y_column)])))[-1, 1]
+      return(gblock[which(ds %in% sort(ds)[1:n])[1:n], ])
     } else {
       return(gblock[1, ])
     }
@@ -226,18 +226,18 @@
 #' @return srted ranked gene list.
 #' 
 .makeRankGeneList <- function(deg, gene_symbol_column, logfoldchanges_column, pvals_column, remove_mito_ribo = TRUE){
-    if (remove_mito_ribo) {
-      y <- grepl('^RPS|^RPL|^MRPL|^MRPS|^MT-|^Rps|^Rpl|^Mrpl|^Mrps|^mt-', deg[,gene_symbol_column])
-      deg <- deg[!y, ]
-    } 
-    deg <- deg[, c(gene_symbol_column, logfoldchanges_column, pvals_column)]
-    deg$nedegog10pval <- -log10(deg[, pvals_column])
-    rank <- unlist(deg$nedegog10pval * sign(deg[,logfoldchanges_column]))
-    rank[rank == Inf] = 300
-    rank[rank == -Inf] = -300
-    names(rank) <- deg[,gene_symbol_column]
-    rank <- rev(sort(rank))    
-    return(rank)
+  if (remove_mito_ribo) {
+    y <- grepl('^RPS|^RPL|^MRPL|^MRPS|^MT-|^Rps|^Rpl|^Mrpl|^Mrps|^mt-', deg[,gene_symbol_column])
+    deg <- deg[!y, ]
+  } 
+  deg <- deg[, c(gene_symbol_column, logfoldchanges_column, pvals_column)]
+  deg$nedegog10pval <- -log10(deg[, pvals_column])
+  rank <- unlist(deg$nedegog10pval * sign(deg[,logfoldchanges_column]))
+  rank[rank == Inf] = 300
+  rank[rank == -Inf] = -300
+  names(rank) <- deg[,gene_symbol_column]
+  rank <- rev(sort(rank))    
+  return(rank)
 }
 
 #' @rdname misc
@@ -250,12 +250,15 @@ range01 <- function(x){(x-min(x))/(max(x)-min(x))}
 #' @param query column name in fgsea results.
 #' 
 .retrieve_gsea <- function(res, query){
-    tmp <- lapply(res, function(x) data.frame(pathway = x[,'pathway'], query = x[,query]))
-    for (i in seq_along(tmp)){
-      colnames(tmp[[i]]) <- c('pathway', names(tmp)[i])  
-    }
-    tmp <- Reduce(function(...) merge(..., by='pathway', all.x=TRUE), tmp)
-    row.names(tmp) <- tmp$pathway
-    tmp <- tmp[, -1]
-    return(tmp)
+  tmp <- lapply(res, function(x) {
+    q <- tryCatch(data.frame(pathway = x[,'pathway'], query = x[,query]), error = function(e) data.frame(pathway = x[,'pathway'], query = do.call(rbind, lapply(x[,query], paste0, collapse = '|'))))
+    return(q)
+  })
+  for (i in seq_along(tmp)){
+    colnames(tmp[[i]]) <- c('pathway', names(tmp)[i])  
   }
+  tmp <- Reduce(function(...) merge(..., by='pathway', all.x=TRUE), tmp)
+  row.names(tmp) <- tmp$pathway
+  tmp <- tmp[, -1]
+  return(tmp)
+}

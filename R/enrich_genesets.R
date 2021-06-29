@@ -47,8 +47,9 @@ enrich_genesets.list <- function(list, bower, core = FALSE, gene_symbol = 'X1', 
   ES <- .retrieve_gsea(res, 'ES')
   pval <- .retrieve_gsea(res, 'pval')
   padj <- .retrieve_gsea(res, 'padj')
+  leadingEdge <- .retrieve_gsea(res, 'leadingEdge')
   
-  bower@scores <- list(NES = NES, ES = ES, pval = pval, padj = padj, full_fgsea = res)
+  bower@scores <- list(NES = NES, ES = ES, pval = pval, padj = padj, leadingEdge = leadingEdge, full_fgsea = res)
   return(bower)
 }
 

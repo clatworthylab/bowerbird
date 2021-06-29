@@ -1,4 +1,5 @@
 #' @include utilities.R
+#' @include extract_core.R
 #'
 
 #' Summarize the terms of the cluster using pagerank algorithm
@@ -89,8 +90,9 @@ summarize_clusters.BOWER <- function(bower, cluster = NULL, pattern = NULL, sep 
   tmp2 <- tmp[cl]
   tmp2[-idx] <- ""
   igraph::V(bower@graph)$labels <- tmp2
-  bower@.graph_data <- .graph_to_data(bower@graph)
-  
+  bower@.graph_data <- .graph_to_data(bower@graph)  
+  bower <- extract_core(bower)
+
 	return(bower)
 }
 
