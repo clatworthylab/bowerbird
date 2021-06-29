@@ -107,32 +107,43 @@
 <p>Pathway analyis is tricky; often there’s too many pathways/terms to use and it’s not easy to distinguish how important every element is. <code>bowerbird</code> attempts to summarise your pathways of interests into potentially meaningful functional annotation modules which you can then take forward to pathway analyses, or the reverse situation where you have a set of pathways that were determined <i>a priori</i> to be significant and you wanted to find out how to interpret it. To do this, we compute a shortest nearest neighbor graph using the genes in the gene sets/pathways and learn a representative summary term from the name of the gene sets that cluster together.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">bowerbird</span><span class="op">)</span>
+<span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu">bower</span><span class="op">(</span><span class="va">gmt_file</span><span class="op">)</span>
+<span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/snn_graph.html">snn_graph</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">)</span>
+<span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/find_clusters.html">find_clusters</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">)</span>
+<span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/summarize_clusters.html">summarize_clusters</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">)</span>
+<span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/enrich_genesets.html">enrich_genesets</a></span><span class="op">(</span><span class="va">sce</span>, <span class="va">bwr</span><span class="op">)</span></code></pre></div>
+</div>
+<div id="full-example" class="section level2">
+<h2 class="hasAnchor">
+<a href="#full-example" class="anchor"></a>Full example</h2>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">bowerbird</span><span class="op">)</span>
 <span class="va">gmt_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"h.all.v7.4.symbols.gmt"</span>, package <span class="op">=</span> <span class="st">"bowerbird"</span><span class="op">)</span> <span class="co"># read in a .gmt file</span>
 <span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu">bower</span><span class="op">(</span><span class="va">gmt_file</span><span class="op">)</span> <span class="co"># this performs a read_geneset step internally, which accepts .gmt, .gmx, .csv, .tsv, .txt, or R objects as list or data.frame format.</span>
 <span class="co">#&gt; Loading required namespace: S4Vectors</span></code></pre></div>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/snn_graph.html">snn_graph</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">)</span>
 <span class="co">#&gt; Loading required namespace: FNN</span></code></pre></div>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/find_clusters.html">find_clusters</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">)</span>
 <span class="co">#&gt; Loading required namespace: ggraph</span></code></pre></div>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/summarize_clusters.html">summarize_clusters</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">)</span>
-<span class="co">#&gt; Downloading udpipe model from https://raw.githubusercontent.com/jwijffels/udpipe.models.ud.2.5/master/inst/udpipe-ud-2.5-191206/english-ewt-ud-2.5-191206.udpipe to /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpiEWzYb/english-ewt-ud-2.5-191206.udpipe</span>
+<span class="co">#&gt; Downloading udpipe model from https://raw.githubusercontent.com/jwijffels/udpipe.models.ud.2.5/master/inst/udpipe-ud-2.5-191206/english-ewt-ud-2.5-191206.udpipe to /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmp5eTYlg/english-ewt-ud-2.5-191206.udpipe</span>
 <span class="co">#&gt;  - This model has been trained on version 2.5 of data from https://universaldependencies.org</span>
 <span class="co">#&gt;  - The model is distributed under the CC-BY-SA-NC license: https://creativecommons.org/licenses/by-nc-sa/4.0</span>
 <span class="co">#&gt;  - Visit https://github.com/jwijffels/udpipe.models.ud.2.5 for model license details.</span>
 <span class="co">#&gt;  - For a list of all models and their licenses (most models you can download with this package have either a CC-BY-SA or a CC-BY-SA-NC license) read the documentation at ?udpipe_download_model. For building your own models: visit the documentation by typing vignette('udpipe-train', package = 'udpipe')</span>
-<span class="co">#&gt; Downloading finished, model stored at '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpiEWzYb/english-ewt-ud-2.5-191206.udpipe'</span></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<span class="co">#&gt; Downloading finished, model stored at '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmp5eTYlg/english-ewt-ud-2.5-191206.udpipe'</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bwr</span>
 <span class="co">#&gt; BOWER class</span>
 <span class="co">#&gt; number of genesets:  50 </span>
 <span class="co">#&gt; genesets kNN Graph: </span>
-<span class="co">#&gt; IGRAPH a895879 UNW- 50 124 -- </span>
+<span class="co">#&gt; IGRAPH b6b941c UNW- 50 124 -- </span>
 <span class="co">#&gt; + attr: name (v/c), cluster (v/n), geneset_size (v/n), terms (v/c),</span>
 <span class="co">#&gt; | labels (v/c), weight (e/n)</span>
-<span class="co">#&gt; + edges from a895879 (vertex names):</span>
+<span class="co">#&gt; + edges from b6b941c (vertex names):</span>
 <span class="co">#&gt; [1] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_HYPOXIA                </span>
 <span class="co">#&gt; [2] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_TGF_BETA_SIGNALING     </span>
 <span class="co">#&gt; [3] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_IL6_JAK_STAT3_SIGNALING</span>
@@ -146,18 +157,18 @@
 <span class="co">#&gt;   XENOBIOTIC METABOLISM : LIFR DNAJB9 CD36 ACOX1 IDH1 ECH1 ...</span>
 <span class="co">#&gt;   E2F TARGETS : SAC3D1 KIF11 KIF23 RACGAP1 NUMA1 KIF2C ...</span>
 <span class="co">#&gt;   ESTROGEN RESPONSE EARLY : JAG1 CTNNB1 GNAI1 FDFT1 DHCR7 FASN ...</span>
+<span class="co">#&gt;   INTERFERON ALPHA RESPONSE : MX1 ISG15 IFIT3 IFI44 IFI35 IRF7 ...</span>
 <span class="co">#&gt;   HEDGEHOG SIGNALING : VEGFA VLDLR MYH9 ERO1A DDIT4 STC2 ...</span>
 <span class="co">#&gt;   IL2 STAT5 SIGNALING : JUNB PPP1R15A SERPINE1 ID2 IFNGR2 PMEPA1 ...</span>
-<span class="co">#&gt;   APOPTOSIS : SPTAN1 CDKN1A GSN GPX3 CLU GADD45B ...</span>
-<span class="co">#&gt;   INTERFERON ALPHA RESPONSE : MX1 ISG15 IFIT3 IFI44 IFI35 IRF7 ...</span>
 <span class="co">#&gt;   APICAL JUNCTION : EGFR ADAM10 CLTC AP2M1 ARF1 MAPK1 ...</span>
-<span class="co">#&gt;   EPITHELIAL MESENCHYMAL TRANSITION : FBN1 FN1 SERPINE1 SPARC MMP2 THBS1 ...</span></code></pre></div>
+<span class="co">#&gt;   P53 PATHWAY : BTG2 TAP1 CDKN2B ATF3 BTG1 RRAD ...</span>
+<span class="co">#&gt;   APOPTOSIS : SPTAN1 CDKN1A GSN GPX3 CLU GADD45B ...</span></code></pre></div>
 </div>
 <div id="examples-of-different-ways-of-loading-in-genesets" class="section level2">
 <h2 class="hasAnchor">
 <a href="#examples-of-different-ways-of-loading-in-genesets" class="anchor"></a>Examples of different ways of loading in genesets</h2>
-<p>Example #1 Doing some manual editing of a predefined geneset.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<p>Doing some manual editing of a predefined geneset.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download from msigdb website</span>
 <span class="va">file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"c5.go.bp.v7.4.symbols.gmt"</span>, package <span class="op">=</span> <span class="st">"bowerbird"</span><span class="op">)</span>
 <span class="co"># manualy read in to do some fine adjustments/filtering</span>
@@ -170,53 +181,52 @@
 <span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/snn_graph.html">snn_graph</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">)</span>
 <span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/find_clusters.html">find_clusters</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">)</span>
 <span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/summarize_clusters.html">summarize_clusters</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">)</span>
-<span class="co">#&gt; Downloading udpipe model from https://raw.githubusercontent.com/jwijffels/udpipe.models.ud.2.5/master/inst/udpipe-ud-2.5-191206/english-ewt-ud-2.5-191206.udpipe to /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpiEWzYb/english-ewt-ud-2.5-191206.udpipe</span>
+<span class="co">#&gt; Downloading udpipe model from https://raw.githubusercontent.com/jwijffels/udpipe.models.ud.2.5/master/inst/udpipe-ud-2.5-191206/english-ewt-ud-2.5-191206.udpipe to /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmp5eTYlg/english-ewt-ud-2.5-191206.udpipe</span>
 <span class="co">#&gt;  - This model has been trained on version 2.5 of data from https://universaldependencies.org</span>
 <span class="co">#&gt;  - The model is distributed under the CC-BY-SA-NC license: https://creativecommons.org/licenses/by-nc-sa/4.0</span>
 <span class="co">#&gt;  - Visit https://github.com/jwijffels/udpipe.models.ud.2.5 for model license details.</span>
 <span class="co">#&gt;  - For a list of all models and their licenses (most models you can download with this package have either a CC-BY-SA or a CC-BY-SA-NC license) read the documentation at ?udpipe_download_model. For building your own models: visit the documentation by typing vignette('udpipe-train', package = 'udpipe')</span>
-<span class="co">#&gt; Downloading finished, model stored at '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpiEWzYb/english-ewt-ud-2.5-191206.udpipe'</span>
+<span class="co">#&gt; Downloading finished, model stored at '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmp5eTYlg/english-ewt-ud-2.5-191206.udpipe'</span>
 <span class="va">bwr</span>
 <span class="co">#&gt; BOWER class</span>
 <span class="co">#&gt; number of genesets:  224 </span>
 <span class="co">#&gt; genesets kNN Graph: </span>
-<span class="co">#&gt; IGRAPH f57f5fc UNW- 224 669 -- </span>
+<span class="co">#&gt; IGRAPH 70aec46 UNW- 224 669 -- </span>
 <span class="co">#&gt; + attr: name (v/c), cluster (v/n), geneset_size (v/n), terms (v/c),</span>
 <span class="co">#&gt; | labels (v/c), weight (e/n)</span>
-<span class="co">#&gt; + edges from f57f5fc (vertex names):</span>
+<span class="co">#&gt; + edges from 70aec46 (vertex names):</span>
 <span class="co">#&gt; [1] GOBP_NEURAL_CREST_CELL_MIGRATION--GOBP_NATURAL_KILLER_CELL_DIFFERENTIATION                             </span>
 <span class="co">#&gt; [2] GOBP_NEURAL_CREST_CELL_MIGRATION--GOBP_SOMATIC_DIVERSIFICATION_OF_IMMUNE_RECEPTORS_VIA_SOMATIC_MUTATION</span>
 <span class="co">#&gt; [3] GOBP_NEURAL_CREST_CELL_MIGRATION--GOBP_NEURAL_CREST_CELL_DIFFERENTIATION                               </span>
 <span class="co">#&gt; [4] GOBP_NEURAL_CREST_CELL_MIGRATION--GOBP_MODULATION_BY_VIRUS_OF_HOST_CELLULAR_PROCESS                    </span>
 <span class="co">#&gt; [5] GOBP_NEURAL_CREST_CELL_MIGRATION--GOBP_VIRAL_RELEASE_FROM_HOST_CELL                                    </span>
 <span class="co">#&gt; + ... omitted several edges</span>
-<span class="co">#&gt; number of geneset clusters:  22 </span>
+<span class="co">#&gt; number of geneset clusters:  21 </span>
 <span class="co">#&gt; Core genes:</span>
 <span class="co">#&gt;  First six genes shown</span>
+<span class="co">#&gt;   T CELL APOPTOTIC PROCESS : ADA BCL2L11 LYN MIR17HG PKN1 BAK1 ...</span>
 <span class="co">#&gt;   TOLL LIKE RECEPTOR SIGNALING PATHWAY : TAB1 LILRA2 CHUK TAB2 TAB3 TBK1 ...</span>
-<span class="co">#&gt;   IMMUNE RESPONSE : ADA C17orf99 PARP3 IGLL5 MICA KLRC4-KLRK1 ...</span>
 <span class="co">#&gt;   ANTIGEN PROCESSING AND PRESENTATION OF PEPTIDE ANTIGEN : ABCB9 HFE HLA-A HLA-B HLA-C HLA-E ...</span>
+<span class="co">#&gt;   IMMUNE RESPONSE : ADA C17orf99 PARP3 IGLL5 MICA KLRC4-KLRK1 ...</span>
+<span class="co">#&gt;   ALPHA BETA T CELL DIFFERENTIATION : BATF FGL2 MALT1 NLRP3 SLAMF6 RC3H1 ...</span>
+<span class="co">#&gt;   T CELL PROLIFERATION : ADA C17orf99 PARP3 KLRF2 CDH17 MAD2L2 ...</span>
 <span class="co">#&gt;   RESPONSE TO INTERFERON BETA : SEMA3A SEMA6C SEMA6B SEMA4F SEMA4D SEMA4B ...</span>
 <span class="co">#&gt;   LYMPHOCYTE MIGRATION : TBK1 IRF3 IRF7 FADD IKBKE ADAM10 ...</span>
-<span class="co">#&gt;   ALPHA BETA T CELL DIFFERENTIATION : BATF LILRB1 FGL2 MALT1 NLRP3 SLAMF6 ...</span>
-<span class="co">#&gt;   T CELL PROLIFERATION : ADA C17orf99 PARP3 ADAM8 CDH17 PSMD14 ...</span>
 <span class="co">#&gt;   T CELL MEDIATED CYTOTOXICITY : LILRB1 RIPK3 IL23R AGER FCGR2B HLA-A ...</span>
-<span class="co">#&gt;   LYMPHOCYTE APOPTOTIC PROCESS : ADA RIPK3 FOXP3 RAG1 BCL2 RPS6 ...</span>
-<span class="co">#&gt;   IMMUNE RESPONSE-1 : PARP3 MICA CD96 LILRB1 FGL2 SPINK5 ...</span>
 <span class="co">#&gt;   CYTOKINE PRODUCTION INVOLVED IN IMMUNE RESPONSE : MALT1 LILRB4 NLRP3 CLC CD55 DENND1B ...</span>
+<span class="co">#&gt;   IMMUNE RESPONSE-1 : PARP3 MICA CD96 LILRB1 FGL2 SPINK5 ...</span>
 <span class="co">#&gt;   MAST CELL ACTIVATION : LYN PDPK1 SYK CD300A BLK BTK ...</span>
-<span class="co">#&gt;   B CELL ACTIVATION : IGLL5 RASGRP1 IGHV2-70D IGHV1-69D IGHV3-64D CEBPG ...</span>
-<span class="co">#&gt;   MATURE B CELL DIFFERENTIATION INVOLVED IN IMMUNE RESPONSE : PARP3 MAD2L2 BATF SHLD3 EXOSC6 SLC15A4 ...</span>
 <span class="co">#&gt;   T CELL SELECTION : IL23R IL12B IL12RB1 IL23A BATF SLAMF6 ...</span>
-<span class="co">#&gt;   B CELL PROLIFERATION : ADA BCL2L11 LYN MIR17HG PKN1 BAK1 ...</span>
-<span class="co">#&gt;   CD4 ALPHA BETA T CELL DIFFERENTIATION : IL23R IL27 ANXA1 HLX NLRP10 IL1B ...</span>
-<span class="co">#&gt;   NATURAL KILLER CELL MEDIATED IMMUNITY : MICA KLRC4-KLRK1 RASGRP1 CD96 CD226 LILRB1 ...</span>
+<span class="co">#&gt;   MATURE B CELL DIFFERENTIATION INVOLVED IN IMMUNE RESPONSE : PARP3 MAD2L2 BATF SHLD3 EXOSC6 SLC15A4 ...</span>
+<span class="co">#&gt;   B CELL ACTIVATION : IGLL5 RASGRP1 IGHV2-70D IGHV1-69D IGHV3-64D CEBPG ...</span>
 <span class="co">#&gt;   ANTIGEN RECEPTOR MEDIATED SIGNALING PATHWAY : CD300A FCRL3 GCSAML NFAM1 ELF1 ELF2 ...</span>
-<span class="co">#&gt;   CD4 ALPHA BETA T CELL DIFFERENTIATION-1 : RC3H1 TBX21 ANXA1 HLX HMGB1 IL2 ...</span>
+<span class="co">#&gt;   CD4 ALPHA BETA T CELL DIFFERENTIATION-1 : IL23R IL27 ANXA1 HLX NLRP10 IL1B ...</span>
+<span class="co">#&gt;   NATURAL KILLER CELL MEDIATED IMMUNITY : MICA KLRC4-KLRK1 RASGRP1 CD96 CD226 LILRB1 ...</span>
 <span class="co">#&gt;   HUMORAL IMMUNE RESPONSE : DEFA1 DEFA3 DEFA4 DEFA5 DEFA6 DEFB1 ...</span>
+<span class="co">#&gt;   CD4 ALPHA BETA T CELL DIFFERENTIATION : RC3H1 TBX21 ANXA1 HLX HMGB1 IL2 ...</span>
 <span class="co">#&gt;   INFLAMMATORY RESPONSE TO ANTIGENIC STIMULUS : PARK7 ADCYAP1 CCR7 CNR1 IL31RA ELANE ...</span></code></pre></div>
-<p>Example #2 Extracting from <code>msigdbr</code>.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<p>Or extracting from <code>msigdbr</code>.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://igordot.github.io/msigdbr/">msigdbr</a></span><span class="op">)</span>
 <span class="va">GO</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="fu">msigdbr</span><span class="fu">::</span><span class="fu"><a href="https://igordot.github.io/msigdbr/reference/msigdbr.html">msigdbr</a></span><span class="op">(</span>category <span class="op">=</span> <span class="st">"C5"</span>, subcategory <span class="op">=</span> <span class="st">"GO:BP"</span><span class="op">)</span><span class="op">)</span>
 <span class="va">genesets</span> <span class="op">&lt;-</span> <span class="va">GO</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">grep</a></span><span class="op">(</span><span class="st">'B_CELL|T_CELL|NATURAL_KILLER|ANTIBODY|ANTIGEN|LYMPHOCYTE|IMMUNE|INTERFERON|TOLL|INNATE|ADAPTIVE'</span>, <span class="va">GO</span><span class="op">$</span><span class="va">gs_name</span><span class="op">)</span>, <span class="op">]</span>
@@ -230,918 +240,71 @@
 <span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/snn_graph.html">snn_graph</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">)</span>
 <span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/find_clusters.html">find_clusters</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">)</span>
 <span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/summarize_clusters.html">summarize_clusters</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">)</span>
-<span class="co">#&gt; Downloading udpipe model from https://raw.githubusercontent.com/jwijffels/udpipe.models.ud.2.5/master/inst/udpipe-ud-2.5-191206/english-ewt-ud-2.5-191206.udpipe to /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpiEWzYb/english-ewt-ud-2.5-191206.udpipe</span>
+<span class="co">#&gt; Downloading udpipe model from https://raw.githubusercontent.com/jwijffels/udpipe.models.ud.2.5/master/inst/udpipe-ud-2.5-191206/english-ewt-ud-2.5-191206.udpipe to /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmp5eTYlg/english-ewt-ud-2.5-191206.udpipe</span>
 <span class="co">#&gt;  - This model has been trained on version 2.5 of data from https://universaldependencies.org</span>
 <span class="co">#&gt;  - The model is distributed under the CC-BY-SA-NC license: https://creativecommons.org/licenses/by-nc-sa/4.0</span>
 <span class="co">#&gt;  - Visit https://github.com/jwijffels/udpipe.models.ud.2.5 for model license details.</span>
 <span class="co">#&gt;  - For a list of all models and their licenses (most models you can download with this package have either a CC-BY-SA or a CC-BY-SA-NC license) read the documentation at ?udpipe_download_model. For building your own models: visit the documentation by typing vignette('udpipe-train', package = 'udpipe')</span>
-<span class="co">#&gt; Downloading finished, model stored at '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpiEWzYb/english-ewt-ud-2.5-191206.udpipe'</span>
+<span class="co">#&gt; Downloading finished, model stored at '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmp5eTYlg/english-ewt-ud-2.5-191206.udpipe'</span>
 <span class="va">bwr</span>
 <span class="co">#&gt; BOWER class</span>
 <span class="co">#&gt; number of genesets:  265 </span>
 <span class="co">#&gt; genesets kNN Graph: </span>
-<span class="co">#&gt; IGRAPH 3d458a1 UNW- 265 843 -- </span>
+<span class="co">#&gt; IGRAPH ceb66b2 UNW- 265 843 -- </span>
 <span class="co">#&gt; + attr: name (v/c), cluster (v/n), geneset_size (v/n), terms (v/c),</span>
 <span class="co">#&gt; | labels (v/c), weight (e/n)</span>
-<span class="co">#&gt; + edges from 3d458a1 (vertex names):</span>
+<span class="co">#&gt; + edges from ceb66b2 (vertex names):</span>
 <span class="co">#&gt; [1] GOBP_ACTIVATED_T_CELL_PROLIFERATION--GOBP_CD8_POSITIVE_ALPHA_BETA_T_CELL_DIFFERENTIATION          </span>
 <span class="co">#&gt; [2] GOBP_ACTIVATED_T_CELL_PROLIFERATION--GOBP_NEGATIVE_REGULATION_OF_ACTIVATED_T_CELL_PROLIFERATION   </span>
 <span class="co">#&gt; [3] GOBP_ACTIVATED_T_CELL_PROLIFERATION--GOBP_NEGATIVE_REGULATION_OF_LYMPHOCYTE_DIFFERENTIATION       </span>
 <span class="co">#&gt; [4] GOBP_ACTIVATED_T_CELL_PROLIFERATION--GOBP_NEGATIVE_REGULATION_OF_T_CELL_RECEPTOR_SIGNALING_PATHWAY</span>
 <span class="co">#&gt; [5] GOBP_ACTIVATION_OF_IMMUNE_RESPONSE --GOBP_ACTIVATION_OF_INNATE_IMMUNE_RESPONSE                    </span>
 <span class="co">#&gt; + ... omitted several edges</span>
-<span class="co">#&gt; number of geneset clusters:  22 </span>
+<span class="co">#&gt; number of geneset clusters:  21 </span>
 <span class="co">#&gt; Core genes:</span>
 <span class="co">#&gt;  First six genes shown</span>
+<span class="co">#&gt;   T CELL MEDIATED CYTOTOXICITY : ABCB9 AZGP1 B2M ERAP1 ERAP2 HFE ...</span>
 <span class="co">#&gt;   IMMUNE RESPONSE-1 : AIM2 BCL10 BTRC CARD11 CARD9 CD209 ...</span>
 <span class="co">#&gt;   CD4 ALPHA BETA T CELL DIFFERENTIATION : ANXA1 ATP7A BATF BCL3 BCL6 CBFB ...</span>
 <span class="co">#&gt;   TYPE 2 IMMUNE RESPONSE : IL4 PLCL2 TLR4 IL18 IL18R1 IL4R ...</span>
 <span class="co">#&gt;   IMMUNE RESPONSE : CLNK HLA-E HLA-F IFNA2 IFNB1 IL18 ...</span>
-<span class="co">#&gt;   T CELL MEDIATED CYTOTOXICITY : HLA-A HLA-B HLA-C HLA-E HLA-F HLA-G ...</span>
 <span class="co">#&gt;   RESPONSE TO INTERFERON BETA : BCL2L11 HIF1A MEF2C ADA SOS1 SOS2 ...</span>
 <span class="co">#&gt;   CD8 ALPHA BETA T CELL ACTIVATION : HLA-E GATA3 ADCYAP1 BTK C3 CCR7 ...</span>
 <span class="co">#&gt;   T CELL DIFFERENTIATION : FCGR2B FGL2 HLA-DOA LILRB2 THBS1 BMP4 ...</span>
 <span class="co">#&gt;   INTERFERON GAMMA PRODUCTION : ABCB9 ACE ACTR10 ACTR1A ACTR1B AP1B1 ...</span>
 <span class="co">#&gt;   TOLL LIKE RECEPTOR SIGNALING PATHWAY : CACTIN PTPRS TICAM1 TLR3 TLR4 TLR9 ...</span>
-<span class="co">#&gt;   T CELL CYTOKINE PRODUCTION : KLRC1 LILRB1 NOD2 PTPRC EGR3 LEF1 ...</span>
 <span class="co">#&gt;   B CELL ACTIVATION-1 : ADA BAX BCL6 BLK BTK CD74 ...</span>
+<span class="co">#&gt;   T CELL CYTOKINE PRODUCTION : KLRC1 LILRB1 NOD2 PTPRC EGR3 LEF1 ...</span>
 <span class="co">#&gt;   B CELL DIFFERENTIATION : IL10 TLR9 SYK ADA BCL3 C17orf99 ...</span>
+<span class="co">#&gt;   ALPHA BETA T CELL ACTIVATION : AGER ANXA1 ARG2 ATP7A BATF BCL3 ...</span>
+<span class="co">#&gt;   B CELL ACTIVATION : ADA ADAM17 BATF BCL3 BCL6 BTK ...</span>
 <span class="co">#&gt;   ACTIVATED T CELL PROLIFERATION : LILRB4 CD24 CD274 FYN HHLA2 ICOSLG ...</span>
 <span class="co">#&gt;   LYMPHOCYTE CHEMOTAXIS : CCL2 CCL3 CCL4 CCL5 CCL7 CXCL14 ...</span>
-<span class="co">#&gt;   B CELL ACTIVATION : ADA ADAM17 BATF BCL3 BCL6 BTK ...</span>
 <span class="co">#&gt;   T CELL SELECTION : TOX BCL2 BATF CTSL FOXP3 IL12B ...</span>
-<span class="co">#&gt;   ALPHA BETA T CELL ACTIVATION : AGER ANXA1 ARG2 ATP7A BATF BCL3 ...</span>
 <span class="co">#&gt;   INFLAMMATORY RESPONSE TO ANTIGENIC STIMULUS : BTK C3 CD28 HLA-E LTA NOD2 ...</span>
 <span class="co">#&gt;   T CELL APOPTOTIC PROCESS : ADA AKT1 BAK1 BAX BCL10 BCL2L11 ...</span>
-<span class="co">#&gt;   ANTIGEN PROCESSING AND PRESENTATION OF PEPTIDE ANTIGEN VIA MHC CLASS I : ABCB9 AZGP1 B2M ERAP1 ERAP2 HFE ...</span>
 <span class="co">#&gt;   LYMPHOCYTE MIGRATION : ADAM10 ADAM17 ADAM8 AIF1 APP CCL20 ...</span></code></pre></div>
 </div>
 <div id="geneset-enrichment-analysis-me" class="section level2">
 <h2 class="hasAnchor">
 <a href="#geneset-enrichment-analysis-me" class="anchor"></a>Geneset enrichment analysis me</h2>
 <p>To do this, we would need either a single-cell object (<code>SingleCellExperiment</code> or <code>Seurat</code>), or a list containing differential gene testing results.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># load a dummy dataset</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">ktplots</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">kidneyimmune</span><span class="op">)</span></code></pre></div>
 <p>With popular single-cell methods.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## AUCell</span>
 <span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/enrich_genesets.html">enrich_genesets</a></span><span class="op">(</span><span class="va">kidneyimmune</span>, <span class="va">bwr</span>, groupby <span class="op">=</span> <span class="st">'celltype'</span>, mode <span class="op">=</span> <span class="st">'AUCell'</span><span class="op">)</span>
-<span class="co">#&gt; Loading required package: Seurat</span>
-<span class="co">#&gt; Registered S3 method overwritten by 'spatstat.geom':</span>
-<span class="co">#&gt;   method     from</span>
-<span class="co">#&gt;   print.boxx cli</span>
-<span class="co">#&gt; Attaching SeuratObject</span>
-<span class="co">#&gt; Loading required namespace: AUCell</span>
 
 <span class="co">## Seurat::AddModuleScore</span>
 <span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/enrich_genesets.html">enrich_genesets</a></span><span class="op">(</span><span class="va">kidneyimmune</span>, <span class="va">bwr</span>, groupby <span class="op">=</span> <span class="st">'celltype'</span>, mode <span class="op">=</span> <span class="st">'Seurat'</span><span class="op">)</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: EPO, IL12B,</span>
-<span class="co">#&gt; MIR181C, MIR21, MIR30B, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: APCS, BTN1A1,</span>
-<span class="co">#&gt; BTN2A3P, BTNL10, BTNL2, BTNL3, C4A, C4B, C4BPA, C7, C8A, C8B, C9, CD5L, CFHR1,</span>
-<span class="co">#&gt; CFHR2, CFHR4, CFHR5, CGAS, COLEC10, CPB2, CPN1, CRP, F2, FYB1, FYB2, GPR32,</span>
-<span class="co">#&gt; GPR32P1, GPR33, HLA-DRB3, HLA-DRB4, IGHV1-45, IGHV1-58, IGHV1-69, IGHV1-69-2,</span>
-<span class="co">#&gt; IGHV1-69D, IGHV1OR15-1, IGHV2-5, IGHV2-70, IGHV2-70D, IGHV3-11, IGHV3-13,</span>
-<span class="co">#&gt; IGHV3-16, IGHV3-20, IGHV3-21, IGHV3-30, IGHV3-35, IGHV3-38, IGHV3-43, IGHV3-49,</span>
-<span class="co">#&gt; IGHV3-53, IGHV3-64, IGHV3-64D, IGHV3-66, IGHV4-28, IGHV4-31, IGHV4-39, IGHV4-4,</span>
-<span class="co">#&gt; IGHV4-61, IGHV5-10-1, IGHV5-51, IGHV7-4-1, IGHV7-81, IGKV1D-12, IGKV1D-33,</span>
-<span class="co">#&gt; IGKV2-28, IGKV2-29, IGKV2-40, IGKV2D-28, IGKV2D-30, IGKV5-2, IGLC1, IGLV3-19,</span>
-<span class="co">#&gt; IGLV3-25, IGLV3-27, KIR2DS2, MBL2, MIR18A, MIR19A, MIR34A, MIR520B, MIR520E,</span>
-<span class="co">#&gt; MUC16, MUC17, MUC19, MUC2, MUC21, MUC3A, MUC5AC, MUC5B, MUC6, MUC7, MYH2,</span>
-<span class="co">#&gt; NECTIN2, PRKACG, PSMB11, STING1, TOMM70, TREX1, not searching for symbol</span>
-<span class="co">#&gt; synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: CGAS, KIR2DS2,</span>
-<span class="co">#&gt; MUC16, MUC17, MUC19, MUC2, MUC21, MUC3A, MUC5AC, MUC5B, MUC6, MUC7, PRKACG,</span>
-<span class="co">#&gt; PSMB11, STING1, TOMM70, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: NPFF, NPY5R,</span>
-<span class="co">#&gt; SELENOS, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: APCS, C4A,</span>
-<span class="co">#&gt; C4B, C4BPA, C7, C8A, C8B, C9, CD8B2, CRP, CYRIB, FCRL4, FGA, FGL1, HLA-DRB3,</span>
-<span class="co">#&gt; HLA-DRB4, HLA-H, HPX, IFNA1, IFNA10, IFNA13, IFNA14, IFNA16, IFNA17, IFNA2,</span>
-<span class="co">#&gt; IFNA21, IFNA4, IFNA5, IFNA6, IFNA7, IFNA8, IFNB1, IFNE, IFNK, IFNW1, IGHD1-1,</span>
-<span class="co">#&gt; IGHJ1, IGHV1-45, IGHV1-58, IGHV1-69, IGHV1-69-2, IGHV1-69D, IGHV1OR15-1,</span>
-<span class="co">#&gt; IGHV2-5, IGHV2-70, IGHV2-70D, IGHV3-11, IGHV3-13, IGHV3-16, IGHV3-20, IGHV3-21,</span>
-<span class="co">#&gt; IGHV3-30, IGHV3-35, IGHV3-38, IGHV3-43, IGHV3-49, IGHV3-53, IGHV3-64, IGHV3-64D,</span>
-<span class="co">#&gt; IGHV3-66, IGHV4-28, IGHV4-31, IGHV4-39, IGHV4-4, IGHV4-61, IGHV5-10-1, IGHV5-51,</span>
-<span class="co">#&gt; IGHV7-4-1, IGHV7-81, IGHV8-51-1, IGKJ1, IGKV1-13, IGKV1-27, IGKV1-37, IGKV1-8,</span>
-<span class="co">#&gt; IGKV1-9, IGKV1D-12, IGKV1D-13, IGKV1D-17, IGKV1D-33, IGKV1D-37, IGKV1D-42,</span>
-<span class="co">#&gt; IGKV1D-43, IGKV2-24, IGKV2-28, IGKV2-29, IGKV2-40, IGKV2D-24, IGKV2D-26,</span>
-<span class="co">#&gt; IGKV2D-28, IGKV2D-29, IGKV2D-30, IGKV3-7, IGKV3D-15, IGKV3D-7, IGKV5-2,</span>
-<span class="co">#&gt; IGKV6-21, IGKV6D-21, IGKV6D-41, IGLC1, IGLJ1, IGLV1-36, IGLV1-50, IGLV10-54,</span>
-<span class="co">#&gt; IGLV11-55, IGLV2-18, IGLV2-33, IGLV3-12, IGLV3-16, IGLV3-19, IGLV3-22, IGLV3-25,</span>
-<span class="co">#&gt; IGLV3-27, IGLV3-32, IGLV4-3, IGLV4-60, IGLV5-37, IGLV5-48, IGLV5-52, IGLV8-61,</span>
-<span class="co">#&gt; IGLV9-49, IL12B, LILRA3, MARCHF8, MBL2, MIR21, NECTIN2, NLRP10, NSD2, SCART1,</span>
-<span class="co">#&gt; SHLD1, SHLD2, SHLD3, TARM1, TRAJ3, TRAJ31, TRAJ42, TRAV18, TRAV2, TRAV7,</span>
-<span class="co">#&gt; TRAV8-1, TRAV9-1, TRBD1, TRBJ1-1, TRBJ1-2, TRBJ1-3, TRBJ1-4, TRBJ1-5, TRBJ1-6,</span>
-<span class="co">#&gt; TRBJ2-1, TRBJ2-2, TRBJ2-3, TRBJ2-4, TRBJ2-5, TRBJ2-6, TRBJ2-7, TRBV10-1,</span>
-<span class="co">#&gt; TRBV10-2, TRBV10-3, TRBV11-1, TRBV11-3, TRBV12-4, TRBV12-5, TRBV13, TRBV16,</span>
-<span class="co">#&gt; TRBV17, TRBV19, TRBV2, TRBV25-1, TRBV30, TRBV4-1, TRBV5-3, TRBV5-4, TRBV5-5,</span>
-<span class="co">#&gt; TRBV5-7, TRBV6-4, TRBV6-5, TRBV6-6, TRBV6-7, TRBV6-8, TRBV7-1, TRBV7-4, TRBV7-6,</span>
-<span class="co">#&gt; TRBV7-7, TRBV9, TRDD1, TRDJ1, TREX1, TRGJ2, TRGV1, TRGV11, not searching for</span>
-<span class="co">#&gt; symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: APCS, C4A,</span>
-<span class="co">#&gt; C4B, C4BPA, C7, C8A, C8B, C9, CRP, CYRIB, HLA-DRB3, HLA-H, HPX, IFNA2, IFNB1,</span>
-<span class="co">#&gt; IGHV1-45, IGHV1-58, IGHV1-69, IGHV1-69-2, IGHV1-69D, IGHV1OR15-1, IGHV2-5,</span>
-<span class="co">#&gt; IGHV2-70, IGHV2-70D, IGHV3-11, IGHV3-13, IGHV3-16, IGHV3-20, IGHV3-21,</span>
-<span class="co">#&gt; IGHV3-30, IGHV3-35, IGHV3-38, IGHV3-43, IGHV3-49, IGHV3-53, IGHV3-64, IGHV3-64D,</span>
-<span class="co">#&gt; IGHV3-66, IGHV4-28, IGHV4-31, IGHV4-39, IGHV4-4, IGHV4-61, IGHV5-10-1, IGHV5-51,</span>
-<span class="co">#&gt; IGHV7-4-1, IGHV7-81, IGKV1D-12, IGKV1D-33, IGKV2-28, IGKV2-29, IGKV2-40,</span>
-<span class="co">#&gt; IGKV2D-28, IGKV2D-30, IGKV5-2, IGLC1, IGLV3-19, IGLV3-25, IGLV3-27, IL12B, MBL2,</span>
-<span class="co">#&gt; MIR21, NECTIN2, NLRP10, NSD2, SCART1, SHLD1, SHLD2, SHLD3, TREX1, not searching</span>
-<span class="co">#&gt; for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: ACTN3, ADIPOQ,</span>
-<span class="co">#&gt; ADRB3, BMP8A, CIDEA, DIO2, EBF2, FGF21, FOXC2, LEP, MC4R, MFAP2, OXTR, PHOX2B,</span>
-<span class="co">#&gt; SLN, UCP1, YBX2, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: HLA-DRB3,</span>
-<span class="co">#&gt; IHH, IL12B, IL21, INS, LGALS7B, MIR21, NKX2-3, PAX1, PSMB11, TARM1, VSIR, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: IHH, IL12B, IL21,</span>
-<span class="co">#&gt; MIR21, NKX2-3, PAX1, PSMB11, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: IL12B, LGALS7B,</span>
-<span class="co">#&gt; VSIR, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: CAPZA3, CTSE,</span>
-<span class="co">#&gt; HLA-DRB3, HLA-DRB4, HLA-H, KIF2B, KIF4B, KIF5A, MARCHF1, MARCHF8, PSMB11, RAB3C,</span>
-<span class="co">#&gt; TREX1, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: HLA-H, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-
-<span class="co">#&gt; Warning: The following features are not present in the object: HLA-H, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-
-<span class="co">#&gt; Warning: The following features are not present in the object: HLA-H, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: HLA-H, PSMB11,</span>
-<span class="co">#&gt; not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: HLA-H, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: CAPZA3, CTSE,</span>
-<span class="co">#&gt; HLA-DRB3, HLA-DRB4, HLA-H, KIF2B, KIF4B, KIF5A, MARCHF1, MARCHF8, PSMB11, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: HLA-H, PSMB11,</span>
-<span class="co">#&gt; not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: HLA-H, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: CAPZA3, CTSE,</span>
-<span class="co">#&gt; HLA-DRB3, HLA-DRB4, KIF2B, KIF4B, KIF5A, MARCHF1, MARCHF8, not searching for</span>
-<span class="co">#&gt; symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: HLA-H, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: BTN1A1, BTN2A3P,</span>
-<span class="co">#&gt; BTNL10, BTNL2, BTNL3, FYB1, FYB2, HLA-DRB3, HLA-DRB4, IGHV1-45, IGHV1-58,</span>
-<span class="co">#&gt; IGHV1-69, IGHV1-69-2, IGHV1-69D, IGHV1OR15-1, IGHV2-5, IGHV2-70, IGHV2-70D,</span>
-<span class="co">#&gt; IGHV3-11, IGHV3-13, IGHV3-16, IGHV3-20, IGHV3-21, IGHV3-30, IGHV3-35, IGHV3-38,</span>
-<span class="co">#&gt; IGHV3-43, IGHV3-49, IGHV3-53, IGHV3-64, IGHV3-64D, IGHV3-66, IGHV4-28, IGHV4-31,</span>
-<span class="co">#&gt; IGHV4-39, IGHV4-4, IGHV4-61, IGHV5-10-1, IGHV5-51, IGHV7-4-1, IGHV7-81, IGLC1,</span>
-<span class="co">#&gt; MIR18A, MIR19A, MIR34A, NECTIN2, PSMB11, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: BPIFA1, CCL13,</span>
-<span class="co">#&gt; CXCL6, DEFA1, DEFA5, DEFA6, DEFB118, DEFB126, DEFB127, DEFB4A, F2, GALP, H2BC10,</span>
-<span class="co">#&gt; H2BC11, H2BC12, H2BC21, H2BC4, H2BC6, H2BC7, H2BC8, H2BS1, KLK3, KLK5, KLK7,</span>
-<span class="co">#&gt; KRT6A, MUC7, PF4, PF4V1, PGC, PGLYRP3, PGLYRP4, REG1B, REG3A, REG3G, RNASE7,</span>
-<span class="co">#&gt; S100A7, SEMG1, SPAG11A, SPAG11B, SPINK5, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: CDH17, CHRNB2,</span>
-<span class="co">#&gt; DCAF1, FZD9, IFNA1, IFNA10, IFNA13, IFNA14, IFNA16, IFNA17, IFNA2, IFNA21,</span>
-<span class="co">#&gt; IFNA4, IFNA5, IFNA6, IFNA7, IFNA8, IFNB1, IFNE, IFNK, IFNW1, IGHV1-45, IGHV1-58,</span>
-<span class="co">#&gt; IGHV1-69, IGHV1-69-2, IGHV1-69D, IGHV1OR15-1, IGHV2-5, IGHV2-70, IGHV2-70D,</span>
-<span class="co">#&gt; IGHV3-11, IGHV3-13, IGHV3-16, IGHV3-20, IGHV3-21, IGHV3-30, IGHV3-35, IGHV3-38,</span>
-<span class="co">#&gt; IGHV3-43, IGHV3-49, IGHV3-53, IGHV3-64, IGHV3-64D, IGHV3-66, IGHV4-28, IGHV4-31,</span>
-<span class="co">#&gt; IGHV4-39, IGHV4-4, IGHV4-61, IGHV5-10-1, IGHV5-51, IGHV7-4-1, IGHV7-81, IGLC1,</span>
-<span class="co">#&gt; IL21, IL5, INHA, MIR17HG, MIR19A, NKX2-3, NSD2, ONECUT1, RAG2, SHLD1, SHLD2,</span>
-<span class="co">#&gt; SHLD3, TLR9, WNT3A, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: CDH17, IFNB1,</span>
-<span class="co">#&gt; IL21, NKX2-3, NSD2, SHLD1, SHLD2, SHLD3, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: MIR17HG, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: CDH17, DCAF1,</span>
-<span class="co">#&gt; FZD9, IFNA1, IFNA10, IFNA13, IFNA14, IFNA16, IFNA17, IFNA2, IFNA21, IFNA4,</span>
-<span class="co">#&gt; IFNA5, IFNA6, IFNA7, IFNA8, IFNB1, IFNE, IFNK, IFNW1, IL21, INHA, MIR17HG,</span>
-<span class="co">#&gt; NKX2-3, ONECUT1, RAG2, TLR9, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: MIR17HG, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: APCS, C4A, C4B,</span>
-<span class="co">#&gt; C4BPA, C7, C8A, C8B, C9, CRP, HPX, IGHV1-45, IGHV1-58, IGHV1-69, IGHV1-69-2,</span>
-<span class="co">#&gt; IGHV1-69D, IGHV1OR15-1, IGHV2-5, IGHV2-70, IGHV2-70D, IGHV3-11, IGHV3-13,</span>
-<span class="co">#&gt; IGHV3-16, IGHV3-20, IGHV3-21, IGHV3-30, IGHV3-35, IGHV3-38, IGHV3-43, IGHV3-49,</span>
-<span class="co">#&gt; IGHV3-53, IGHV3-64, IGHV3-64D, IGHV3-66, IGHV4-28, IGHV4-31, IGHV4-39, IGHV4-4,</span>
-<span class="co">#&gt; IGHV4-61, IGHV5-10-1, IGHV5-51, IGHV7-4-1, IGHV7-81, IGKV1D-12, IGKV1D-33,</span>
-<span class="co">#&gt; IGKV2-28, IGKV2-29, IGKV2-40, IGKV2D-28, IGKV2D-30, IGKV5-2, IGLC1, IGLV3-19,</span>
-<span class="co">#&gt; IGLV3-25, IGLV3-27, MBL2, NECTIN2, NSD2, SHLD1, SHLD2, SHLD3, TREX1, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: CHRNB2, IFNA1,</span>
-<span class="co">#&gt; IFNA10, IFNA13, IFNA14, IFNA16, IFNA17, IFNA2, IFNA21, IFNA4, IFNA5, IFNA6,</span>
-<span class="co">#&gt; IFNA7, IFNA8, IFNB1, IFNE, IFNK, IFNW1, IL21, IL5, RAG2, TLR9, WNT3A, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: IGHV1-45,</span>
-<span class="co">#&gt; IGHV1-58, IGHV1-69, IGHV1-69-2, IGHV1-69D, IGHV1OR15-1, IGHV2-5, IGHV2-70,</span>
-<span class="co">#&gt; IGHV2-70D, IGHV3-11, IGHV3-13, IGHV3-16, IGHV3-20, IGHV3-21, IGHV3-30, IGHV3-35,</span>
-<span class="co">#&gt; IGHV3-38, IGHV3-43, IGHV3-49, IGHV3-53, IGHV3-64, IGHV3-64D, IGHV3-66, IGHV4-28,</span>
-<span class="co">#&gt; IGHV4-31, IGHV4-39, IGHV4-4, IGHV4-61, IGHV5-10-1, IGHV5-51, IGHV7-4-1,</span>
-<span class="co">#&gt; IGHV7-81, IGLC1, MIR18A, MIR19A, MIR34A, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: HLA-DRB3, IL12B,</span>
-<span class="co">#&gt; IL21, LGALS7B, MIR21, NKX2-3, PAX1, TARM1, VSIR, not searching for symbol</span>
-<span class="co">#&gt; synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: IFNA2, IFNB1, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: IL12B, IL21,</span>
-<span class="co">#&gt; MIR21, NKX2-3, PAX1, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: IL12B, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: PAX1, PSMB11,</span>
-<span class="co">#&gt; VSIR, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: PAX1, PSMB11, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: VSIR, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: ABCA13, ACP3,</span>
-<span class="co">#&gt; ADA2, AHSG, ARHGAP45, CALML5, CDH17, CEACAM6, CHGA, CHRNB4, CPLX2, DEFA1, DSG1,</span>
-<span class="co">#&gt; EPX, FOXF1, HLA-H, IFNA1, IFNA10, IFNA13, IFNA14, IFNA16, IFNA17, IFNA2, IFNA21,</span>
-<span class="co">#&gt; IFNA4, IFNA5, IFNA6, IFNA7, IFNA8, IFNB1, IFNE, IFNK, IFNW1, IL12B, IL21, IRAG2,</span>
-<span class="co">#&gt; KARS1, LBP, LILRA3, MIR21, MRGPRX2, NKX2-3, NSD2, ORM2, PGLYRP3, PKP1, PLA2G3,</span>
-<span class="co">#&gt; PRG2, PRG3, S100A7, SERPINA3, SERPINB12, SERPINB3, SHLD1, SHLD2, SHLD3, STING1,</span>
-<span class="co">#&gt; TARM1, TCIM, TREX1, VPS35L, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: ACOD1, IFNB1,</span>
-<span class="co">#&gt; IRGC, STING1, TREX1, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: CHGA, IFNA2,</span>
-<span class="co">#&gt; IFNB1, INAVA, RAET1G, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: HLA-DRB3, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: CCR9, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: ACOD1, APCS,</span>
-<span class="co">#&gt; BPIFA1, BPIFA2, BPIFB2, C4A, C4B, C4BPA, C7, C8A, C8B, C9, CCL13, CD5L, CFHR1,</span>
-<span class="co">#&gt; CFHR2, CFHR4, CFHR5, CHGA, COLEC10, CPB2, CPN1, CRP, CST9, CST9L, CST9LP1,</span>
-<span class="co">#&gt; CXCL6, DCD, DEFA1, DEFA5, DEFA6, DEFB103A, DEFB103B, DEFB118, DEFB126, DEFB127,</span>
-<span class="co">#&gt; DEFB4A, DMBT1, EPPIN, F2, FGA, GALP, H2BC10, H2BC11, H2BC12, H2BC21, H2BC4,</span>
-<span class="co">#&gt; H2BC6, H2BC7, H2BC8, H2BS1, HPX, HTN3, IFNA1, IFNA10, IFNA13, IFNA14, IFNA16,</span>
-<span class="co">#&gt; IFNA17, IFNA2, IFNA21, IFNA4, IFNA5, IFNA6, IFNA7, IFNA8, IFNB1, IFNE, IFNK,</span>
-<span class="co">#&gt; IFNW1, IGHV1-45, IGHV1-58, IGHV1-69, IGHV1-69-2, IGHV1-69D, IGHV1OR15-1,</span>
-<span class="co">#&gt; IGHV2-5, IGHV2-70, IGHV2-70D, IGHV3-11, IGHV3-13, IGHV3-16, IGHV3-20, IGHV3-21,</span>
-<span class="co">#&gt; IGHV3-30, IGHV3-35, IGHV3-38, IGHV3-43, IGHV3-49, IGHV3-53, IGHV3-64, IGHV3-64D,</span>
-<span class="co">#&gt; IGHV3-66, IGHV4-28, IGHV4-31, IGHV4-39, IGHV4-4, IGHV4-61, IGHV5-10-1, IGHV5-51,</span>
-<span class="co">#&gt; IGHV7-4-1, IGHV7-81, IGKV1D-12, IGKV1D-33, IGKV2-28, IGKV2-29, IGKV2-40,</span>
-<span class="co">#&gt; IGKV2D-28, IGKV2D-30, IGKV5-2, IGLC1, IGLV3-19, IGLV3-25, IGLV3-27, IL36RN,</span>
-<span class="co">#&gt; KLK3, KLK5, KLK7, KRT6A, MBL2, MIR520B, MIR520E, MUC7, PF4, PF4V1, PGC, PGLYRP3,</span>
-<span class="co">#&gt; PGLYRP4, PLA2G2A, REG1B, REG3A, REG3G, RNASE7, S100A7, SEMG1, SEMG2, SPAG11A,</span>
-<span class="co">#&gt; SPAG11B, SPINK5, TF, WFDC10A, WFDC10B, WFDC11, WFDC12, WFDC13, WFDC5, WFDC9,</span>
-<span class="co">#&gt; ZP4, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: APCS, C4A, C4B,</span>
-<span class="co">#&gt; C4BPA, C7, C8A, C8B, C9, CRP, HPX, IGHV1-45, IGHV1-58, IGHV1-69, IGHV1-69-2,</span>
-<span class="co">#&gt; IGHV1-69D, IGHV1OR15-1, IGHV2-5, IGHV2-70, IGHV2-70D, IGHV3-11, IGHV3-13,</span>
-<span class="co">#&gt; IGHV3-16, IGHV3-20, IGHV3-21, IGHV3-30, IGHV3-35, IGHV3-38, IGHV3-43, IGHV3-49,</span>
-<span class="co">#&gt; IGHV3-53, IGHV3-64, IGHV3-64D, IGHV3-66, IGHV4-28, IGHV4-31, IGHV4-39, IGHV4-4,</span>
-<span class="co">#&gt; IGHV4-61, IGHV5-10-1, IGHV5-51, IGHV7-4-1, IGHV7-81, IGKV1D-12, IGKV1D-33,</span>
-<span class="co">#&gt; IGKV2-28, IGKV2-29, IGKV2-40, IGKV2D-28, IGKV2D-30, IGKV5-2, IGLC1, IGLV3-19,</span>
-<span class="co">#&gt; IGLV3-25, IGLV3-27, MBL2, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: ABCA13, ACOD1,</span>
-<span class="co">#&gt; ACP3, ADA2, AHSG, APCS, APOBEC1, ARHGAP45, BPIFA1, C4A, C4B, C4BPA, C7, C8A,</span>
-<span class="co">#&gt; C8B, C9, CALML5, CD5L, CDH17, CEACAM6, CFHR1, CFHR2, CFHR4, CFHR5, CGAS, CHGA,</span>
-<span class="co">#&gt; CHRNB4, CLEC2A, COLEC10, CPB2, CPLX2, CPN1, CRP, CXCL6, CYBC1, CYRIB, DEFA1,</span>
-<span class="co">#&gt; DMBT1, DSG1, EPX, F2, FOXF1, HLA-DRB3, HLA-H, HPX, IFIT1B, IFNA1, IFNA10,</span>
-<span class="co">#&gt; IFNA13, IFNA14, IFNA16, IFNA17, IFNA2, IFNA21, IFNA4, IFNA5, IFNA6, IFNA7,</span>
-<span class="co">#&gt; IFNA8, IFNB1, IFNE, IFNK, IFNL2, IFNL3, IFNL4, IFNW1, IGHV1-45, IGHV1-58,</span>
-<span class="co">#&gt; IGHV1-69, IGHV1-69-2, IGHV1-69D, IGHV1OR15-1, IGHV2-5, IGHV2-70, IGHV2-70D,</span>
-<span class="co">#&gt; IGHV3-11, IGHV3-13, IGHV3-16, IGHV3-20, IGHV3-21, IGHV3-30, IGHV3-35, IGHV3-38,</span>
-<span class="co">#&gt; IGHV3-43, IGHV3-49, IGHV3-53, IGHV3-64, IGHV3-64D, IGHV3-66, IGHV4-28, IGHV4-31,</span>
-<span class="co">#&gt; IGHV4-39, IGHV4-4, IGHV4-61, IGHV5-10-1, IGHV5-51, IGHV7-4-1, IGHV7-81,</span>
-<span class="co">#&gt; IGKV1D-12, IGKV1D-33, IGKV2-28, IGKV2-29, IGKV2-40, IGKV2D-28, IGKV2D-30,</span>
-<span class="co">#&gt; IGKV5-2, IGLC1, IGLV3-19, IGLV3-25, IGLV3-27, IL12B, IL21, IL5, ILRUN, INS,</span>
-<span class="co">#&gt; IRAG2, KARS1, KCNJ8, KLK5, KLK7, LBP, LEP, LILRA3, MBL2, MIR21, MIR26B, MIR520B,</span>
-<span class="co">#&gt; MIR520E, MIR708, MMP12, MRGPRX2, MYH2, NECTIN2, NKX2-3, NLRP9, NOP53, NSD2,</span>
-<span class="co">#&gt; OPRK1, ORM2, PGC, PGLYRP3, PKP1, PLA2G3, PLA2G5, PRG2, PRG3, RAET1G, S100A7,</span>
-<span class="co">#&gt; SCART1, SELENOK, SERPINA3, SERPINB12, SERPINB3, SERPINB4, SFTPA1, SHFL, SHLD1,</span>
-<span class="co">#&gt; SHLD2, SHLD3, SPINK5, STING1, TARM1, TCIM, TLR9, TOMM70, TREX1, UFD1, ULBP3,</span>
-<span class="co">#&gt; USP17L2, VPS35L, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: BTN1A1,</span>
-<span class="co">#&gt; BTN2A3P, BTNL10, BTNL2, BTNL3, FYB1, FYB2, GPR32, GPR32P1, GPR33, HLA-DRB3,</span>
-<span class="co">#&gt; HLA-DRB4, IGHV1-45, IGHV1-58, IGHV1-69, IGHV1-69-2, IGHV1-69D, IGHV1OR15-1,</span>
-<span class="co">#&gt; IGHV2-5, IGHV2-70, IGHV2-70D, IGHV3-11, IGHV3-13, IGHV3-16, IGHV3-20, IGHV3-21,</span>
-<span class="co">#&gt; IGHV3-30, IGHV3-35, IGHV3-38, IGHV3-43, IGHV3-49, IGHV3-53, IGHV3-64, IGHV3-64D,</span>
-<span class="co">#&gt; IGHV3-66, IGHV4-28, IGHV4-31, IGHV4-39, IGHV4-4, IGHV4-61, IGHV5-10-1, IGHV5-51,</span>
-<span class="co">#&gt; IGHV7-4-1, IGHV7-81, IGKV1D-12, IGKV1D-33, IGKV2-28, IGKV2-29, IGKV2-40,</span>
-<span class="co">#&gt; IGKV2D-28, IGKV2D-30, IGKV5-2, IGLC1, IGLV3-19, IGLV3-25, IGLV3-27, KIR2DS2,</span>
-<span class="co">#&gt; MIR18A, MIR19A, MIR34A, MUC16, MUC17, MUC19, MUC2, MUC21, MUC3A, MUC5AC, MUC5B,</span>
-<span class="co">#&gt; MUC6, MUC7, MYH2, NECTIN2, PRKACG, PSMB11, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: HLA-DRB3, IL12B,</span>
-<span class="co">#&gt; NECTIN2, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: ACOD1, ADIPOQ,</span>
-<span class="co">#&gt; APCS, ARTN, ATP5IF1, BARX1, CARTPT, CCN4, CCR9, CDH17, CDIN1, CIAO3, CLDN18,</span>
-<span class="co">#&gt; CSF3, DCAF1, DNAI4, EFNA2, EPO, FGF10, FOXE1, FOXL1, FOXN1, FSHB, FST, FZD9,</span>
-<span class="co">#&gt; GLI2, H3-3A, H3-3B, H3C1, H3C10, H3C11, H3C12, H3C13, H3C14, H3C15, H3C2, H3C3,</span>
-<span class="co">#&gt; H3C4, H3C6, H3C7, H3C8, H4-16, H4C1, H4C11, H4C12, H4C13, H4C14, H4C15, H4C2,</span>
-<span class="co">#&gt; H4C3, H4C4, H4C5, H4C6, H4C8, H4C9, HAND2, HES5, IFNA1, IFNA10, IFNA13, IFNA14,</span>
-<span class="co">#&gt; IFNA16, IFNA17, IFNA2, IFNA21, IFNA4, IFNA5, IFNA6, IFNA7, IFNA8, IFNB1, IFNE,</span>
-<span class="co">#&gt; IFNK, IFNW1, IHH, IL12B, IL17D, IL20, IL21, IL25, IL3, IL34, IL36B, IL5, INHA,</span>
-<span class="co">#&gt; KRT75, LEP, LY6D, MARCHF7, MIR125B1, MIR145, MIR17HG, MIR21, MIR221, MIR222,</span>
-<span class="co">#&gt; MIR223, MIR30B, MMP21, MPIG6B, MPL, NKX2-3, NKX2-5, NKX3-2, NSD2, OCSTAMP,</span>
-<span class="co">#&gt; ONECUT1, PAX1, PDGFRA, PF4, PGLYRP3, PITX2, PLA2G3, PMS2P1, PMS2P5, PMS2P6,</span>
-<span class="co">#&gt; POU4F1, POU4F2, PRXL2A, PSMB11, PYGO1, RAG2, RHEX, RO60, SERPINB12, SFRP2,</span>
-<span class="co">#&gt; SHLD1, SHLD2, SHLD3, SIX1, SLC8A3, SP7, SPINK5, TCIM, TENT2, TF, TLR9, TMEM131L,</span>
-<span class="co">#&gt; TMEM190, TREX1, TYR, VSIR, WNT1, WNT3A, WNT4, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: NSD2, SHLD1,</span>
-<span class="co">#&gt; SHLD2, SHLD3, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: GPR17, IL12B,</span>
-<span class="co">#&gt; IL1F10, IL25, IL36A, IL36B, IL36G, IL36RN, IL37, KARS1, MIR105-1, MIR19A,</span>
-<span class="co">#&gt; MIR19B1, MIR6869, NPFF, NPY5R, SELENOS, TREX1, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: ACOD1, APCS,</span>
-<span class="co">#&gt; APOA4, BPIFA1, BPIFB3, C4A, C4B, C4BPA, C7, C8A, C8B, C9, CAMK2A, CCL1, CCL11,</span>
-<span class="co">#&gt; CCL13, CCL16, CCL24, CCL25, CCL3L1, CCL7, CFHR5, CGAS, CHGA, CITED1, CLEC2A,</span>
-<span class="co">#&gt; COLEC10, CRP, CYBC1, DCST1, DEFA1, DEFA5, DEFA6, DEFB104A, DEFB104B, DEFB105A,</span>
-<span class="co">#&gt; DEFB105B, DEFB106A, DEFB106B, DEFB107A, DEFB107B, DEFB108A, DEFB108B, DEFB110,</span>
-<span class="co">#&gt; DEFB112, DEFB113, DEFB114, DEFB115, DEFB116, DEFB118, DEFB119, DEFB121, DEFB123,</span>
-<span class="co">#&gt; DEFB124, DEFB125, DEFB126, DEFB127, DEFB128, DEFB131A, DEFB131B, DEFB132,</span>
-<span class="co">#&gt; DEFB133, DEFB134, DEFB135, DMBT1, DRD2, EPRS1, FGA, GBP6, H2BC10, H2BC11,</span>
-<span class="co">#&gt; H2BC12, H2BC21, H2BC4, H2BC6, H2BC7, H2BC8, H2BS1, HLA-DRB3, HLA-DRB4, HLA-</span>
-<span class="co">#&gt; H, HPX, IFIT1B, IFNA1, IFNA10, IFNA13, IFNA14, IFNA16, IFNA17, IFNA2, IFNA21,</span>
-<span class="co">#&gt; IFNA4, IFNA5, IFNA6, IFNA7, IFNA8, IFNB1, IFNK, IFNL2, IFNL3, IFNL4, IGHV1-45,</span>
-<span class="co">#&gt; IGHV1-58, IGHV1-69, IGHV1-69-2, IGHV1-69D, IGHV1OR15-1, IGHV2-5, IGHV2-70,</span>
-<span class="co">#&gt; IGHV2-70D, IGHV3-11, IGHV3-13, IGHV3-16, IGHV3-20, IGHV3-21, IGHV3-30, IGHV3-35,</span>
-<span class="co">#&gt; IGHV3-38, IGHV3-43, IGHV3-49, IGHV3-53, IGHV3-64, IGHV3-64D, IGHV3-66, IGHV4-28,</span>
-<span class="co">#&gt; IGHV4-31, IGHV4-39, IGHV4-4, IGHV4-61, IGHV5-10-1, IGHV5-51, IGHV7-4-1,</span>
-<span class="co">#&gt; IGHV7-81, IGLC1, IL12B, IL21, IL34, IL36A, IL36B, IL36G, IL36RN, ILRUN, INAVA,</span>
-<span class="co">#&gt; INS, KIR2DS1, KIR2DS2, KIR2DS4, KIR2DS5, KIR3DS1, KRT16, LBP, LEP, MBL2,</span>
-<span class="co">#&gt; MIR181B1, MIR21, MIR520B, MIR520E, MMP12, MUC16, MUC17, MUC19, MUC2, MUC21,</span>
-<span class="co">#&gt; MUC3A, MUC5AC, MUC5B, MUC6, MUC7, NECTIN2, NLRP10, NLRP2B, NLRP9, OTOP1,</span>
-<span class="co">#&gt; PGLYRP3, PGLYRP4, PLA2G2F, PLA2G5, PRKACG, PSMB11, PYDC1, PYDC2, RAET1G, RNASE7,</span>
-<span class="co">#&gt; RNASE8, RNF39, S100A7, SERPINB4, SHFL, SIGLEC16, SRMS, STING1, STMP1, TARM1,</span>
-<span class="co">#&gt; TASL, TLR9, TOMM70, TREML4, TREX1, TRIM40, TRIM43, TRIM43B, TRIM48, TRIM49,</span>
-<span class="co">#&gt; TRIM49B, TRIM49C, TRIM49D1, TRIM49D2, TRIM51, TRIM64, TRIM64B, TRIM64C, TRIM75P,</span>
-<span class="co">#&gt; TRIM77, TRIML1, ULBP3, WFDC10A, WFDC10B, WFDC11, WFDC12, WFDC13, WFDC5, WFDC9,</span>
-<span class="co">#&gt; not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: KIR2DS2, MUC16,</span>
-<span class="co">#&gt; MUC17, MUC19, MUC2, MUC21, MUC3A, MUC5AC, MUC5B, MUC6, MUC7, PRKACG, PSMB11, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: APOA4, DEFA1,</span>
-<span class="co">#&gt; DEFA5, DEFA6, H2BC10, H2BC11, H2BC12, H2BC21, H2BC4, H2BC6, H2BC7, H2BC8, H2BS1,</span>
-<span class="co">#&gt; not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: MMP12, TLR9, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: MIR26B, STING1,</span>
-<span class="co">#&gt; TLR9, TOMM70, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: CAMK2A, HLA-DRB3,</span>
-<span class="co">#&gt; HLA-DRB4, HLA-H, HPX, OTOP1, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: CYRIB, IL12B,</span>
-<span class="co">#&gt; IL21, IL36RN, INHA, ISL1, LGALS7B, MIR24-1, MIR708, PGLYRP3, SCGB1A1, TLR9,</span>
-<span class="co">#&gt; VSIR, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: CCR9, CDH17,</span>
-<span class="co">#&gt; CGAS, CHRNB2, CYRIB, DCAF1, EPO, FGF10, FGL1, FOXN1, FZD9, GAL, GLI2, HLA-DRB3,</span>
-<span class="co">#&gt; IFNA1, IFNA10, IFNA13, IFNA14, IFNA16, IFNA17, IFNA2, IFNA21, IFNA4, IFNA5,</span>
-<span class="co">#&gt; IFNA6, IFNA7, IFNA8, IFNB1, IFNE, IFNK, IFNW1, IGHV1-45, IGHV1-58, IGHV1-69,</span>
-<span class="co">#&gt; IGHV1-69-2, IGHV1-69D, IGHV1OR15-1, IGHV2-5, IGHV2-70, IGHV2-70D, IGHV3-11,</span>
-<span class="co">#&gt; IGHV3-13, IGHV3-16, IGHV3-20, IGHV3-21, IGHV3-30, IGHV3-35, IGHV3-38, IGHV3-43,</span>
-<span class="co">#&gt; IGHV3-49, IGHV3-53, IGHV3-64, IGHV3-64D, IGHV3-66, IGHV4-28, IGHV4-31, IGHV4-39,</span>
-<span class="co">#&gt; IGHV4-4, IGHV4-61, IGHV5-10-1, IGHV5-51, IGHV7-4-1, IGHV7-81, IGLC1, IHH, IL12B,</span>
-<span class="co">#&gt; IL21, IL36B, IL5, INHA, INS, KIR3DS1, LEP, LGALS7B, LY6D, MARCHF7, MIR17HG,</span>
-<span class="co">#&gt; MIR181C, MIR19A, MIR21, MIR27A, MIR30B, MPL, NKX2-3, NSD2, ONECUT1, PAX1,</span>
-<span class="co">#&gt; PGLYRP3, PLA2G2F, PSMB11, RAG2, RIPOR2, SCGB1A1, SELENOK, SHLD1, SHLD2, SHLD3,</span>
-<span class="co">#&gt; SOX11, SPINK5, TAC1, TARM1, TLR9, TMEM131L, TREX1, ULBP3, VSIR, WNT1, WNT3A,</span>
-<span class="co">#&gt; WNT4, ZP4, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: CDH17, IFNA1,</span>
-<span class="co">#&gt; IFNA10, IFNA13, IFNA14, IFNA16, IFNA17, IFNA2, IFNA21, IFNA4, IFNA5, IFNA6,</span>
-<span class="co">#&gt; IFNA7, IFNA8, IFNB1, IFNE, IFNK, IFNW1, IL12B, IL21, MIR21, NKX2-3, NSD2,</span>
-<span class="co">#&gt; PGLYRP3, SHLD1, SHLD2, SHLD3, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: LGALS13, LGALS14,</span>
-<span class="co">#&gt; LGALS16, MIR17HG, PIP, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: C10orf99, CCL1,</span>
-<span class="co">#&gt; CCL11, CCL13, CCL16, CCL24, CCL25, CCL3L1, CCL7, DEFA1, S100A7, not searching</span>
-<span class="co">#&gt; for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: FOXN1, MIR17HG,</span>
-<span class="co">#&gt; not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: APCS, C4A,</span>
-<span class="co">#&gt; C4B, C4BPA, C7, C8A, C8B, C9, CLEC2A, CRP, CYRIB, HLA-DRB3, HLA-H, HPX, IFNA2,</span>
-<span class="co">#&gt; IFNB1, IGHV1-45, IGHV1-58, IGHV1-69, IGHV1-69-2, IGHV1-69D, IGHV1OR15-1,</span>
-<span class="co">#&gt; IGHV2-5, IGHV2-70, IGHV2-70D, IGHV3-11, IGHV3-13, IGHV3-16, IGHV3-20, IGHV3-21,</span>
-<span class="co">#&gt; IGHV3-30, IGHV3-35, IGHV3-38, IGHV3-43, IGHV3-49, IGHV3-53, IGHV3-64, IGHV3-64D,</span>
-<span class="co">#&gt; IGHV3-66, IGHV4-28, IGHV4-31, IGHV4-39, IGHV4-4, IGHV4-61, IGHV5-10-1, IGHV5-51,</span>
-<span class="co">#&gt; IGHV7-4-1, IGHV7-81, IGKV1D-12, IGKV1D-33, IGKV2-28, IGKV2-29, IGKV2-40,</span>
-<span class="co">#&gt; IGKV2D-28, IGKV2D-30, IGKV5-2, IGLC1, IGLV3-19, IGLV3-25, IGLV3-27, IL12B, IL21,</span>
-<span class="co">#&gt; LEP, MBL2, NECTIN2, NSD2, RAET1G, SCART1, SERPINB4, SHLD1, SHLD2, SHLD3, TREX1,</span>
-<span class="co">#&gt; ULBP3, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: ARTN, C10orf99,</span>
-<span class="co">#&gt; CCL1, CCL11, CCL13, CCL16, CCL24, CCL25, CCL3L1, CCL7, DEFA1, RIPOR2, S100A7,</span>
-<span class="co">#&gt; SELENOK, XG, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: LBP, TREX1, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: CHGA, CPLX2,</span>
-<span class="co">#&gt; FOXF1, MRGPRX2, NECTIN2, PLA2G3, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: CHGA, CPLX2,</span>
-<span class="co">#&gt; FOXF1, MRGPRX2, PLA2G3, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: CDH17, IL21,</span>
-<span class="co">#&gt; NKX2-3, not searching for symbol synonyms</span>
-
-<span class="co">#&gt; Warning: The following features are not present in the object: CDH17, IL21,</span>
-<span class="co">#&gt; NKX2-3, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: KPNA7, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-
-<span class="co">#&gt; Warning: The following features are not present in the object: KPNA7, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: REG3G, TLR9, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: IFNA1, IFNA10,</span>
-<span class="co">#&gt; IFNA13, IFNA14, IFNA16, IFNA17, IFNA2, IFNA21, IFNA4, IFNA5, IFNA6, IFNA7,</span>
-<span class="co">#&gt; IFNA8, IFNB1, IFNE, IFNK, IFNW1, IL12B, KIR3DS1, LEP, PGLYRP3, ULBP3, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: IFNA1, IFNA10,</span>
-<span class="co">#&gt; IFNA13, IFNA14, IFNA16, IFNA17, IFNA2, IFNA21, IFNA4, IFNA5, IFNA6, IFNA7,</span>
-<span class="co">#&gt; IFNA8, IFNB1, IFNE, IFNK, IFNW1, IL12B, PGLYRP3, not searching for symbol</span>
-<span class="co">#&gt; synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: CCL7, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: RAET1G, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: PGLYRP3, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: CLEC2A, IL12B,</span>
-<span class="co">#&gt; IL21, LEP, NECTIN2, RAET1G, SERPINB4, ULBP3, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: IL12B, LEP, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: MIR181C, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: C4BPA, IFNA2,</span>
-<span class="co">#&gt; IFNB1, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: IHH, LGALS7B,</span>
-<span class="co">#&gt; TARM1, VSIR, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: IHH, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: MIR34A, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: INHA, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: LGALS7B, TARM1,</span>
-<span class="co">#&gt; VSIR, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: IFNA2, IFNB1, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: C4BPA, FOXF1,</span>
-<span class="co">#&gt; IFNA2, IFNB1, ILRUN, INS, MIR26B, PGLYRP3, SERPINB4, SPINK5, UFD1, not searching</span>
-<span class="co">#&gt; for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: ACOD1, C4BPA,</span>
-<span class="co">#&gt; DCST1, DRD2, FOXF1, GPR17, IFNA2, IFNB1, IL12B, INS, MIR105-1, MIR181B1, MIR19A,</span>
-<span class="co">#&gt; MIR19B1, MIR21, MIR6869, MMP12, NPY5R, OTOP1, PGLYRP3, SELENOS, SERPINB4,</span>
-<span class="co">#&gt; SPINK5, TREX1, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: ACOD1, ADIPOQ,</span>
-<span class="co">#&gt; APCS, BMP5, C4BPA, CARTPT, CCL25, CCN3, CLDN18, DCST1, DRD2, FGL1, FOXF1,</span>
-<span class="co">#&gt; GAL, GPR17, IFNA2, IFNB1, IHH, IL12B, IL17D, ILRUN, INHA, INS, LGALS7B, LRFN5,</span>
-<span class="co">#&gt; MARCHF7, MIR105-1, MIR125A, MIR125B1, MIR130A, MIR146A, MIR181B1, MIR181C,</span>
-<span class="co">#&gt; MIR19A, MIR19B1, MIR21, MIR221, MIR222, MIR223, MIR24-1, MIR26B, MIR27A,</span>
-<span class="co">#&gt; MIR30B, MIR34A, MIR6869, MMP12, NPY5R, OTOP1, PGLYRP3, PLA2G2F, RIPOR2, SCGB1A1,</span>
-<span class="co">#&gt; SELENOS, SERPINB4, SOX11, SPINK5, TAFA3, TARM1, TMEM131L, TREX1, UFD1, VSIR, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: GPR17, IL12B,</span>
-<span class="co">#&gt; MIR105-1, MIR19A, MIR19B1, MIR6869, NPY5R, SELENOS, not searching for symbol</span>
-<span class="co">#&gt; synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: ACOD1, DCST1,</span>
-<span class="co">#&gt; DRD2, INS, MIR181B1, MIR21, MMP12, OTOP1, SERPINB4, TREX1, not searching for</span>
-<span class="co">#&gt; symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: MIR26B, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: IL36RN, INHA,</span>
-<span class="co">#&gt; LGALS7B, MIR24-1, MIR708, PGLYRP3, SCGB1A1, VSIR, not searching for symbol</span>
-<span class="co">#&gt; synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: FGL1, GAL, IFNA2,</span>
-<span class="co">#&gt; IFNB1, IHH, INHA, LGALS7B, MARCHF7, MIR181C, MIR21, MIR27A, MIR30B, PGLYRP3,</span>
-<span class="co">#&gt; PLA2G2F, RIPOR2, SCGB1A1, SOX11, TARM1, TMEM131L, VSIR, not searching for symbol</span>
-<span class="co">#&gt; synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: MIR17HG, PIP, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: IFNA2, IFNB1,</span>
-<span class="co">#&gt; IHH, INHA, MIR21, MIR30B, PGLYRP3, TMEM131L, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: C4BPA, IFNA2,</span>
-<span class="co">#&gt; IFNB1, SERPINB4, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: RIPOR2, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: PGLYRP3, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: SERPINB4, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: IFNA2, IFNB1,</span>
-<span class="co">#&gt; SPINK5, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: PIP, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: IFNA2, IFNB1, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-
-<span class="co">#&gt; Warning: The following features are not present in the object: IFNA2, IFNB1, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: IHH, LGALS7B,</span>
-<span class="co">#&gt; MARCHF7, MIR181C, PLA2G2F, SCGB1A1, TMEM131L, VSIR, not searching for symbol</span>
-<span class="co">#&gt; synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: ACOD1, MIR140,</span>
-<span class="co">#&gt; MIR146A, MIR181B1, MIR708, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: ACOD1, MIR140,</span>
-<span class="co">#&gt; MIR146A, MIR17, MIR181B1, MIR19A, MIR708, NLRP2B, TLR9, not searching for symbol</span>
-<span class="co">#&gt; synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: ACOD1, ILRUN,</span>
-<span class="co">#&gt; MIR21, MIR26B, UFD1, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: APCS, IFNA2, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: ALX1, CYP26C1,</span>
-<span class="co">#&gt; EDNRA, FOXC2, GBX2, HAND2, HTR2B, ISL1, PHOX2B, PITX2, SOX10, SOX11, SOX8,</span>
-<span class="co">#&gt; TWIST1, WNT8A, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: ALX1, GBX2,</span>
-<span class="co">#&gt; HAND2, HTR2B, ISL1, PHOX2B, PITX2, SOX10, SOX8, TWIST1, not searching for symbol</span>
-<span class="co">#&gt; synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: APOA4, DEFA1,</span>
-<span class="co">#&gt; DEFA5, DEFA6, H2BC10, H2BC11, H2BC12, H2BC21, H2BC4, H2BC6, H2BC7, H2BC8, H2BS1,</span>
-<span class="co">#&gt; IFNL2, TREX1, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: EPO, IL12B,</span>
-<span class="co">#&gt; MIR21, MIR30B, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: CYRIB, HLA-</span>
-<span class="co">#&gt; DRB3, HLA-H, HPX, IL12B, MIR21, NECTIN2, NLRP10, NSD2, SHLD1, SHLD2, SHLD3, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: HLA-DRB3, IHH,</span>
-<span class="co">#&gt; IL12B, MIR21, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: IHH, IL12B,</span>
-<span class="co">#&gt; MIR21, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: IL12B, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: MIR18A, MIR19A,</span>
-<span class="co">#&gt; NECTIN2, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: CHRNB2, IGHV1-45,</span>
-<span class="co">#&gt; IGHV1-58, IGHV1-69, IGHV1-69-2, IGHV1-69D, IGHV1OR15-1, IGHV2-5, IGHV2-70,</span>
-<span class="co">#&gt; IGHV2-70D, IGHV3-11, IGHV3-13, IGHV3-16, IGHV3-20, IGHV3-21, IGHV3-30, IGHV3-35,</span>
-<span class="co">#&gt; IGHV3-38, IGHV3-43, IGHV3-49, IGHV3-53, IGHV3-64, IGHV3-64D, IGHV3-66, IGHV4-28,</span>
-<span class="co">#&gt; IGHV4-31, IGHV4-39, IGHV4-4, IGHV4-61, IGHV5-10-1, IGHV5-51, IGHV7-4-1,</span>
-<span class="co">#&gt; IGHV7-81, IGLC1, IL21, IL5, NSD2, SHLD1, SHLD2, SHLD3, TLR9, WNT3A, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: HPX, NECTIN2,</span>
-<span class="co">#&gt; NSD2, SHLD1, SHLD2, SHLD3, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: CHRNB2, IL21,</span>
-<span class="co">#&gt; IL5, TLR9, WNT3A, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: HLA-DRB3, IL12B,</span>
-<span class="co">#&gt; MIR21, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: IL12B, MIR21, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: RAET1G, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: ACOD1, HPX, KLK5,</span>
-<span class="co">#&gt; KLK7, MIR520B, MIR520E, PGC, ZP4, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: HPX, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: CYRIB, FOXF1,</span>
-<span class="co">#&gt; HLA-DRB3, HLA-H, HPX, IL12B, IL21, IL5, KLK5, KLK7, LBP, MIR21, MIR520B,</span>
-<span class="co">#&gt; MIR520E, NECTIN2, NSD2, PGC, PLA2G3, PLA2G5, RAET1G, SHLD1, SHLD2, SHLD3, TLR9,</span>
-<span class="co">#&gt; USP17L2, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: ACOD1, APCS,</span>
-<span class="co">#&gt; BTN1A1, BTN2A3P, BTNL10, BTNL2, BTNL3, C4A, C4B, C4BPA, C7, C8A, C8B, C9,</span>
-<span class="co">#&gt; CD5L, CFHR1, CFHR2, CFHR4, CFHR5, CGAS, COLEC10, CPB2, CPN1, CRP, CYRIB, F2,</span>
-<span class="co">#&gt; FYB1, FYB2, GPR151, GPR32, GPR32P1, GPR33, HLA-DRB3, HLA-DRB4, HLA-H, HPX,</span>
-<span class="co">#&gt; IFNB1, IFNK, IFNL2, IFNL3, IFNL4, IGHV1-45, IGHV1-58, IGHV1-69, IGHV1-69-2,</span>
-<span class="co">#&gt; IGHV1-69D, IGHV1OR15-1, IGHV2-5, IGHV2-70, IGHV2-70D, IGHV3-11, IGHV3-13,</span>
-<span class="co">#&gt; IGHV3-16, IGHV3-20, IGHV3-21, IGHV3-30, IGHV3-35, IGHV3-38, IGHV3-43, IGHV3-49,</span>
-<span class="co">#&gt; IGHV3-53, IGHV3-64, IGHV3-64D, IGHV3-66, IGHV4-28, IGHV4-31, IGHV4-39, IGHV4-4,</span>
-<span class="co">#&gt; IGHV4-61, IGHV5-10-1, IGHV5-51, IGHV7-4-1, IGHV7-81, IGKV1D-12, IGKV1D-33,</span>
-<span class="co">#&gt; IGKV2-28, IGKV2-29, IGKV2-40, IGKV2D-28, IGKV2D-30, IGKV5-2, IGLC1, IGLV3-19,</span>
-<span class="co">#&gt; IGLV3-25, IGLV3-27, IL12B, IL21, KARS1, KIR2DS2, KLK5, KLK7, LBP, MBL2, MIR136,</span>
-<span class="co">#&gt; MIR18A, MIR19A, MIR21, MIR34A, MIR520B, MIR520E, MMP12, MUC16, MUC17, MUC19,</span>
-<span class="co">#&gt; MUC2, MUC21, MUC3A, MUC5AC, MUC5B, MUC6, MUC7, MYH2, NECTIN2, NLRP10, NSD2,</span>
-<span class="co">#&gt; PGC, PLA2G3, PLA2G5, PRKACG, PSMB11, RAET1G, SHLD1, SHLD2, SHLD3, STING1, TASL,</span>
-<span class="co">#&gt; TOMM70, TREX1, ZP4, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: ACOD1, APCS,</span>
-<span class="co">#&gt; BDKRB1, BTN1A1, BTN2A3P, BTNL10, BTNL2, BTNL3, C4A, C4B, C4BPA, C7, C8A,</span>
-<span class="co">#&gt; C8B, C9, CCL1, CCL24, CCL7, CD5L, CFHR1, CFHR2, CFHR4, CFHR5, CGAS, CHRNB2,</span>
-<span class="co">#&gt; COLEC10, CPB2, CPN1, CRP, CYRIB, DEFB124, EPO, F2, FGF10, FOXF1, FYB1, FYB2,</span>
-<span class="co">#&gt; GLI2, GPR151, GPR32, GPR32P1, GPR33, HLA-DRB3, HLA-DRB4, HLA-H, HPX, IFNB1,</span>
-<span class="co">#&gt; IFNK, IFNL2, IFNL3, IFNL4, IGHV1-45, IGHV1-58, IGHV1-69, IGHV1-69-2, IGHV1-69D,</span>
-<span class="co">#&gt; IGHV1OR15-1, IGHV2-5, IGHV2-70, IGHV2-70D, IGHV3-11, IGHV3-13, IGHV3-16,</span>
-<span class="co">#&gt; IGHV3-20, IGHV3-21, IGHV3-30, IGHV3-35, IGHV3-38, IGHV3-43, IGHV3-49, IGHV3-53,</span>
-<span class="co">#&gt; IGHV3-64, IGHV3-64D, IGHV3-66, IGHV4-28, IGHV4-31, IGHV4-39, IGHV4-4, IGHV4-61,</span>
-<span class="co">#&gt; IGHV5-10-1, IGHV5-51, IGHV7-4-1, IGHV7-81, IGKV1D-12, IGKV1D-33, IGKV2-28,</span>
-<span class="co">#&gt; IGKV2-29, IGKV2-40, IGKV2D-28, IGKV2D-30, IGKV5-2, IGLC1, IGLV3-19, IGLV3-25,</span>
-<span class="co">#&gt; IGLV3-27, IHH, IL12B, IL20, IL21, IL34, IL36B, IL5, KARS1, KIR2DS2, KLK5, KLK7,</span>
-<span class="co">#&gt; LBP, LEP, MBL2, MIR128-1, MIR136, MIR142, MIR145, MIR18A, MIR19A, MIR21, MIR30B,</span>
-<span class="co">#&gt; MIR34A, MIR520B, MIR520E, MMP12, MPL, MSTN, MUC16, MUC17, MUC19, MUC2, MUC21,</span>
-<span class="co">#&gt; MUC3A, MUC5AC, MUC5B, MUC6, MUC7, MYH2, NECTIN2, NLRP10, NSD2, OCSTAMP, PF4,</span>
-<span class="co">#&gt; PGC, PLA2G3, PLA2G5, POU4F1, POU4F2, PRKACG, PRSS56, PSMB11, RAET1G, RIPOR2,</span>
-<span class="co">#&gt; S100A7, SELENOK, SHLD1, SHLD2, SHLD3, SPACA3, STING1, TAC1, TAFA3, TASL, TLR9,</span>
-<span class="co">#&gt; TOMM70, TREX1, USP17L2, VEGFC, VEGFD, VSIR, WNT3A, XG, ZP4, not searching for</span>
-<span class="co">#&gt; symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: KARS1, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: MMP12, TLR9, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: TLR9, TOMM70, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: CYRIB, IL12B,</span>
-<span class="co">#&gt; IL21, ISL1, TLR9, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: LGALS13, LGALS14,</span>
-<span class="co">#&gt; LGALS16, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: CCL7, S100A7, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: GLI2, IHH, IL12B,</span>
-<span class="co">#&gt; IL36B, MIR21, VSIR, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: CCL7, S100A7,</span>
-<span class="co">#&gt; SELENOK, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: NECTIN2, PLA2G3,</span>
-<span class="co">#&gt; not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: IL12B, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-
-<span class="co">#&gt; Warning: The following features are not present in the object: IL12B, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: IL12B, IL21,</span>
-<span class="co">#&gt; NECTIN2, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: IL12B, IL21,</span>
-<span class="co">#&gt; NECTIN2, RAET1G, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: HPX, IL5, KLK5,</span>
-<span class="co">#&gt; KLK7, NSD2, PGC, RAET1G, SHLD1, SHLD2, SHLD3, TLR9, not searching for symbol</span>
-<span class="co">#&gt; synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: VSIR, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: CYRIB, HLA-H,</span>
-<span class="co">#&gt; IL12B, NECTIN2, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: CYRIB, HLA-DRB3,</span>
-<span class="co">#&gt; HLA-H, IL12B, NECTIN2, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: S100A7, SELENOK,</span>
-<span class="co">#&gt; not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: EPO, IL12B, IL21,</span>
-<span class="co">#&gt; LEP, MIR21, MIR30B, SELENOK, ZP4, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: IL12B, NLRP10,</span>
-<span class="co">#&gt; not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: LBP, TASL, TLR9,</span>
-<span class="co">#&gt; TREML4, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: CGAS, MMP12,</span>
-<span class="co">#&gt; MRE11, STING1, TLR9, TOMM70, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: FOXN1, IL12B, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: CGAS, CHGA,</span>
-<span class="co">#&gt; HPX, IFNA2, IFNB1, IGKV1-13, IGKV1-27, IGKV1-37, IGKV1-8, IGKV1-9, IGKV1D-12,</span>
-<span class="co">#&gt; IGKV1D-13, IGKV1D-17, IGKV1D-33, IGKV1D-42, IGKV1D-43, IGKV2-24, IGKV2-28,</span>
-<span class="co">#&gt; IGKV2-29, IGKV2-40, IGKV2D-24, IGKV2D-26, IGKV2D-28, IGKV2D-29, IGKV2D-30,</span>
-<span class="co">#&gt; IGKV3-7, IGKV3D-15, IGKV3D-7, IGKV5-2, IGKV6-21, IGKV6D-21, IGKV6D-41, IGLV1-36,</span>
-<span class="co">#&gt; IGLV1-50, IGLV10-54, IGLV11-55, IGLV2-18, IGLV2-33, IGLV3-12, IGLV3-16,</span>
-<span class="co">#&gt; IGLV3-19, IGLV3-22, IGLV3-25, IGLV3-27, IGLV3-32, IGLV4-3, IGLV4-60, IGLV5-37,</span>
-<span class="co">#&gt; IGLV5-48, IGLV5-52, IGLV8-61, IGLV9-49, IL21, IL5, INAVA, KLK3, KLK5, KLK7,</span>
-<span class="co">#&gt; NSD2, PGC, PMS2P1, PMS2P5, PMS2P6, RAET1G, SHLD1, SHLD2, SHLD3, SPINK5, TLR9,</span>
-<span class="co">#&gt; TRAV18, TRAV2, TRAV9-1, TREX1, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: SERPINB4, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: NPY5R, SELENOS,</span>
-<span class="co">#&gt; not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: C4BPA, CYRIB,</span>
-<span class="co">#&gt; HLA-DRB3, HLA-H, HPX, IFNA2, IFNB1, IL12B, MIR21, NECTIN2, NLRP10, NSD2, SHLD1,</span>
-<span class="co">#&gt; SHLD2, SHLD3, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: HLA-DRB3, IHH,</span>
-<span class="co">#&gt; IL12B, LGALS7B, MIR21, TARM1, VSIR, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: IHH, IL12B,</span>
-<span class="co">#&gt; MIR21, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: MIR18A, MIR19A,</span>
-<span class="co">#&gt; MIR34A, NECTIN2, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: CHRNB2, IGHV1-45,</span>
-<span class="co">#&gt; IGHV1-58, IGHV1-69, IGHV1-69-2, IGHV1-69D, IGHV1OR15-1, IGHV2-5, IGHV2-70,</span>
-<span class="co">#&gt; IGHV2-70D, IGHV3-11, IGHV3-13, IGHV3-16, IGHV3-20, IGHV3-21, IGHV3-30, IGHV3-35,</span>
-<span class="co">#&gt; IGHV3-38, IGHV3-43, IGHV3-49, IGHV3-53, IGHV3-64, IGHV3-64D, IGHV3-66, IGHV4-28,</span>
-<span class="co">#&gt; IGHV4-31, IGHV4-39, IGHV4-4, IGHV4-61, IGHV5-10-1, IGHV5-51, IGHV7-4-1,</span>
-<span class="co">#&gt; IGHV7-81, IGLC1, IL21, IL5, INHA, MIR17HG, NSD2, SHLD1, SHLD2, SHLD3, TLR9,</span>
-<span class="co">#&gt; WNT3A, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: MIR17HG, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: INHA, MIR17HG,</span>
-<span class="co">#&gt; TLR9, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: C4BPA, HPX,</span>
-<span class="co">#&gt; NECTIN2, NSD2, SHLD1, SHLD2, SHLD3, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: CHRNB2, IL21,</span>
-<span class="co">#&gt; IL5, TLR9, WNT3A, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: MIR18A, MIR19A,</span>
-<span class="co">#&gt; MIR34A, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: HLA-DRB3, IL12B,</span>
-<span class="co">#&gt; LGALS7B, MIR21, TARM1, VSIR, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: IL12B, MIR21, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: VSIR, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: ACOD1, C4A,</span>
-<span class="co">#&gt; C4B, C4BPA, C7, C8A, C8B, C9, CD5L, CFHR1, CFHR2, CFHR4, CFHR5, CPB2, CPN1, F2,</span>
-<span class="co">#&gt; HPX, IGHV1-69, IGHV1OR15-1, IGHV2-5, IGHV2-70, IGHV3-11, IGHV3-13, IGHV3-30,</span>
-<span class="co">#&gt; IGHV3-53, IGHV4-39, IGKV1D-12, IGKV1D-33, IGKV2-28, IGKV2-29, IGKV2-40,</span>
-<span class="co">#&gt; IGKV2D-28, IGKV2D-30, IGKV5-2, IGLC1, IGLV3-19, IGLV3-25, IGLV3-27, KLK5, KLK7,</span>
-<span class="co">#&gt; MIR520B, MIR520E, PGC, SPINK5, ZP4, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: C4BPA, HPX, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: C4A, C4B,</span>
-<span class="co">#&gt; C4BPA, C7, C8A, C8B, C9, CD5L, CFHR1, CFHR2, CFHR4, CFHR5, CGAS, CPB2, CPN1,</span>
-<span class="co">#&gt; CXCL6, CYRIB, F2, FOXF1, HLA-DRB3, HLA-H, HPX, IFIT1B, IFNA2, IFNB1, IGHV1-69,</span>
-<span class="co">#&gt; IGHV1OR15-1, IGHV2-5, IGHV2-70, IGHV3-11, IGHV3-13, IGHV3-30, IGHV3-53,</span>
-<span class="co">#&gt; IGHV4-39, IGKV1D-12, IGKV1D-33, IGKV2-28, IGKV2-29, IGKV2-40, IGKV2D-28,</span>
-<span class="co">#&gt; IGKV2D-30, IGKV5-2, IGLC1, IGLV3-19, IGLV3-25, IGLV3-27, IL12B, IL21, IL5,</span>
-<span class="co">#&gt; ILRUN, INS, KLK5, KLK7, LBP, LEP, MIR21, MIR26B, MIR520B, MIR520E, MMP12,</span>
-<span class="co">#&gt; NECTIN2, NSD2, PGC, PGLYRP3, PLA2G3, PLA2G5, RAET1G, SELENOK, SERPINB4, SHLD1,</span>
-<span class="co">#&gt; SHLD2, SHLD3, SPINK5, STING1, TLR9, TOMM70, TREX1, UFD1, USP17L2, not searching</span>
-<span class="co">#&gt; for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: ACOD1, APCS,</span>
-<span class="co">#&gt; BTN1A1, BTN2A3P, BTNL10, BTNL2, BTNL3, C4A, C4B, C4BPA, C7, C8A, C8B, C9,</span>
-<span class="co">#&gt; CD300LD, CD5L, CD8B2, CFHR1, CFHR2, CFHR4, CFHR5, CGAS, COL17A1, COL2A1,</span>
-<span class="co">#&gt; COLEC10, CPB2, CPN1, CRP, CYRIB, DCST1, DRD2, F2, FCGR2C, FGL1, FOXF1, FYB1,</span>
-<span class="co">#&gt; FYB2, GLYCAM1, GPR151, GPR17, GPR32, GPR32P1, GPR33, HLA-DRB3, HLA-DRB4, HLA-</span>
-<span class="co">#&gt; H, HPX, IFNA2, IFNB1, IFNK, IFNL2, IFNL3, IFNL4, IGHV1-45, IGHV1-58, IGHV1-69,</span>
-<span class="co">#&gt; IGHV1-69-2, IGHV1-69D, IGHV1OR15-1, IGHV2-5, IGHV2-70, IGHV2-70D, IGHV3-11,</span>
-<span class="co">#&gt; IGHV3-13, IGHV3-16, IGHV3-20, IGHV3-21, IGHV3-30, IGHV3-35, IGHV3-38, IGHV3-43,</span>
-<span class="co">#&gt; IGHV3-49, IGHV3-53, IGHV3-64, IGHV3-64D, IGHV3-66, IGHV4-28, IGHV4-31, IGHV4-39,</span>
-<span class="co">#&gt; IGHV4-4, IGHV4-61, IGHV5-10-1, IGHV5-51, IGHV7-4-1, IGHV7-81, IGKV1D-12,</span>
-<span class="co">#&gt; IGKV1D-33, IGKV2-28, IGKV2-29, IGKV2-40, IGKV2D-28, IGKV2D-30, IGKV5-2, IGLC1,</span>
-<span class="co">#&gt; IGLV3-19, IGLV3-25, IGLV3-27, IL12B, IL21, INS, KARS1, KIR2DL2, KIR2DS1,</span>
-<span class="co">#&gt; KIR2DS2, KLK5, KLK7, LBP, LEP, MBL2, MIR105-1, MIR136, MIR181B1, MIR18A, MIR19A,</span>
-<span class="co">#&gt; MIR19B1, MIR21, MIR34A, MIR520B, MIR520E, MIR6869, MMP12, MUC16, MUC17, MUC19,</span>
-<span class="co">#&gt; MUC2, MUC21, MUC3A, MUC5AC, MUC5B, MUC6, MUC7, MYH2, NECTIN2, NLRP10, NPY5R,</span>
-<span class="co">#&gt; NSD2, OTOP1, PGC, PGLYRP3, PLA2G3, PLA2G5, PRKACG, PSMB11, RAET1G, SELENOS,</span>
-<span class="co">#&gt; SERPINB4, SHLD1, SHLD2, SHLD3, SPINK5, STING1, TASL, TOMM70, TREML4, TREX1,</span>
-<span class="co">#&gt; ULBP3, VSIR, ZP4, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: ACOD1, ADIPOQ,</span>
-<span class="co">#&gt; APCS, BDKRB1, BMP5, BTN1A1, BTN2A3P, BTNL10, BTNL2, BTNL3, C10orf99, C4A,</span>
-<span class="co">#&gt; C4B, C4BPA, C7, C8A, C8B, C9, CARTPT, CCL1, CCL24, CCL25, CCL7, CCN3, CD300LD,</span>
-<span class="co">#&gt; CD5L, CD8B2, CFHR1, CFHR2, CFHR4, CFHR5, CGAS, CHRNB2, CLDN18, COL17A1, COL2A1,</span>
-<span class="co">#&gt; COLEC10, CPB2, CPN1, CRP, CSF3, CXCL6, CYRIB, DCST1, DEFB124, DRD2, EPO, F2,</span>
-<span class="co">#&gt; FCGR2C, FGF10, FGL1, FOXF1, FOXN1, FSHB, FUT9, FYB1, FYB2, GAL, GGT3P, GLI2,</span>
-<span class="co">#&gt; GLYCAM1, GPR151, GPR17, GPR32, GPR32P1, GPR33, H3-3A, H3-3B, H3C1, H3C10,</span>
-<span class="co">#&gt; H3C11, H3C12, H3C13, H3C14, H3C15, H3C2, H3C3, H3C4, H3C6, H3C7, H3C8, H4-16,</span>
-<span class="co">#&gt; H4C1, H4C11, H4C12, H4C13, H4C14, H4C15, H4C2, H4C3, H4C4, H4C5, H4C6, H4C8,</span>
-<span class="co">#&gt; H4C9, HLA-DRB3, HLA-DRB4, HLA-H, HPX, IFIT1B, IFNA2, IFNB1, IFNK, IFNL2,</span>
-<span class="co">#&gt; IFNL3, IFNL4, IGHV1-45, IGHV1-58, IGHV1-69, IGHV1-69-2, IGHV1-69D, IGHV1OR15-1,</span>
-<span class="co">#&gt; IGHV2-5, IGHV2-70, IGHV2-70D, IGHV3-11, IGHV3-13, IGHV3-16, IGHV3-20, IGHV3-21,</span>
-<span class="co">#&gt; IGHV3-30, IGHV3-35, IGHV3-38, IGHV3-43, IGHV3-49, IGHV3-53, IGHV3-64, IGHV3-64D,</span>
-<span class="co">#&gt; IGHV3-66, IGHV4-28, IGHV4-31, IGHV4-39, IGHV4-4, IGHV4-61, IGHV5-10-1, IGHV5-51,</span>
-<span class="co">#&gt; IGHV7-4-1, IGHV7-81, IGKV1D-12, IGKV1D-33, IGKV2-28, IGKV2-29, IGKV2-40,</span>
-<span class="co">#&gt; IGKV2D-28, IGKV2D-30, IGKV5-2, IGLC1, IGLV3-19, IGLV3-25, IGLV3-27, IHH, IL12B,</span>
-<span class="co">#&gt; IL17D, IL20, IL21, IL34, IL36B, IL5, ILRUN, INHA, INS, KARS1, KIR2DL2, KIR2DS1,</span>
-<span class="co">#&gt; KIR2DS2, KLK5, KLK7, LBP, LEP, LGALS7B, LRFN5, MARCHF7, MBL2, MIR105-1, MIR125A,</span>
-<span class="co">#&gt; MIR125B1, MIR128-1, MIR130A, MIR136, MIR142, MIR145, MIR146A, MIR17HG, MIR181B1,</span>
-<span class="co">#&gt; MIR181C, MIR18A, MIR19A, MIR19B1, MIR21, MIR221, MIR222, MIR223, MIR24-1,</span>
-<span class="co">#&gt; MIR26B, MIR27A, MIR30B, MIR34A, MIR520B, MIR520E, MIR6869, MMP12, MPL, MST1L,</span>
-<span class="co">#&gt; MSTN, MUC16, MUC17, MUC19, MUC2, MUC21, MUC3A, MUC5AC, MUC5B, MUC6, MUC7,</span>
-<span class="co">#&gt; MYH2, NECTIN2, NLRP10, NPY5R, NSD2, OCSTAMP, ORM2, OTOP1, PF4, PGC, PGLYRP3,</span>
-<span class="co">#&gt; PIP, PLA2G2A, PLA2G2F, PLA2G3, PLA2G5, POU4F1, POU4F2, PRKACG, PRSS56, PRXL2A,</span>
-<span class="co">#&gt; PSMB11, RAET1G, RHEX, RIPOR2, S100A7, SCGB1A1, SELENOK, SELENOS, SERPINB4,</span>
-<span class="co">#&gt; SHLD1, SHLD2, SHLD3, SOX11, SPACA3, SPINK5, STING1, TAC1, TAFA3, TARM1, TASL,</span>
-<span class="co">#&gt; TCIM, TLR9, TMEM131L, TOMM70, TREML4, TREX1, UFD1, ULBP3, USP17L2, VEGFC, VEGFD,</span>
-<span class="co">#&gt; VSIR, WNT3A, XG, ZP4, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: GPR17, IL12B,</span>
-<span class="co">#&gt; KARS1, MIR105-1, MIR19A, MIR19B1, MIR6869, NPY5R, SELENOS, not searching for</span>
-<span class="co">#&gt; symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: ACOD1, CGAS,</span>
-<span class="co">#&gt; DCST1, DRD2, HPX, IFNB1, IFNK, IL12B, IL21, INS, KIR2DS2, LBP, LEP, MIR181B1,</span>
-<span class="co">#&gt; MIR21, MIR520B, MIR520E, MMP12, MUC16, MUC17, MUC19, MUC2, MUC21, MUC3A, MUC5AC,</span>
-<span class="co">#&gt; MUC5B, MUC6, MUC7, NECTIN2, OTOP1, PLA2G5, PRKACG, PSMB11, RAET1G, SERPINB4,</span>
-<span class="co">#&gt; STING1, TASL, TOMM70, TREX1, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: CGAS, CHRNB2,</span>
-<span class="co">#&gt; CYRIB, EPO, FGF10, FGL1, FOXN1, GAL, GLI2, HLA-DRB3, IFNA2, IFNB1, IGHV1-45,</span>
-<span class="co">#&gt; IGHV1-58, IGHV1-69, IGHV1-69-2, IGHV1-69D, IGHV1OR15-1, IGHV2-5, IGHV2-70,</span>
-<span class="co">#&gt; IGHV2-70D, IGHV3-11, IGHV3-13, IGHV3-16, IGHV3-20, IGHV3-21, IGHV3-30, IGHV3-35,</span>
-<span class="co">#&gt; IGHV3-38, IGHV3-43, IGHV3-49, IGHV3-53, IGHV3-64, IGHV3-64D, IGHV3-66, IGHV4-28,</span>
-<span class="co">#&gt; IGHV4-31, IGHV4-39, IGHV4-4, IGHV4-61, IGHV5-10-1, IGHV5-51, IGHV7-4-1,</span>
-<span class="co">#&gt; IGHV7-81, IGLC1, IHH, IL12B, IL21, IL36B, IL5, INHA, LEP, LGALS7B, MARCHF7,</span>
-<span class="co">#&gt; MIR17HG, MIR181C, MIR21, MIR27A, MIR30B, MPL, NSD2, PGLYRP3, PLA2G2F, RIPOR2,</span>
-<span class="co">#&gt; SCGB1A1, SELENOK, SHLD1, SHLD2, SHLD3, SOX11, SPINK5, TAC1, TARM1, TLR9,</span>
-<span class="co">#&gt; TMEM131L, TREX1, VSIR, WNT3A, ZP4, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: LGALS13, LGALS14,</span>
-<span class="co">#&gt; LGALS16, MIR17HG, PIP, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: CCL7, S100A7, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: FOXN1, GLI2,</span>
-<span class="co">#&gt; IFNA2, IFNB1, IHH, IL12B, IL36B, INHA, MIR17HG, MIR21, MIR30B, PGLYRP3, SPINK5,</span>
-<span class="co">#&gt; TLR9, TMEM131L, VSIR, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: C4BPA, CYRIB,</span>
-<span class="co">#&gt; HLA-DRB3, HLA-H, HPX, IFNA2, IFNB1, IL12B, IL21, LEP, NECTIN2, NSD2, RAET1G,</span>
-<span class="co">#&gt; SERPINB4, SHLD1, SHLD2, SHLD3, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: C10orf99, CCL7,</span>
-<span class="co">#&gt; RIPOR2, S100A7, SELENOK, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: FOXF1, NECTIN2,</span>
-<span class="co">#&gt; PLA2G3, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: FOXF1, PLA2G3,</span>
-<span class="co">#&gt; not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: IL12B, LEP,</span>
-<span class="co">#&gt; PGLYRP3, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: IL12B, IL21, LEP,</span>
-<span class="co">#&gt; NECTIN2, RAET1G, SERPINB4, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: CGAS, HPX, IFNA2,</span>
-<span class="co">#&gt; IFNB1, IL5, KLK5, KLK7, NSD2, PGC, RAET1G, SHLD1, SHLD2, SHLD3, SPINK5, TLR9,</span>
-<span class="co">#&gt; TREX1, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: HPX, OTOP1, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: CGAS, CYRIB,</span>
-<span class="co">#&gt; EPO, FGL1, FOXN1, GLI2, HLA-DRB3, IFNA2, IFNB1, IHH, IL12B, IL21, IL36B, LEP,</span>
-<span class="co">#&gt; LGALS7B, MARCHF7, MIR181C, MIR21, MIR27A, MIR30B, PLA2G2F, RIPOR2, SCGB1A1,</span>
-<span class="co">#&gt; SELENOK, SPINK5, TARM1, TMEM131L, TREX1, VSIR, ZP4, not searching for symbol</span>
-<span class="co">#&gt; synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: LGALS13, LGALS14,</span>
-<span class="co">#&gt; LGALS16, PIP, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: S100A7, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: FOXN1, GLI2,</span>
-<span class="co">#&gt; IFNA2, IFNB1, IHH, IL12B, IL36B, MIR21, MIR30B, SPINK5, TMEM131L, VSIR, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: FOXN1, GLI2, IHH,</span>
-<span class="co">#&gt; TMEM131L, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: CYRIB, HLA-H,</span>
-<span class="co">#&gt; IL12B, NECTIN2, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: CYRIB, HLA-DRB3,</span>
-<span class="co">#&gt; HLA-H, IFNA2, IFNB1, IL12B, NECTIN2, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: C10orf99, RIPOR2,</span>
-<span class="co">#&gt; S100A7, SELENOK, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: NECTIN2, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: IL12B, NLRP10,</span>
-<span class="co">#&gt; not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: IL12B, MIR21,</span>
-<span class="co">#&gt; NLRP10, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: ACOD1, LBP,</span>
-<span class="co">#&gt; MIR140, MIR146A, MIR181B1, MIR708, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: ACOD1, LBP,</span>
-<span class="co">#&gt; MIR140, MIR146A, MIR17, MIR181B1, MIR19A, MIR708, NLRP2B, TASL, TLR9, TREML4,</span>
-<span class="co">#&gt; not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: IFNA2, IFNB1, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: DCST1, MIR21,</span>
-<span class="co">#&gt; MMP12, TREX1, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: MIR21, MIR30B,</span>
-<span class="co">#&gt; VSIR, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: RO60, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: ACOD1, IFNB1,</span>
-<span class="co">#&gt; IRGC, SHFL, STING1, TREX1, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: ACOD1, CAMK2A,</span>
-<span class="co">#&gt; CCL1, CCL11, CCL13, CCL16, CCL24, CCL25, CCL3L1, CCL7, CITED1, EPRS1, GBP6,</span>
-<span class="co">#&gt; HLA-DRB3, HLA-DRB4, HLA-H, HPX, IL12B, OTOP1, SHFL, not searching for symbol</span>
-<span class="co">#&gt; synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: DCST1, HLA-H,</span>
-<span class="co">#&gt; IFIT1B, IFNA1, IFNA10, IFNA13, IFNA14, IFNA16, IFNA17, IFNA2, IFNA21, IFNA4,</span>
-<span class="co">#&gt; IFNA5, IFNA6, IFNA7, IFNA8, IFNB1, MIR21, MMP12, SHFL, TREX1, not searching for</span>
-<span class="co">#&gt; symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: DCAF1, NSD2,</span>
-<span class="co">#&gt; PMS2P1, PMS2P5, PMS2P6, RAG2, SHLD1, SHLD2, SHLD3, not searching for symbol</span>
-<span class="co">#&gt; synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: PMS2P1, PMS2P5,</span>
-<span class="co">#&gt; PMS2P6, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: CCR9, CGAS,</span>
-<span class="co">#&gt; CYRIB, EPO, FGL1, FOXN1, GLI2, HLA-DRB3, IFNA1, IFNA10, IFNA13, IFNA14, IFNA16,</span>
-<span class="co">#&gt; IFNA17, IFNA2, IFNA21, IFNA4, IFNA5, IFNA6, IFNA7, IFNA8, IFNB1, IFNE, IFNK,</span>
-<span class="co">#&gt; IFNW1, IHH, IL12B, IL21, IL36B, INS, LEP, LGALS7B, MARCHF7, MIR181C, MIR21,</span>
-<span class="co">#&gt; MIR27A, MIR30B, NKX2-3, PAX1, PLA2G2F, PSMB11, RAG2, RIPOR2, SCGB1A1, SELENOK,</span>
-<span class="co">#&gt; SPINK5, TARM1, TMEM131L, TREX1, VSIR, WNT1, WNT4, ZP4, not searching for symbol</span>
-<span class="co">#&gt; synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: IFNA1, IFNA10,</span>
-<span class="co">#&gt; IFNA13, IFNA14, IFNA16, IFNA17, IFNA2, IFNA21, IFNA4, IFNA5, IFNA6, IFNA7,</span>
-<span class="co">#&gt; IFNA8, IFNB1, IFNE, IFNK, IFNW1, IL12B, IL21, MIR21, not searching for symbol</span>
-<span class="co">#&gt; synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: LGALS13, LGALS14,</span>
-<span class="co">#&gt; LGALS16, PIP, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: DEFA1, S100A7,</span>
-<span class="co">#&gt; not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: IFNA2, IFNB1, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: CCR9, FOXN1,</span>
-<span class="co">#&gt; GLI2, IFNA2, IFNB1, IHH, IL12B, IL21, IL36B, LEP, MIR21, MIR30B, NKX2-3, PAX1,</span>
-<span class="co">#&gt; PSMB11, RAG2, SPINK5, TMEM131L, VSIR, WNT1, WNT4, not searching for symbol</span>
-<span class="co">#&gt; synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: FOXN1, GLI2, IHH,</span>
-<span class="co">#&gt; PSMB11, RAG2, TMEM131L, WNT1, WNT4, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: IL12B, IL21,</span>
-<span class="co">#&gt; MIR21, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: FOXN1, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: FOXN1, IL12B,</span>
-<span class="co">#&gt; RAG2, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: CYRIB, HLA-H,</span>
-<span class="co">#&gt; IL12B, NECTIN2, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: HLA-DRB3, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: CYRIB, HLA-DRB3,</span>
-<span class="co">#&gt; HLA-H, IFNA2, IFNB1, IL12B, NECTIN2, SCART1, TREX1, not searching for symbol</span>
-<span class="co">#&gt; synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: C10orf99, DEFA1,</span>
-<span class="co">#&gt; RIPOR2, S100A7, SELENOK, XG, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: EPO, IHH, IL12B,</span>
-<span class="co">#&gt; IL21, LEP, LGALS7B, MARCHF7, MIR181C, MIR21, MIR30B, PLA2G2F, SCGB1A1, SELENOK,</span>
-<span class="co">#&gt; TMEM131L, VSIR, WNT4, ZP4, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: BTN1A1, BTN2A3P,</span>
-<span class="co">#&gt; BTNL10, BTNL2, BTNL3, FYB1, FYB2, HLA-DRB3, HLA-DRB4, NECTIN2, PSMB11, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: FOXN1, IL12B, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: IL12B, NLRP10,</span>
-<span class="co">#&gt; not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: IL12B, MIR21,</span>
-<span class="co">#&gt; NLRP10, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: FOXN1, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: ACOD1, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: ACOD1, LBP,</span>
-<span class="co">#&gt; MIR140, MIR146A, MIR181B1, MIR708, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: TLR9, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: ACOD1, APOB,</span>
-<span class="co">#&gt; FGA, FGG, LBP, MIR140, MIR146A, MIR17, MIR181B1, MIR19A, MIR708, NLRP2B, REG3G,</span>
-<span class="co">#&gt; SFTPA1, SFTPA2, TASL, TLR9, TREML4, not searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: IFNA2, IFNB1, not</span>
-<span class="co">#&gt; searching for symbol synonyms</span>
-<span class="co">#&gt; Warning: The following features are not present in the object: ACOD1, CGAS,</span>
-<span class="co">#&gt; ILRUN, MIR21, MIR26B, MMP12, MRE11, NLRP4, STING1, TLR9, TOMM70, TREX1, UFD1,</span>
-<span class="co">#&gt; not searching for symbol synonyms</span>
 
 <span class="co">## scanpy.tl.score_genes</span>
 <span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/enrich_genesets.html">enrich_genesets</a></span><span class="op">(</span><span class="va">kidneyimmune</span>, <span class="va">bwr</span>, groupby <span class="op">=</span> <span class="st">'celltype'</span>, mode <span class="op">=</span> <span class="st">'scanpy'</span><span class="op">)</span></code></pre></div>
 <p>Visualise as a network plot.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="co"># plot</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggraph.data-imaginist.com">ggraph</a></span><span class="op">)</span>
@@ -1163,13 +326,13 @@
 <span class="op">}</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">plot_list</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">@</span><span class="va">scores</span><span class="op">)</span>
 <span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/plot_grid.html">plot_grid</a></span><span class="op">(</span>plotlist <span class="op">=</span> <span class="va">plot_list</span><span class="op">)</span></code></pre></div>
-<p><img src="bowerbird_vignette_files/figure-html/unnamed-chunk-12-1.png" width="4000" height="3000"></p>
+<p><img src="bowerbird_vignette_files/figure-html/unnamed-chunk-13-1.png" width="400" height="300"></p>
 <p>Visualise as a heatmap.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">pheatmap</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pheatmap/man/pheatmap.html">pheatmap</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">@</span><span class="va">scores</span><span class="op">)</span></code></pre></div>
-<p><img src="bowerbird_vignette_files/figure-html/unnamed-chunk-13-1.png" width="2000" height="2000"></p>
-<p>Running <code>fgsea</code> on deg tables in a list as an alternative to the single-cell methods.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">pheatmap</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pheatmap/man/pheatmap.html">pheatmap</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">@</span><span class="va">scores</span><span class="op">)</span></code></pre></div>
+<p><img src="bowerbird_vignette_files/figure-html/unnamed-chunk-14-1.png" width="200" height="200"></p>
+<p>Running <code>fgsea</code> on deg tables in a list as an alternative to the single-cell methods.</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">degs</span> <span class="op">&lt;-</span> <span class="fu">Seurat</span><span class="fu">::</span><span class="fu"><a href="https://satijalab.org/seurat/reference/FindAllMarkers.html">FindAllMarkers</a></span><span class="op">(</span><span class="va">kidneyimmune</span><span class="op">)</span>
 <span class="va">degs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/split.html">split</a></span><span class="op">(</span><span class="va">degs</span>, <span class="va">degs</span><span class="op">$</span><span class="va">cluster</span><span class="op">)</span> <span class="co"># so in practice, there should be one DEG table per comparison in a list.</span>
 <span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/enrich_genesets.html">enrich_genesets</a></span><span class="op">(</span><span class="va">degs</span>, <span class="va">bwr</span>, gene_symbol <span class="op">=</span> <span class="st">'gene'</span>, logfoldchanges <span class="op">=</span> <span class="st">'avg_log2FC'</span>,  pvals <span class="op">=</span> <span class="st">'p_val'</span><span class="op">)</span>
@@ -1196,26 +359,26 @@
 <span class="op">}</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">plot_list</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">@</span><span class="va">scores</span><span class="op">$</span><span class="va">NES</span><span class="op">)</span>
 <span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/plot_grid.html">plot_grid</a></span><span class="op">(</span>plotlist <span class="op">=</span> <span class="va">plot_list</span><span class="op">)</span></code></pre></div>
-<p><img src="bowerbird_vignette_files/figure-html/unnamed-chunk-14-1.png" width="4000" height="3000"></p>
+<p><img src="bowerbird_vignette_files/figure-html/unnamed-chunk-15-1.png" width="400" height="300"></p>
 <p>Visualise as a heatmap again.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">pheatmap</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pheatmap/man/pheatmap.html">pheatmap</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">@</span><span class="va">scores</span><span class="op">$</span><span class="va">NES</span>, <span class="op">)</span></code></pre></div>
-<p><img src="bowerbird_vignette_files/figure-html/unnamed-chunk-15-1.png" width="2000" height="2000"></p>
+<p><img src="bowerbird_vignette_files/figure-html/unnamed-chunk-16-1.png" width="200" height="200"></p>
 </div>
 <div id="using-core-genes-for-enrichment" class="section level2">
 <h2 class="hasAnchor">
 <a href="#using-core-genes-for-enrichment" class="anchor"></a>Using core genes for enrichment</h2>
 <p>Same function as above, just specifying <code>core = TRUE</code>.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/enrich_genesets.html">enrich_genesets</a></span><span class="op">(</span><span class="va">kidneyimmune</span>, <span class="va">bwr</span>, core <span class="op">=</span> <span class="cn">TRUE</span>, groupby <span class="op">=</span> <span class="st">'celltype'</span><span class="op">)</span> <span class="co"># if mode is not specified, the default option is to use AUCell</span>
 <span class="co"># output can also be plotted via ggraph as above but i'm using heatmap for convenience.</span>
 <span class="fu">pheatmap</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pheatmap/man/pheatmap.html">pheatmap</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">@</span><span class="va">scores</span><span class="op">)</span></code></pre></div>
-<p><img src="bowerbird_vignette_files/figure-html/unnamed-chunk-16-1.png" width="2000" height="2000"></p>
+<p><img src="bowerbird_vignette_files/figure-html/unnamed-chunk-17-1.png" width="200" height="200"></p>
 <p>Same for the gsea results.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/enrich_genesets.html">enrich_genesets</a></span><span class="op">(</span><span class="va">degs</span>, <span class="va">bwr</span>, core <span class="op">=</span> <span class="cn">TRUE</span>, gene_symbol <span class="op">=</span> <span class="st">'gene'</span>, logfoldchanges <span class="op">=</span> <span class="st">'avg_log2FC'</span>,  pvals <span class="op">=</span> <span class="st">'p_val'</span><span class="op">)</span>
 <span class="fu">pheatmap</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pheatmap/man/pheatmap.html">pheatmap</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">@</span><span class="va">scores</span><span class="op">$</span><span class="va">NES</span><span class="op">)</span></code></pre></div>
-<p><img src="bowerbird_vignette_files/figure-html/unnamed-chunk-17-1.png" width="2000" height="2000"></p>
+<p><img src="bowerbird_vignette_files/figure-html/unnamed-chunk-18-1.png" width="2000" height="2000"></p>
 </div>
 </div>
   </div>
