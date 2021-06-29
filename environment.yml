@@ -1,0 +1,10 @@
+name: r-reticulate
+channels:
+- conda-forge
+- bioconda
+- anaconda
+- defaults
+- r
+dependencies:
+- python-igraph
+- leidenalg
