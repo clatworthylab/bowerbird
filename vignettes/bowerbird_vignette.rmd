@@ -202,7 +202,7 @@ plot_list <- lapply(colnames(bwr@scores$NES), function(ds){
     geom_edge_link(aes(width = weight), alpha = .25) +
     geom_node_point(aes(color = padj, size = geneset_size)) + 
     scale_size_area(max_size = 8) +
-    geom_node_text(aes(label = labels), size = 2.5) +
+    geom_node_text(aes(label = labels), size = 3) +
     theme_bw() +
     theme_void() +
     scale_color_viridis(na.value = '#e7e7e7') +
@@ -224,7 +224,7 @@ plot_list <- lapply(colnames(bwr@scores$NES), function(ds){
     geom_edge_link(aes(width = weight), alpha = .25) +
     geom_node_point(aes(color = NES, size = geneset_size)) +
     scale_size_area(max_size = 8) +
-    geom_node_text(aes(label = labels), size = 2.5) +
+    geom_node_text(aes(label = labels), size = 3) +
     theme_bw() +
     theme_void() +
     scale_color_viridis() +
@@ -239,14 +239,14 @@ cowplot::plot_grid(plotlist = plot_list, scale = 0.9)
 
 Same function as above, just specifying `core = TRUE`. This will grab the intersecting (or outersecting rather) genes in a gene set cluster and perform the enrichment, like a summary gene set of the summarised terms.
 
-```{r, message=FALSE, warning=FALSE, fig.width=10, fig.height=7}
+```{r, message=FALSE, warning=FALSE, fig.width=15, fig.height=10}
 bwr <- enrich_genesets(kidneyimmune, bwr, core = TRUE, groupby = 'celltype') # if mode is not specified, the default option is to use AUCell
 pheatmap::pheatmap(bwr@scores, cellheight = 20, cellwidth = 20)
 ```
 
 Same for the gsea results.
 
-```{r, message=FALSE, warning=FALSE, fig.width=10, fig.height=7}
+```{r, message=FALSE, warning=FALSE, fig.width=15, fig.height=10}
 bwr <- enrich_genesets(degs, bwr, core = TRUE, gene_symbol = 'gene', logfoldchanges = 'avg_log2FC',  pvals = 'p_val')
 pheatmap::pheatmap(bwr@scores$NES, cellheight = 20, cellwidth = 20)
 ```
