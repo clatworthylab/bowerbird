@@ -49,4 +49,7 @@ Suggests:
     msigdbr,
     pheatmap,
     cowplot,
-    parallel
+    parallel,
+    ktplots
+Remotes:
+    zktuong/ktplots
