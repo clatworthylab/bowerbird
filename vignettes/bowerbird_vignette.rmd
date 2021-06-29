@@ -179,7 +179,7 @@ plot_list <- lapply(colnames(bwr@scores), function(ds){
     theme(plot.title = element_text(size = 8, face = "bold"))
 })
 names(plot_list) <- colnames(bwr@scores)
-cowplot::plot_grid(plotlist = plot_list, scale = 0.9, ncol = 3)
+cowplot::plot_grid(plotlist = plot_list, scale = 0.9)
 ```
 
 ## Running `fgsea` on deg tables in a list as an alternative to the single-cell methods.
@@ -212,7 +212,7 @@ plot_list <- lapply(colnames(bwr@scores$NES), function(ds){
     ggtitle(ds) + theme(legend.position = 'none', plot.title = element_text(size = 8, face = "bold"))
 })
 names(plot_list) <- colnames(bwr@scores$NES)
-cowplot::plot_grid(plotlist = plot_list, scale = 0.9, ncol = 3)
+cowplot::plot_grid(plotlist = plot_list, scale = 0.9)
 ```
 
 Coloured by normalized enrichment score.
@@ -234,7 +234,7 @@ plot_list <- lapply(colnames(bwr@scores$NES), function(ds){
     ggtitle(ds) + theme(legend.position = 'none', plot.title = element_text(size = 8, face = "bold"))
 })
 names(plot_list) <- colnames(bwr@scores$NES)
-cowplot::plot_grid(plotlist = plot_list, scale = 0.9, ncol = 3)
+cowplot::plot_grid(plotlist = plot_list, scale = 0.9)
 ```
 
 ## Using `core` genes for enrichment
@@ -243,14 +243,14 @@ Same function as above, just specifying `core = TRUE`. This will grab the inters
 
 ```{r, message=FALSE, warning=FALSE, fig.width=15, fig.height=10}
 bwr <- enrich_genesets(kidneyimmune, bwr, core = TRUE, groupby = 'celltype') # if mode is not specified, the default option is to use AUCell
-pheatmap::pheatmap(bwr@scores, cellheight = 20, cellwidth = 20)
+pheatmap::pheatmap(bwr@scores, cellheight = 10, cellwidth = 10)
 ```
 
 Same for the gsea results.
 
 ```{r, message=FALSE, warning=FALSE, fig.width=15, fig.height=10}
 bwr <- enrich_genesets(degs, bwr, core = TRUE, gene_symbol = 'gene', logfoldchanges = 'avg_log2FC',  pvals = 'p_val')
-pheatmap::pheatmap(bwr@scores$NES, cellheight = 20, cellwidth = 20)
+pheatmap::pheatmap(bwr@scores$NES, cellheight = 10, cellwidth = 10)
 ```
 
 To visualise as a graph, can consider doing:
