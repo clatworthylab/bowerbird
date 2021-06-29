@@ -234,7 +234,7 @@ plot_list <- lapply(colnames(bwr@scores$NES), function(ds){
     ggtitle(ds) + theme(legend.position = 'none', plot.title = element_text(size = 8, face = "bold"))
 })
 names(plot_list) <- colnames(bwr@scores$NES)
-cowplot::plot_grid(plotlist = plot_list, scale = 0., ncol = 3)
+cowplot::plot_grid(plotlist = plot_list, scale = 0.9, ncol = 3)
 ```
 
 ## Using `core` genes for enrichment
