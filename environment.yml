@@ -8,3 +8,4 @@ channels:
 dependencies:
 - python-igraph
 - leidenalg
+- numpy
