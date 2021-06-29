@@ -219,23 +219,23 @@
 
 #' @rdname misc
 #' @param deg deg table. must at least have a column for gene symbol, log fold changes and pvalues.
-#' @param gene_symbol_column gene_symbol_column
-#' @param logfoldchanges_column logfoldchanges_column
-#' @param pvals_column pvals_column
+#' @param gene_symbol gene_symbol
+#' @param logfoldchanges logfoldchanges
+#' @param pvals pvals
 #' @param remove_mito_ribo boolean. whether or not to remove mitochondial and ribosomal genes from consideration. Default is TRUE.
 #' @return srted ranked gene list.
 #' 
-.makeRankGeneList <- function(deg, gene_symbol_column, logfoldchanges_column, pvals_column, remove_mito_ribo = TRUE){
+.makeRankGeneList <- function(deg, gene_symbol, logfoldchanges, pvals, remove_mito_ribo = TRUE){
   if (remove_mito_ribo) {
-    y <- grepl('^RPS|^RPL|^MRPL|^MRPS|^MT-|^Rps|^Rpl|^Mrpl|^Mrps|^mt-', deg[,gene_symbol_column])
+    y <- grepl('^RPS|^RPL|^MRPL|^MRPS|^MT-|^Rps|^Rpl|^Mrpl|^Mrps|^mt-', deg[,gene_symbol])
     deg <- deg[!y, ]
   } 
-  deg <- deg[, c(gene_symbol_column, logfoldchanges_column, pvals_column)]
-  deg$nedegog10pval <- -log10(deg[, pvals_column])
-  rank <- unlist(deg$nedegog10pval * sign(deg[,logfoldchanges_column]))
+  deg <- deg[, c(gene_symbol, logfoldchanges, pvals)]
+  deg$nedegog10pval <- -log10(deg[, pvals])
+  rank <- unlist(deg$nedegog10pval * sign(deg[,logfoldchanges]))
   rank[rank == Inf] = 300
   rank[rank == -Inf] = -300
-  names(rank) <- deg[,gene_symbol_column]
+  names(rank) <- deg[,gene_symbol]
   rank <- rev(sort(rank))    
   return(rank)
 }
