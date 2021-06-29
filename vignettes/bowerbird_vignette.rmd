@@ -138,7 +138,7 @@ pheatmap::pheatmap(bwr@scores)
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 degs <- Seurat::FindAllMarkers(kidneyimmune)
 degs <- split(degs, degs$cluster) # so in practice, there should be one DEG table per comparison in a list.
-bwr <- enrich_genesets(degs, bwr, gene_symbol = 'gene', logfoldchanges = 'avg_logFC',  pvals = 'p_val')
+bwr <- enrich_genesets(degs, bwr, gene_symbol = 'gene', logfoldchanges = 'avg_log2FC',  pvals = 'p_val')
 
 # plot
 plot_list <- lapply(colnames(bwr@scores$NES), function(ds){
@@ -176,6 +176,6 @@ pheatmap::pheatmap(bwr@scores)
 ```
 same for the gsea results.
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
-bwr <- enrich_genesets(degs, bwr, core = TRUE, gene_symbol = 'gene', logfoldchanges = 'avg_logFC',  pvals = 'p_val')
+bwr <- enrich_genesets(degs, bwr, core = TRUE, gene_symbol = 'gene', logfoldchanges = 'avg_log2FC',  pvals = 'p_val')
 pheatmap::pheatmap(bwr@scores$NES)
 ```
