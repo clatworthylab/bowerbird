@@ -46,4 +46,7 @@ Suggests:
     Seurat,
     devtools,
     roxygen2,
+    msigdbr,
+    pheatmap,
+    cowplot,
     parallel
