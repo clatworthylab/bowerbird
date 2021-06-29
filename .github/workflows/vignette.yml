@@ -26,10 +26,6 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
 
-      # - name: Install python dependencies
-      #   run: pip install python-igraph leidenalg
-      #   shell: bash -l {0}
-
       - uses: r-lib/actions/setup-r@v1
         id: install-r
 
