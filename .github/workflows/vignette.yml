@@ -10,7 +10,14 @@ name: vignette
 
 jobs:
   vignette:
-    runs-on: macOS-latest
+    defaults:
+      run:
+        shell: bash -l {0}
+    strategy:
+      matrix:
+        config:
+          - { python-version: 3.8, os: macos-latest }
+    runs-on: ${{ matrix.config.os }}
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
@@ -29,6 +36,16 @@ jobs:
           echo "##[set-output name=biocversion;]$(Rscript -e 'cat(as.character(tools:::.BioC_version_associated_with_R_version()))' | awk '{print $1}')"
         shell: bash -l {0}
 
+      - name: Cache conda
+          uses: actions/cache@v1
+          env:
+            # Increase this value to reset cache if etc/example-environment.yml has not changed
+            CACHE_NUMBER: 0
+          with:
+            path: ~/conda_pkgs_dir
+            key:
+              ${{ runner.os }}-conda-${{ env.CACHE_NUMBER }}-${{
+              hashFiles('environment.yml') }}
       - name: Install pak and query dependencies
         run: |
           install.packages("pak", repos = "https://r-lib.github.io/p/pak/dev/")
@@ -43,6 +60,16 @@ jobs:
             !${{ env.R_LIBS_USER }}/pak
           key: ${{ env.cache-version }}-${{ matrix.config.os }}-biocversion-RELEASE_${{ steps.bioc.outputs.mainbiocversion}}_${{ steps.bioc.outputs.subbiocversion}}-r-${{ matrix.config.r-version}}-${{ hashFiles('.github/depends.Rds') }}
           restore-keys: ${{ env.cache-version }}-${{ matrix.config.os }}-biocversion-RELEASE_${{ steps.bioc.outputs.mainbiocversion}}_${{ steps.bioc.outputs.subbiocversion}}-r-${{ matrix.config.r-version}}-
+      - name: Setup Miniconda
+        uses: conda-incubator/setup-miniconda@v2.0.1
+        with:
+          auto-activate-base: true
+          auto-update-conda : true
+          activate-environment: r-reticulate
+          channels: conda-forge, bioconda, anaconda, r, defaults
+          channel-priority: true
+          python-version: ${{ matrix.config.python-version }}
+          use-only-tar-bz2: true # IMPORTANT: This needs to be set for caching to work properly!
 
       - name: Install dependencies
         run: |
