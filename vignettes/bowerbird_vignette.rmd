@@ -52,22 +52,30 @@ bwr <- enrich_genesets(sce, bwr)
 ```
 
 ## Full example
-```{r}
+```{r, message = FALSE, warning = FALSE}
 library(bowerbird)
 gmt_file <- system.file("extdata", "h.all.v7.4.symbols.gmt", package = "bowerbird") # read in a .gmt file
 bwr <- bower(gmt_file) # this performs a read_geneset step internally, which accepts .gmt, .gmx, .csv, .tsv, .txt, or R objects as list or data.frame format.
-```
-```{r}
 bwr <- snn_graph(bwr)
-```
-```{r}
 bwr <- find_clusters(bwr)
-```
-```{r}
 bwr <- summarize_clusters(bwr)
 ```
-```{r}
-bwr
+
+Input formats accepts .gmt, .gmx, .csv, .tsv, .txt, or R objects as list or data.frame format.
+
+```{r, message = FALSE, warning = FALSE}
+csv_file <- system.file("extdata", "h.all.v7.4.symbols.csv", package = "bowerbird") # read in a .gmt file
+csv <- read.csv(csv_file)
+head(csv)
+```
+
+And now to process it through.
+
+```{r, message = FALSE, warning = FALSE}
+bwr <- bower(csv)
+bwr <- snn_graph(bwr)
+bwr <- find_clusters(bwr)
+bwr <- summarize_clusters(bwr)
 ```
 
 ## Examples of different ways of loading in genesets
@@ -87,7 +95,6 @@ bwr <- bower(geneset)
 bwr <- snn_graph(bwr)
 bwr <- find_clusters(bwr)
 bwr <- summarize_clusters(bwr)
-bwr
 ```
 
 Or extracting from `msigdbr`.
@@ -106,11 +113,30 @@ bwr <- bower(gs_list)
 bwr <- snn_graph(bwr)
 bwr <- find_clusters(bwr)
 bwr <- summarize_clusters(bwr)
+```
+
+So what has actually happened? Well, basically `bowerbird` has learnt which gene sets share more genes with each other, clustered them together and learnt a new summary term.
+
+```{r}
 bwr
 ```
 
+We can visualise it with a simple plot
+
+```{r, fig.width=7, fig.height=7}
+ggraph(bwr@graph, 'igraph', algorithm = 'fr') + 
+    geom_edge_link(aes(width = weight), alpha = .25) +
+    geom_node_point(aes(color = factor(cluster), size = geneset_size)) + 
+    scale_size_area(max_size = 8) +
+    geom_node_text(aes(label = labels), size = 3) +
+    theme_bw() +
+    theme_void() +
+    scale_edge_width(range = c(0, 1)) + 
+    guides(colour=FALSE)
+```
+
 ## Geneset average expression testing
-To do this, we would need either a single-cell object (`SingleCellExperiment` or `Seurat`), or a list containing differential gene testing results.
+We can also compute the enrichment score and superimpose the values onto the visualization. To do this, we would need either a single-cell object (`SingleCellExperiment` or `Seurat`), or a list containing differential gene testing results.
 
 ```{r, message=FALSE, warning=FALSE}
 # load a dummy dataset
