@@ -50,6 +50,7 @@ Suggests:
     pheatmap,
     cowplot,
     parallel,
-    ktplots
+    ktplots,
+    rmarkdown
 Remotes:
     zktuong/ktplots
