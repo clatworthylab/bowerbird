@@ -33,7 +33,7 @@ knitr::opts_chunk$set(
 ```
 
 ## Installation
-```R
+```{r}
 # because currently private, requires specifying personal github access token
 # devtools::install_github('clatworthylab/bowerbird', auth_token = "insert_your_personal_github_access_token")
 # or clone this repo and do devtools::install('path/of/folder/to/bowerbird')
@@ -41,7 +41,7 @@ knitr::opts_chunk$set(
 
 ## Quick Usage
 Pathway analyis is tricky; often there's too many pathways/terms to use and it's not easy to distinguish how important every element is. `bowerbird` attempts to summarise your pathways of interests into potentially meaningful functional annotation modules which you can then take forward to pathway analyses, or the reverse situation where you have a set of pathways that were determined <i>a priori</i> to be significant and you wanted to find out how to interpret it. To do this, we compute a shortest nearest neighbor graph using the genes in the gene sets/pathways and learn a representative summary term from the name of the gene sets that cluster together.
-```{r, echo=FALSE}
+```{r}
 library(bowerbird)
 # download from msigdb website
 gmt_file <- system.file("extdata", "h.all.v7.4.symbols.gmt", package = "bowerbird")
@@ -55,7 +55,7 @@ bwr
 ## Examples of different ways of loading in genesets
 
 Example #1 Doing some manual editing of a predefined geneset.
-```{r, echo=FALSE}
+```{r}
 library(bowerbird)
 # download from msigdb website
 file <- system.file("extdata", "c5.go.bp.v7.4.symbols.gmt", package = "bowerbird")
@@ -72,7 +72,7 @@ bwr <- summarize_clusters(bwr)
 ```
 
 Example #2 Extracting from `msigdbr`.
-```{r, echo=FALSE}
+```{r}
 library(bowerbird)
 library(msigdbr)
 GO <- data.frame(msigdbr::msigdbr(category = "C5", subcategory = "GO:BP"))
@@ -91,7 +91,7 @@ bwr <- summarize_clusters(bwr)
 
 ## geneset enrichment analysis
 To do this, we would need either a single-cell object (`SingleCellExperiment` or `Seurat`), or a list containing differential gene testing results
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
+```{r, message=FALSE, warning=FALSE}
 # load a dummy dataset
 library(ktplots)
 data(kidneyimmune)
@@ -106,6 +106,9 @@ bwr <- enrich_genesets(kidneyimmune, bwr, groupby = 'celltype', mode = 'Seurat')
 
 ## scanpy.tl.score_genes
 bwr <- enrich_genesets(kidneyimmune, bwr, groupby = 'celltype', mode = 'scanpy')
+```
+
+```{r, out.width=20, out.height=20}
 
 # plot
 library(ggraph)
@@ -130,12 +133,13 @@ cowplot::plot_grid(plotlist = plot_list)
 ```
 
 as a heatmap
-```{r, echo=FALSE}
+```{r, out.width=20, out.height=20}
+knitr::opts_chunk$set(fig.width=20, fig.height=20) 
 pheatmap::pheatmap(bwr@scores)
 ```
 
 # with fgsea on deg tables in a list
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
+```{r, message=FALSE, warning=FALSE, out.width=20, out.height=20}
 degs <- Seurat::FindAllMarkers(kidneyimmune)
 degs <- split(degs, degs$cluster) # so in practice, there should be one DEG table per comparison in a list.
 bwr <- enrich_genesets(degs, bwr, gene_symbol = 'gene', logfoldchanges = 'avg_log2FC',  pvals = 'p_val')
@@ -164,18 +168,18 @@ names(plot_list) <- colnames(bwr@scores$NES)
 cowplot::plot_grid(plotlist = plot_list)
 ```
 as a heatmap
-```{r, echo=FALSE}
+```{r, out.width=10, out.height=10}
 pheatmap::pheatmap(bwr@scores$NES)
 ```
 ## Using core genes for enrichment
 same function as above, just specifying `core = TRUE`.
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
-bwr <- enrich_genesets(kidneyimmune, bwr, core = TRUE, groupby = 'celltype', mode = 'AUCell')
+```{r, message=FALSE, warning=FALSE, out.width=10, out.height=10}
+bwr <- enrich_genesets(kidneyimmune, bwr, core = TRUE, groupby = 'celltype') # if mode is not specified, the default option is to use AUCell
 # output can also be plotted via ggraph as above but i'm using heatmap for convenience.
 pheatmap::pheatmap(bwr@scores)
 ```
 same for the gsea results.
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
+```{r, message=FALSE, warning=FALSE, out.width=10, out.height=10}
 bwr <- enrich_genesets(degs, bwr, core = TRUE, gene_symbol = 'gene', logfoldchanges = 'avg_log2FC',  pvals = 'p_val')
 pheatmap::pheatmap(bwr@scores$NES)
 ```

@@ -51,6 +51,9 @@ bwr
 # number of geneset clusters:  10
 ```
 
+## Vignette
+A vignette is available at https://clatworthylab.github.io/bowerbird/articles/bowerbird_vignette.html
+
 ## Examples of different ways of loading in genesets
 
 Example #1 Doing some manual editing of a predefined geneset.
