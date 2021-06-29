@@ -30,9 +30,9 @@
 
 .makeRankGeneList(
   deg,
-  gene_symbol_column,
-  logfoldchanges_column,
-  pvals_column,
+  gene_symbol,
+  logfoldchanges,
+  pvals,
   remove_mito_ribo = TRUE
 )
 
@@ -75,11 +75,11 @@ range01(x)
 
 \item{deg}{deg table. must at least have a column for gene symbol, log fold changes and pvalues.}
 
-\item{gene_symbol_column}{gene_symbol_column}
+\item{gene_symbol}{gene_symbol}
 
-\item{logfoldchanges_column}{logfoldchanges_column}
+\item{logfoldchanges}{logfoldchanges}
 
-\item{pvals_column}{pvals_column}
+\item{pvals}{pvals}
 
 \item{remove_mito_ribo}{boolean. whether or not to remove mitochondial and ribosomal genes from consideration. Default is TRUE.}
 
