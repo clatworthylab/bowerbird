@@ -66,7 +66,8 @@ Input formats accepts .gmt, .gmx, .csv, .tsv, .txt, or R objects as list or data
 ```{r, message = FALSE, warning = FALSE}
 csv_file <- system.file("extdata", "h.all.v7.4.symbols.csv", package = "bowerbird") # read in a .gmt file
 csv <- read.csv(csv_file)
-head(csv)
+# see first 6 rows of the first 3 columns
+csv[1:6, 1:3]
 ```
 
 And now to process it through.
