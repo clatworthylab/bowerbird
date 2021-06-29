@@ -51,6 +51,7 @@ Suggests:
     cowplot,
     parallel,
     doParallel,
+    doRNG,
     ktplots,
     rmarkdown
 Remotes:
