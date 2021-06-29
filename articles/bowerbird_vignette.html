@@ -105,71 +105,190 @@
 <h2 class="hasAnchor">
 <a href="#quick-usage" class="anchor"></a>Quick Usage</h2>
 <p>Pathway analyis is tricky; often there’s too many pathways/terms to use and it’s not easy to distinguish how important every element is. <code>bowerbird</code> attempts to summarise your pathways of interests into potentially meaningful functional annotation modules which you can then take forward to pathway analyses, or the reverse situation where you have a set of pathways that were determined <i>a priori</i> to be significant and you wanted to find out how to interpret it. To do this, we compute a shortest nearest neighbor graph using the genes in the gene sets/pathways and learn a representative summary term from the name of the gene sets that cluster together.</p>
-<pre><code>#&gt; Loading required namespace: S4Vectors
-#&gt; Loading required namespace: FNN
-#&gt; Loading required namespace: ggraph
-#&gt; Downloading udpipe model from https://raw.githubusercontent.com/jwijffels/udpipe.models.ud.2.5/master/inst/udpipe-ud-2.5-191206/english-ewt-ud-2.5-191206.udpipe to /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpKCjwGc/english-ewt-ud-2.5-191206.udpipe
-#&gt;  - This model has been trained on version 2.5 of data from https://universaldependencies.org
-#&gt;  - The model is distributed under the CC-BY-SA-NC license: https://creativecommons.org/licenses/by-nc-sa/4.0
-#&gt;  - Visit https://github.com/jwijffels/udpipe.models.ud.2.5 for model license details.
-#&gt;  - For a list of all models and their licenses (most models you can download with this package have either a CC-BY-SA or a CC-BY-SA-NC license) read the documentation at ?udpipe_download_model. For building your own models: visit the documentation by typing vignette('udpipe-train', package = 'udpipe')
-#&gt; Downloading finished, model stored at '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpKCjwGc/english-ewt-ud-2.5-191206.udpipe'
-#&gt; BOWER class
-#&gt; number of genesets:  50 
-#&gt; genesets kNN Graph: 
-#&gt; IGRAPH cc22994 UNW- 50 124 -- 
-#&gt; + attr: name (v/c), cluster (v/n), geneset_size (v/n), terms (v/c),
-#&gt; | labels (v/c), weight (e/n)
-#&gt; + edges from cc22994 (vertex names):
-#&gt; [1] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_HYPOXIA                
-#&gt; [2] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_TGF_BETA_SIGNALING     
-#&gt; [3] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_IL6_JAK_STAT3_SIGNALING
-#&gt; [4] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_APOPTOSIS              
-#&gt; [5] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_MYOGENESIS             
-#&gt; [6] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_COMPLEMENT             
-#&gt; + ... omitted several edges
-#&gt; number of geneset clusters:  9 
-#&gt; Core genes:
-#&gt;  First six genes shown
-#&gt;   XENOBIOTIC METABOLISM : LIFR DNAJB9 CD36 ACOX1 IDH1 ECH1 ...
-#&gt;   E2F TARGETS : SAC3D1 KIF11 KIF23 RACGAP1 NUMA1 KIF2C ...
-#&gt;   ESTROGEN RESPONSE EARLY : JAG1 CTNNB1 GNAI1 FDFT1 DHCR7 FASN ...
-#&gt;   APOPTOSIS : SPTAN1 CDKN1A GSN GPX3 CLU GADD45B ...
-#&gt;   INTERFERON ALPHA RESPONSE : MX1 ISG15 IFIT3 IFI44 IFI35 IRF7 ...
-#&gt;   HEDGEHOG SIGNALING : VEGFA VLDLR MYH9 ERO1A DDIT4 STC2 ...
-#&gt;   IL2 STAT5 SIGNALING : JUNB PPP1R15A SERPINE1 ID2 IFNGR2 PMEPA1 ...
-#&gt;   APICAL JUNCTION : EGFR ADAM10 CLTC AP2M1 ARF1 MAPK1 ...
-#&gt;   EPITHELIAL MESENCHYMAL TRANSITION : FBN1 FN1 SERPINE1 SPARC MMP2 THBS1 ...</code></pre>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">bowerbird</span><span class="op">)</span>
+<span class="co"># download from msigdb website</span>
+<span class="va">gmt_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"h.all.v7.4.symbols.gmt"</span>, package <span class="op">=</span> <span class="st">"bowerbird"</span><span class="op">)</span>
+<span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu">bower</span><span class="op">(</span><span class="va">gmt_file</span><span class="op">)</span> <span class="co"># this performs a read_geneset step internally, which accepts .gmt, .gmx, .csv, .tsv, .txt, or R objects as list or data.frame format.</span>
+<span class="co">#&gt; Loading required namespace: S4Vectors</span>
+<span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/snn_graph.html">snn_graph</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">)</span>
+<span class="co">#&gt; Loading required namespace: FNN</span>
+<span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/find_clusters.html">find_clusters</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">)</span>
+<span class="co">#&gt; Loading required namespace: ggraph</span>
+<span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/summarize_clusters.html">summarize_clusters</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">)</span>
+<span class="co">#&gt; Downloading udpipe model from https://raw.githubusercontent.com/jwijffels/udpipe.models.ud.2.5/master/inst/udpipe-ud-2.5-191206/english-ewt-ud-2.5-191206.udpipe to /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpSF7iOg/english-ewt-ud-2.5-191206.udpipe</span>
+<span class="co">#&gt;  - This model has been trained on version 2.5 of data from https://universaldependencies.org</span>
+<span class="co">#&gt;  - The model is distributed under the CC-BY-SA-NC license: https://creativecommons.org/licenses/by-nc-sa/4.0</span>
+<span class="co">#&gt;  - Visit https://github.com/jwijffels/udpipe.models.ud.2.5 for model license details.</span>
+<span class="co">#&gt;  - For a list of all models and their licenses (most models you can download with this package have either a CC-BY-SA or a CC-BY-SA-NC license) read the documentation at ?udpipe_download_model. For building your own models: visit the documentation by typing vignette('udpipe-train', package = 'udpipe')</span>
+<span class="co">#&gt; Downloading finished, model stored at '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpSF7iOg/english-ewt-ud-2.5-191206.udpipe'</span>
+<span class="va">bwr</span>
+<span class="co">#&gt; BOWER class</span>
+<span class="co">#&gt; number of genesets:  50 </span>
+<span class="co">#&gt; genesets kNN Graph: </span>
+<span class="co">#&gt; IGRAPH c97b968 UNW- 50 124 -- </span>
+<span class="co">#&gt; + attr: name (v/c), cluster (v/n), geneset_size (v/n), terms (v/c),</span>
+<span class="co">#&gt; | labels (v/c), weight (e/n)</span>
+<span class="co">#&gt; + edges from c97b968 (vertex names):</span>
+<span class="co">#&gt; [1] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_HYPOXIA                </span>
+<span class="co">#&gt; [2] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_TGF_BETA_SIGNALING     </span>
+<span class="co">#&gt; [3] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_IL6_JAK_STAT3_SIGNALING</span>
+<span class="co">#&gt; [4] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_APOPTOSIS              </span>
+<span class="co">#&gt; [5] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_MYOGENESIS             </span>
+<span class="co">#&gt; [6] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_COMPLEMENT             </span>
+<span class="co">#&gt; + ... omitted several edges</span>
+<span class="co">#&gt; number of geneset clusters:  9 </span>
+<span class="co">#&gt; Core genes:</span>
+<span class="co">#&gt;  First six genes shown</span>
+<span class="co">#&gt;   XENOBIOTIC METABOLISM : LIFR DNAJB9 CD36 ACOX1 IDH1 ECH1 ...</span>
+<span class="co">#&gt;   E2F TARGETS : SAC3D1 KIF11 KIF23 RACGAP1 NUMA1 KIF2C ...</span>
+<span class="co">#&gt;   ESTROGEN RESPONSE EARLY : JAG1 CTNNB1 GNAI1 FDFT1 DHCR7 FASN ...</span>
+<span class="co">#&gt;   INTERFERON ALPHA RESPONSE : MX1 ISG15 IFIT3 IFI44 IFI35 IRF7 ...</span>
+<span class="co">#&gt;   HEDGEHOG SIGNALING : VEGFA VLDLR MYH9 ERO1A DDIT4 STC2 ...</span>
+<span class="co">#&gt;   IL2 STAT5 SIGNALING : JUNB PPP1R15A SERPINE1 ID2 IFNGR2 PMEPA1 ...</span>
+<span class="co">#&gt;   APICAL JUNCTION : EGFR ADAM10 CLTC AP2M1 ARF1 MAPK1 ...</span>
+<span class="co">#&gt;   APOPTOSIS : SPTAN1 CDKN1A GSN GPX3 CLU GADD45B ...</span>
+<span class="co">#&gt;   P53 PATHWAY : BTG2 TAP1 CDKN2B ATF3 BTG1 RRAD ...</span></code></pre></div>
 </div>
 <div id="examples-of-different-ways-of-loading-in-genesets" class="section level2">
 <h2 class="hasAnchor">
 <a href="#examples-of-different-ways-of-loading-in-genesets" class="anchor"></a>Examples of different ways of loading in genesets</h2>
 <p>Example #1 Doing some manual editing of a predefined geneset.</p>
-<pre><code>#&gt; Downloading udpipe model from https://raw.githubusercontent.com/jwijffels/udpipe.models.ud.2.5/master/inst/udpipe-ud-2.5-191206/english-ewt-ud-2.5-191206.udpipe to /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpKCjwGc/english-ewt-ud-2.5-191206.udpipe
-#&gt;  - This model has been trained on version 2.5 of data from https://universaldependencies.org
-#&gt;  - The model is distributed under the CC-BY-SA-NC license: https://creativecommons.org/licenses/by-nc-sa/4.0
-#&gt;  - Visit https://github.com/jwijffels/udpipe.models.ud.2.5 for model license details.
-#&gt;  - For a list of all models and their licenses (most models you can download with this package have either a CC-BY-SA or a CC-BY-SA-NC license) read the documentation at ?udpipe_download_model. For building your own models: visit the documentation by typing vignette('udpipe-train', package = 'udpipe')
-#&gt; Downloading finished, model stored at '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpKCjwGc/english-ewt-ud-2.5-191206.udpipe'</code></pre>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">bowerbird</span><span class="op">)</span>
+<span class="co"># download from msigdb website</span>
+<span class="va">file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"c5.go.bp.v7.4.symbols.gmt"</span>, package <span class="op">=</span> <span class="st">"bowerbird"</span><span class="op">)</span>
+<span class="co"># manualy read in to do some fine adjustments/filtering</span>
+<span class="va">geneset</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_geneset.html">read_geneset</a></span><span class="op">(</span><span class="va">file</span><span class="op">)</span> <span class="co"># reads in gene file manually</span>
+<span class="co"># do a bit of manual filtering</span>
+<span class="va">geneset</span> <span class="op">&lt;-</span> <span class="va">geneset</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">grep</a></span><span class="op">(</span><span class="st">'B_CELL|T_CELL|NATURAL_KILLER|ANTIBODY|ANTIGEN|LYMPHOCYTE|IMMUNE|INTERFERON|TOLL|INNATE|ADAPTIVE'</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">geneset</span><span class="op">)</span><span class="op">)</span><span class="op">]</span>
+<span class="va">geneset</span> <span class="op">&lt;-</span> <span class="va">geneset</span><span class="op">[</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">grepl</a></span><span class="op">(</span><span class="st">'TROPHOBLAST_CELL|FAT_CELL|ENT_CELL'</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">geneset</span><span class="op">)</span><span class="op">)</span><span class="op">]</span>
+
+<span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu">bower</span><span class="op">(</span><span class="va">geneset</span><span class="op">)</span>
+<span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/snn_graph.html">snn_graph</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">)</span>
+<span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/find_clusters.html">find_clusters</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">)</span>
+<span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/summarize_clusters.html">summarize_clusters</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">)</span>
+<span class="co">#&gt; Downloading udpipe model from https://raw.githubusercontent.com/jwijffels/udpipe.models.ud.2.5/master/inst/udpipe-ud-2.5-191206/english-ewt-ud-2.5-191206.udpipe to /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpSF7iOg/english-ewt-ud-2.5-191206.udpipe</span>
+<span class="co">#&gt;  - This model has been trained on version 2.5 of data from https://universaldependencies.org</span>
+<span class="co">#&gt;  - The model is distributed under the CC-BY-SA-NC license: https://creativecommons.org/licenses/by-nc-sa/4.0</span>
+<span class="co">#&gt;  - Visit https://github.com/jwijffels/udpipe.models.ud.2.5 for model license details.</span>
+<span class="co">#&gt;  - For a list of all models and their licenses (most models you can download with this package have either a CC-BY-SA or a CC-BY-SA-NC license) read the documentation at ?udpipe_download_model. For building your own models: visit the documentation by typing vignette('udpipe-train', package = 'udpipe')</span>
+<span class="co">#&gt; Downloading finished, model stored at '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpSF7iOg/english-ewt-ud-2.5-191206.udpipe'</span></code></pre></div>
 <p>Example #2 Extracting from <code>msigdbr</code>.</p>
-<pre><code>#&gt; Downloading udpipe model from https://raw.githubusercontent.com/jwijffels/udpipe.models.ud.2.5/master/inst/udpipe-ud-2.5-191206/english-ewt-ud-2.5-191206.udpipe to /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpKCjwGc/english-ewt-ud-2.5-191206.udpipe
-#&gt;  - This model has been trained on version 2.5 of data from https://universaldependencies.org
-#&gt;  - The model is distributed under the CC-BY-SA-NC license: https://creativecommons.org/licenses/by-nc-sa/4.0
-#&gt;  - Visit https://github.com/jwijffels/udpipe.models.ud.2.5 for model license details.
-#&gt;  - For a list of all models and their licenses (most models you can download with this package have either a CC-BY-SA or a CC-BY-SA-NC license) read the documentation at ?udpipe_download_model. For building your own models: visit the documentation by typing vignette('udpipe-train', package = 'udpipe')
-#&gt; Downloading finished, model stored at '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpKCjwGc/english-ewt-ud-2.5-191206.udpipe'</code></pre>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">bowerbird</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://igordot.github.io/msigdbr/">msigdbr</a></span><span class="op">)</span>
+<span class="va">GO</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="fu">msigdbr</span><span class="fu">::</span><span class="fu"><a href="https://igordot.github.io/msigdbr/reference/msigdbr.html">msigdbr</a></span><span class="op">(</span>category <span class="op">=</span> <span class="st">"C5"</span>, subcategory <span class="op">=</span> <span class="st">"GO:BP"</span><span class="op">)</span><span class="op">)</span>
+<span class="va">genesets</span> <span class="op">&lt;-</span> <span class="va">GO</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">grep</a></span><span class="op">(</span><span class="st">'B_CELL|T_CELL|NATURAL_KILLER|ANTIBODY|ANTIGEN|LYMPHOCYTE|IMMUNE|INTERFERON|TOLL|INNATE|ADAPTIVE'</span>, <span class="va">GO</span><span class="op">$</span><span class="va">gs_name</span><span class="op">)</span>, <span class="op">]</span>
+<span class="va">genesets</span> <span class="op">&lt;-</span> <span class="va">genesets</span><span class="op">[</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">grepl</a></span><span class="op">(</span><span class="st">'TROPHOBLAST_CELL|FAT_CELL|ENT_CELL'</span>, <span class="va">genesets</span><span class="op">$</span><span class="va">gs_name</span><span class="op">)</span>, <span class="op">]</span>
+
+<span class="co"># convert to list</span>
+<span class="va">gs_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">genesets</span><span class="op">$</span><span class="va">gs_name</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">genesets</span><span class="op">[</span><span class="va">genesets</span><span class="op">$</span><span class="va">gs_name</span> <span class="op">%in%</span> <span class="va">x</span>, <span class="st">"gene_symbol"</span><span class="op">]</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">gs_list</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">genesets</span><span class="op">$</span><span class="va">gs_name</span><span class="op">)</span>
+
+<span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu">bower</span><span class="op">(</span><span class="va">gs_list</span><span class="op">)</span>
+<span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/snn_graph.html">snn_graph</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">)</span>
+<span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/find_clusters.html">find_clusters</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">)</span>
+<span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/summarize_clusters.html">summarize_clusters</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">)</span>
+<span class="co">#&gt; Downloading udpipe model from https://raw.githubusercontent.com/jwijffels/udpipe.models.ud.2.5/master/inst/udpipe-ud-2.5-191206/english-ewt-ud-2.5-191206.udpipe to /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpSF7iOg/english-ewt-ud-2.5-191206.udpipe</span>
+<span class="co">#&gt;  - This model has been trained on version 2.5 of data from https://universaldependencies.org</span>
+<span class="co">#&gt;  - The model is distributed under the CC-BY-SA-NC license: https://creativecommons.org/licenses/by-nc-sa/4.0</span>
+<span class="co">#&gt;  - Visit https://github.com/jwijffels/udpipe.models.ud.2.5 for model license details.</span>
+<span class="co">#&gt;  - For a list of all models and their licenses (most models you can download with this package have either a CC-BY-SA or a CC-BY-SA-NC license) read the documentation at ?udpipe_download_model. For building your own models: visit the documentation by typing vignette('udpipe-train', package = 'udpipe')</span>
+<span class="co">#&gt; Downloading finished, model stored at '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpSF7iOg/english-ewt-ud-2.5-191206.udpipe'</span></code></pre></div>
 </div>
 <div id="geneset-enrichment-analysis" class="section level2">
 <h2 class="hasAnchor">
 <a href="#geneset-enrichment-analysis" class="anchor"></a>geneset enrichment analysis</h2>
-<p>To do this, we would need either a single-cell object (<code>SingleCellExperiment</code> or <code>Seurat</code>), or a list containing differential gene testing results <img src="bowerbird_vignette_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
-<p>as a heatmap <img src="bowerbird_vignette_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
+<p>To do this, we would need either a single-cell object (<code>SingleCellExperiment</code> or <code>Seurat</code>), or a list containing differential gene testing results</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># load a dummy dataset</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">ktplots</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">kidneyimmune</span><span class="op">)</span>
+
+<span class="co"># with single-cell methods:</span>
+
+<span class="co">## AUCell</span>
+<span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/enrich_genesets.html">enrich_genesets</a></span><span class="op">(</span><span class="va">kidneyimmune</span>, <span class="va">bwr</span>, groupby <span class="op">=</span> <span class="st">'celltype'</span>, mode <span class="op">=</span> <span class="st">'AUCell'</span><span class="op">)</span>
+
+<span class="co">## Seurat::AddModuleScore</span>
+<span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/enrich_genesets.html">enrich_genesets</a></span><span class="op">(</span><span class="va">kidneyimmune</span>, <span class="va">bwr</span>, groupby <span class="op">=</span> <span class="st">'celltype'</span>, mode <span class="op">=</span> <span class="st">'Seurat'</span><span class="op">)</span>
+
+<span class="co">## scanpy.tl.score_genes</span>
+<span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/enrich_genesets.html">enrich_genesets</a></span><span class="op">(</span><span class="va">kidneyimmune</span>, <span class="va">bwr</span>, groupby <span class="op">=</span> <span class="st">'celltype'</span>, mode <span class="op">=</span> <span class="st">'scanpy'</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
+<span class="co"># plot</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggraph.data-imaginist.com">ggraph</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+<span class="va">plot_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">@</span><span class="va">scores</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">ds</span><span class="op">)</span><span class="op">{</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>
+  <span class="fu">igraph</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">@</span><span class="va">graph</span><span class="op">)</span><span class="op">$</span><span class="va">score</span> <span class="op">&lt;-</span> <span class="va">bwr</span><span class="op">@</span><span class="va">scores</span><span class="op">[</span>, <span class="va">ds</span><span class="op">]</span>
+  <span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggraph.data-imaginist.com/reference/ggraph.html">ggraph</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">@</span><span class="va">graph</span>, <span class="st">'igraph'</span>, algorithm <span class="op">=</span> <span class="st">'fr'</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggraph.data-imaginist.com/reference/geom_edge_link.html">geom_edge_link</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>width <span class="op">=</span> <span class="va">weight</span><span class="op">)</span>, alpha <span class="op">=</span> <span class="fl">.25</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggraph.data-imaginist.com/reference/geom_node_point.html">geom_node_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">score</span>, size <span class="op">=</span> <span class="va">geneset_size</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_size.html">scale_size_area</a></span><span class="op">(</span>max_size <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggraph.data-imaginist.com/reference/geom_node_text.html">geom_node_text</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="va">labels</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_void</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://sjmgarnier.github.io/viridis/reference/scale_viridis.html">scale_color_viridis</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+    <span class="co"># scale_color_viridis(limits=c(0, 0.1), oob=scales::squish) +</span>
+    <span class="fu"><a href="https://ggraph.data-imaginist.com/reference/scale_edge_width.html">scale_edge_width</a></span><span class="op">(</span>range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="va">ds</span><span class="op">)</span>
+<span class="op">}</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">plot_list</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">@</span><span class="va">scores</span><span class="op">)</span>
+<span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/plot_grid.html">plot_grid</a></span><span class="op">(</span>plotlist <span class="op">=</span> <span class="va">plot_list</span><span class="op">)</span></code></pre></div>
+<p><img src="bowerbird_vignette_files/figure-html/unnamed-chunk-7-1.png" width="20" height="20"></p>
+<p>as a heatmap</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">knitr</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/knitr/man/opts_chunk.html">opts_chunk</a></span><span class="op">$</span><span class="fu">set</span><span class="op">(</span>fig.width<span class="op">=</span><span class="fl">20</span>, fig.height<span class="op">=</span><span class="fl">20</span><span class="op">)</span> 
+<span class="fu">pheatmap</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pheatmap/man/pheatmap.html">pheatmap</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">@</span><span class="va">scores</span><span class="op">)</span></code></pre></div>
+<p><img src="bowerbird_vignette_files/figure-html/unnamed-chunk-8-1.png" width="20" height="20"></p>
 </div>
 </div>
 <div id="with-fgsea-on-deg-tables-in-a-list" class="section level1">
 <h1 class="hasAnchor">
 <a href="#with-fgsea-on-deg-tables-in-a-list" class="anchor"></a>with fgsea on deg tables in a list</h1>
-<p><img src="bowerbird_vignette_files/figure-html/unnamed-chunk-7-1.png" width="700"> as a heatmap <img src="bowerbird_vignette_files/figure-html/unnamed-chunk-8-1.png" width="700"> ## Using core genes for enrichment same function as above, just specifying <code>core = TRUE</code>. <img src="bowerbird_vignette_files/figure-html/unnamed-chunk-9-1.png" width="700"> same for the gsea results. <img src="bowerbird_vignette_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">degs</span> <span class="op">&lt;-</span> <span class="fu">Seurat</span><span class="fu">::</span><span class="fu"><a href="https://satijalab.org/seurat/reference/FindAllMarkers.html">FindAllMarkers</a></span><span class="op">(</span><span class="va">kidneyimmune</span><span class="op">)</span>
+<span class="va">degs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/split.html">split</a></span><span class="op">(</span><span class="va">degs</span>, <span class="va">degs</span><span class="op">$</span><span class="va">cluster</span><span class="op">)</span> <span class="co"># so in practice, there should be one DEG table per comparison in a list.</span>
+<span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/enrich_genesets.html">enrich_genesets</a></span><span class="op">(</span><span class="va">degs</span>, <span class="va">bwr</span>, gene_symbol <span class="op">=</span> <span class="st">'gene'</span>, logfoldchanges <span class="op">=</span> <span class="st">'avg_log2FC'</span>,  pvals <span class="op">=</span> <span class="st">'p_val'</span><span class="op">)</span>
+
+<span class="co"># plot</span>
+<span class="va">plot_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">@</span><span class="va">scores</span><span class="op">$</span><span class="va">NES</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">ds</span><span class="op">)</span><span class="op">{</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>
+  <span class="va">NES</span> <span class="op">&lt;-</span> <span class="va">bwr</span><span class="op">@</span><span class="va">scores</span><span class="op">$</span><span class="va">NES</span><span class="op">[</span>, <span class="va">ds</span><span class="op">]</span>
+  <span class="va">padj</span> <span class="op">&lt;-</span> <span class="va">bwr</span><span class="op">@</span><span class="va">scores</span><span class="op">$</span><span class="va">padj</span><span class="op">[</span>, <span class="va">ds</span><span class="op">]</span>
+  <span class="va">padj</span><span class="op">[</span><span class="va">padj</span> <span class="op">&gt;=</span> <span class="fl">0.25</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NA</span>
+  <span class="fu">igraph</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">@</span><span class="va">graph</span><span class="op">)</span><span class="op">$</span><span class="va">NES</span> <span class="op">&lt;-</span> <span class="va">NES</span>
+  <span class="fu">igraph</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">@</span><span class="va">graph</span><span class="op">)</span><span class="op">$</span><span class="va">padj</span> <span class="op">&lt;-</span> <span class="va">padj</span>
+  <span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggraph.data-imaginist.com/reference/ggraph.html">ggraph</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">@</span><span class="va">graph</span>, <span class="st">'igraph'</span>, algorithm <span class="op">=</span> <span class="st">'fr'</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggraph.data-imaginist.com/reference/geom_edge_link.html">geom_edge_link</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>width <span class="op">=</span> <span class="va">weight</span><span class="op">)</span>, alpha <span class="op">=</span> <span class="fl">.25</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggraph.data-imaginist.com/reference/geom_node_point.html">geom_node_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">padj</span>, size <span class="op">=</span> <span class="va">NES</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_size.html">scale_size_area</a></span><span class="op">(</span>max_size <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggraph.data-imaginist.com/reference/geom_node_text.html">geom_node_text</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="va">labels</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_void</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://sjmgarnier.github.io/viridis/reference/scale_viridis.html">scale_color_viridis</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+    <span class="co"># scale_color_viridis(limits=c(0, 0.1), oob=scales::squish) +</span>
+    <span class="fu"><a href="https://ggraph.data-imaginist.com/reference/scale_edge_width.html">scale_edge_width</a></span><span class="op">(</span>range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="va">ds</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">'none'</span><span class="op">)</span>
+<span class="op">}</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">plot_list</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">@</span><span class="va">scores</span><span class="op">$</span><span class="va">NES</span><span class="op">)</span>
+<span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/plot_grid.html">plot_grid</a></span><span class="op">(</span>plotlist <span class="op">=</span> <span class="va">plot_list</span><span class="op">)</span></code></pre></div>
+<p><img src="bowerbird_vignette_files/figure-html/unnamed-chunk-9-1.png" width="20" height="20"> as a heatmap</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">pheatmap</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pheatmap/man/pheatmap.html">pheatmap</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">@</span><span class="va">scores</span><span class="op">$</span><span class="va">NES</span><span class="op">)</span></code></pre></div>
+<p><img src="bowerbird_vignette_files/figure-html/unnamed-chunk-10-1.png" width="10" height="10"> ## Using core genes for enrichment same function as above, just specifying <code>core = TRUE</code>.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/enrich_genesets.html">enrich_genesets</a></span><span class="op">(</span><span class="va">kidneyimmune</span>, <span class="va">bwr</span>, core <span class="op">=</span> <span class="cn">TRUE</span>, groupby <span class="op">=</span> <span class="st">'celltype'</span><span class="op">)</span> <span class="co"># if mode is not specified, the default option is to use AUCell</span>
+<span class="co"># output can also be plotted via ggraph as above but i'm using heatmap for convenience.</span>
+<span class="fu">pheatmap</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pheatmap/man/pheatmap.html">pheatmap</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">@</span><span class="va">scores</span><span class="op">)</span></code></pre></div>
+<p><img src="bowerbird_vignette_files/figure-html/unnamed-chunk-11-1.png" width="10" height="10"> same for the gsea results.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/enrich_genesets.html">enrich_genesets</a></span><span class="op">(</span><span class="va">degs</span>, <span class="va">bwr</span>, core <span class="op">=</span> <span class="cn">TRUE</span>, gene_symbol <span class="op">=</span> <span class="st">'gene'</span>, logfoldchanges <span class="op">=</span> <span class="st">'avg_log2FC'</span>,  pvals <span class="op">=</span> <span class="st">'p_val'</span><span class="op">)</span>
+<span class="fu">pheatmap</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pheatmap/man/pheatmap.html">pheatmap</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">@</span><span class="va">scores</span><span class="op">$</span><span class="va">NES</span><span class="op">)</span></code></pre></div>
+<p><img src="bowerbird_vignette_files/figure-html/unnamed-chunk-12-1.png" width="10" height="10"></p>
 </div>
   </div>
 
