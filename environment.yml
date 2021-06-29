@@ -9,3 +9,12 @@ dependencies:
 - python-igraph
 - leidenalg
 - numpy
+- seaborn
+- scikit-learn
+- statsmodels
+- numba
+- pytables
+- pip:
+  - pip
+  - scanpy
+  
