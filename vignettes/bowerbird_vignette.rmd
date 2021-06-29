@@ -9,6 +9,7 @@ vignette: >
 ---
 
 [![R](https://github.com/clatworthylab/bowerbird/actions/workflows/r.yml/badge.svg?branch=master)](https://github.com/clatworthylab/bowerbird/actions/workflows/r.yml)
+[![vignette](https://github.com/clatworthylab/bowerbird/actions/workflows/vignette.yml/badge.svg)](https://github.com/clatworthylab/bowerbird/actions/workflows/vignette.yml)
 
 # bowerbird
 A single-cell package for Functional Annotation + Gene Module Summarization.
