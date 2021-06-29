@@ -127,161 +127,15 @@
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">csv_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"h.all.v7.4.symbols.csv"</span>, package <span class="op">=</span> <span class="st">"bowerbird"</span><span class="op">)</span> <span class="co"># read in a .gmt file</span>
 <span class="va">csv</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="va">csv_file</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">csv</span><span class="op">)</span>
+<span class="co"># see first 6 rows of the first 3 columns</span>
+<span class="va">csv</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>
 <span class="co">#&gt;   HALLMARK_ADIPOGENESIS HALLMARK_ALLOGRAFT_REJECTION HALLMARK_ANDROGEN_RESPONSE</span>
 <span class="co">#&gt; 1                 ABCA1                        AARS1                      ABCC4</span>
 <span class="co">#&gt; 2                 ABCB8                        ABCE1                      ABHD2</span>
 <span class="co">#&gt; 3                 ACAA2                         ABI1                      ACSL3</span>
 <span class="co">#&gt; 4                 ACADL                         ACHE                      ACTN1</span>
 <span class="co">#&gt; 5                 ACADM                       ACVR2A                    ADAMTS1</span>
-<span class="co">#&gt; 6                 ACADS                         AKT1                      ADRM1</span>
-<span class="co">#&gt;   HALLMARK_ANGIOGENESIS HALLMARK_APICAL_JUNCTION HALLMARK_APICAL_SURFACE</span>
-<span class="co">#&gt; 1                  APOH                    ACTA1                  ADAM10</span>
-<span class="co">#&gt; 2                   APP                     ACTB                 ADIPOR2</span>
-<span class="co">#&gt; 3                 CCND2                    ACTC1                 AFAP1L2</span>
-<span class="co">#&gt; 4                COL3A1                    ACTG1                   AKAP7</span>
-<span class="co">#&gt; 5                COL5A2                    ACTG2                     APP</span>
-<span class="co">#&gt; 6                 CXCL6                    ACTN1                ATP6V0A4</span>
-<span class="co">#&gt;   HALLMARK_APOPTOSIS HALLMARK_BILE_ACID_METABOLISM</span>
-<span class="co">#&gt; 1               ADD1                         ABCA1</span>
-<span class="co">#&gt; 2              AIFM3                         ABCA2</span>
-<span class="co">#&gt; 3               ANKH                         ABCA3</span>
-<span class="co">#&gt; 4              ANXA1                         ABCA4</span>
-<span class="co">#&gt; 5                APP                         ABCA5</span>
-<span class="co">#&gt; 6               ATF3                         ABCA6</span>
-<span class="co">#&gt;   HALLMARK_CHOLESTEROL_HOMEOSTASIS HALLMARK_COAGULATION HALLMARK_COMPLEMENT</span>
-<span class="co">#&gt; 1                            ABCA2                  A2M               ACTN2</span>
-<span class="co">#&gt; 2                            ACAT2                ACOX2               ADAM9</span>
-<span class="co">#&gt; 3                            ACSS2                ADAM9              ADRA2B</span>
-<span class="co">#&gt; 4                            ACTG1                  ANG              AKAP10</span>
-<span class="co">#&gt; 5                             ADH4                ANXA1                 ANG</span>
-<span class="co">#&gt; 6                            ALCAM                APOA1               ANXA5</span>
-<span class="co">#&gt;   HALLMARK_DNA_REPAIR HALLMARK_E2F_TARGETS</span>
-<span class="co">#&gt; 1                AAAS                  AK2</span>
-<span class="co">#&gt; 2                 ADA               ANP32E</span>
-<span class="co">#&gt; 3               ADCY6                ASF1A</span>
-<span class="co">#&gt; 4               ADRM1                ASF1B</span>
-<span class="co">#&gt; 5                AGO4                ATAD2</span>
-<span class="co">#&gt; 6                 AK1                AURKA</span>
-<span class="co">#&gt;   HALLMARK_EPITHELIAL_MESENCHYMAL_TRANSITION HALLMARK_ESTROGEN_RESPONSE_EARLY</span>
-<span class="co">#&gt; 1                                     ABI3BP                             ABAT</span>
-<span class="co">#&gt; 2                                      ACTA2                            ABCA3</span>
-<span class="co">#&gt; 3                                     ADAM12                            ABHD2</span>
-<span class="co">#&gt; 4                                      ANPEP                           ABLIM1</span>
-<span class="co">#&gt; 5                                      APLP1                            ADCY1</span>
-<span class="co">#&gt; 6                                       AREG                            ADCY9</span>
-<span class="co">#&gt;   HALLMARK_ESTROGEN_RESPONSE_LATE HALLMARK_FATTY_ACID_METABOLISM</span>
-<span class="co">#&gt; 1                           ABCA3                          AADAT</span>
-<span class="co">#&gt; 2                           ABHD2                          ACAA1</span>
-<span class="co">#&gt; 3                           ACOX2                          ACAA2</span>
-<span class="co">#&gt; 4                            ADD3                          ACADL</span>
-<span class="co">#&gt; 5                            AFF1                          ACADM</span>
-<span class="co">#&gt; 6                            AGR2                          ACADS</span>
-<span class="co">#&gt;   HALLMARK_G2M_CHECKPOINT HALLMARK_GLYCOLYSIS HALLMARK_HEDGEHOG_SIGNALING</span>
-<span class="co">#&gt; 1                    ABL1               ABCB6                        ACHE</span>
-<span class="co">#&gt; 2                    AMD1             ADORA2B                      ADGRG1</span>
-<span class="co">#&gt; 3                  ARID4A                 AGL                        AMOT</span>
-<span class="co">#&gt; 4                    ATF5                AGRN                      CDK5R1</span>
-<span class="co">#&gt; 5                    ATRX                 AK3                        CDK6</span>
-<span class="co">#&gt; 6                   AURKA                 AK4                      CELSR1</span>
-<span class="co">#&gt;   HALLMARK_HEME_METABOLISM HALLMARK_HYPOXIA HALLMARK_IL2_STAT5_SIGNALING</span>
-<span class="co">#&gt; 1                    ABCB6            ACKR3                        ABCB1</span>
-<span class="co">#&gt; 2                    ABCG2              ADM                       ADAM19</span>
-<span class="co">#&gt; 3                    ACKR1          ADORA2B                         AGER</span>
-<span class="co">#&gt; 4                     ACP5              AK4                         AHCY</span>
-<span class="co">#&gt; 5                    ACSL6           AKAP12                        AHNAK</span>
-<span class="co">#&gt; 6                     ADD1            ALDOA                          AHR</span>
-<span class="co">#&gt;   HALLMARK_IL6_JAK_STAT3_SIGNALING HALLMARK_INFLAMMATORY_RESPONSE</span>
-<span class="co">#&gt; 1                              A2M                          ABCA1</span>
-<span class="co">#&gt; 2                           ACVR1B                           ABI1</span>
-<span class="co">#&gt; 3                           ACVRL1                         ACVR1B</span>
-<span class="co">#&gt; 4                             BAK1                         ACVR2A</span>
-<span class="co">#&gt; 5                              CBL                         ADGRE1</span>
-<span class="co">#&gt; 6                             CCL7                            ADM</span>
-<span class="co">#&gt;   HALLMARK_INTERFERON_ALPHA_RESPONSE HALLMARK_INTERFERON_GAMMA_RESPONSE</span>
-<span class="co">#&gt; 1                               ADAR                               ADAR</span>
-<span class="co">#&gt; 2                                B2M                              APOL6</span>
-<span class="co">#&gt; 3                              BATF2                             ARID5B</span>
-<span class="co">#&gt; 4                               BST2                              ARL4A</span>
-<span class="co">#&gt; 5                                C1S                              AUTS2</span>
-<span class="co">#&gt; 6                              CASP1                                B2M</span>
-<span class="co">#&gt;   HALLMARK_KRAS_SIGNALING_DN HALLMARK_KRAS_SIGNALING_UP</span>
-<span class="co">#&gt; 1                     ABCB11                      ABCB1</span>
-<span class="co">#&gt; 2                      ABCG4                        ACE</span>
-<span class="co">#&gt; 3                      ACTC1                     ADAM17</span>
-<span class="co">#&gt; 4                     ADRA2C                      ADAM8</span>
-<span class="co">#&gt; 5                    AKR1B10                   ADAMDEC1</span>
-<span class="co">#&gt; 6                    ALOX12B                     ADGRA2</span>
-<span class="co">#&gt;   HALLMARK_MITOTIC_SPINDLE HALLMARK_MTORC1_SIGNALING HALLMARK_MYC_TARGETS_V1</span>
-<span class="co">#&gt; 1                     ABI1                     ABCF2                   ABCE1</span>
-<span class="co">#&gt; 2                     ABL1                     ACACA                    ACP1</span>
-<span class="co">#&gt; 3                      ABR                      ACLY                   AIMP2</span>
-<span class="co">#&gt; 4                    ACTN4                     ACSL3                   AP3S1</span>
-<span class="co">#&gt; 5                   AKAP13                     ACTR2                   APEX1</span>
-<span class="co">#&gt; 6                    ALMS1                     ACTR3                    BUB3</span>
-<span class="co">#&gt;   HALLMARK_MYC_TARGETS_V2 HALLMARK_MYOGENESIS HALLMARK_NOTCH_SIGNALING</span>
-<span class="co">#&gt; 1                   AIMP2              ABLIM1                    APH1A</span>
-<span class="co">#&gt; 2                    BYSL                ACHE                    ARRB1</span>
-<span class="co">#&gt; 3                    CBX3               ACSL1                    CCND1</span>
-<span class="co">#&gt; 4                    CDK4               ACTA1                     CUL1</span>
-<span class="co">#&gt; 5                  DCTPP1               ACTC1                     DLL1</span>
-<span class="co">#&gt; 6                   DDX18               ACTN2                     DTX1</span>
-<span class="co">#&gt;   HALLMARK_OXIDATIVE_PHOSPHORYLATION HALLMARK_P53_PATHWAY</span>
-<span class="co">#&gt; 1                              ABCB7                 ABAT</span>
-<span class="co">#&gt; 2                              ACAA1                ABCC5</span>
-<span class="co">#&gt; 3                              ACAA2                ABHD4</span>
-<span class="co">#&gt; 4                              ACADM               ACVR1B</span>
-<span class="co">#&gt; 5                             ACADSB                  ADA</span>
-<span class="co">#&gt; 6                             ACADVL                  AEN</span>
-<span class="co">#&gt;   HALLMARK_PANCREAS_BETA_CELLS HALLMARK_PEROXISOME</span>
-<span class="co">#&gt; 1                        ABCC8               ABCB1</span>
-<span class="co">#&gt; 2                         AKT3               ABCB4</span>
-<span class="co">#&gt; 3                         CHGA               ABCB9</span>
-<span class="co">#&gt; 4                          DCX               ABCC5</span>
-<span class="co">#&gt; 5                         DPP4               ABCC8</span>
-<span class="co">#&gt; 6                         ELP4               ABCD1</span>
-<span class="co">#&gt;   HALLMARK_PI3K_AKT_MTOR_SIGNALING HALLMARK_PROTEIN_SECRETION</span>
-<span class="co">#&gt; 1                            ACACA                      ABCA1</span>
-<span class="co">#&gt; 2                            ACTR2                     ADAM10</span>
-<span class="co">#&gt; 3                            ACTR3                     ANP32E</span>
-<span class="co">#&gt; 4                            ADCY2                      AP1G1</span>
-<span class="co">#&gt; 5                             AKT1                      AP2B1</span>
-<span class="co">#&gt; 6                           AKT1S1                      AP2M1</span>
-<span class="co">#&gt;   HALLMARK_REACTIVE_OXYGEN_SPECIES_PATHWAY HALLMARK_SPERMATOGENESIS</span>
-<span class="co">#&gt; 1                                    ABCC1                      ACE</span>
-<span class="co">#&gt; 2                                    ATOX1                    ACRBP</span>
-<span class="co">#&gt; 3                                      CAT                    ACRV1</span>
-<span class="co">#&gt; 4                                   CDKN2D                   ACTL7B</span>
-<span class="co">#&gt; 5                                    EGLN2                    ADAD1</span>
-<span class="co">#&gt; 6                                    ERCC2                    ADAM2</span>
-<span class="co">#&gt;   HALLMARK_TGF_BETA_SIGNALING HALLMARK_TNFA_SIGNALING_VIA_NFKB</span>
-<span class="co">#&gt; 1                       ACVR1                            ABCA1</span>
-<span class="co">#&gt; 2                         APC                            ACKR3</span>
-<span class="co">#&gt; 3                      ARID4B                             AREG</span>
-<span class="co">#&gt; 4                       BCAR3                             ATF3</span>
-<span class="co">#&gt; 5                        BMP2                           ATP2B1</span>
-<span class="co">#&gt; 6                      BMPR1A                          B4GALT1</span>
-<span class="co">#&gt;   HALLMARK_UNFOLDED_PROTEIN_RESPONSE HALLMARK_UV_RESPONSE_DN</span>
-<span class="co">#&gt; 1                           ALDH18A1                   ABCC1</span>
-<span class="co">#&gt; 2                            ARFGAP1                  ACVR2A</span>
-<span class="co">#&gt; 3                               ASNS                    ADD3</span>
-<span class="co">#&gt; 4                               ATF3                  ADGRL2</span>
-<span class="co">#&gt; 5                               ATF4                 ADORA2B</span>
-<span class="co">#&gt; 6                               ATF6                   AGGF1</span>
-<span class="co">#&gt;   HALLMARK_UV_RESPONSE_UP HALLMARK_WNT_BETA_CATENIN_SIGNALING</span>
-<span class="co">#&gt; 1                   ABCB1                              ADAM17</span>
-<span class="co">#&gt; 2                   ACAA1                               AXIN1</span>
-<span class="co">#&gt; 3                    AGO2                               AXIN2</span>
-<span class="co">#&gt; 4                   ALAS1                               CCND2</span>
-<span class="co">#&gt; 5                   ALDOA                              CSNK1E</span>
-<span class="co">#&gt; 6                    AMD1                              CTNNB1</span>
-<span class="co">#&gt;   HALLMARK_XENOBIOTIC_METABOLISM Unnamed..50</span>
-<span class="co">#&gt; 1                          ABCC2          NA</span>
-<span class="co">#&gt; 2                          ABCC3          NA</span>
-<span class="co">#&gt; 3                          ABCD2          NA</span>
-<span class="co">#&gt; 4                          ABHD6          NA</span>
-<span class="co">#&gt; 5                           ACO2          NA</span>
-<span class="co">#&gt; 6                          ACOX1          NA</span></code></pre></div>
+<span class="co">#&gt; 6                 ACADS                         AKT1                      ADRM1</span></code></pre></div>
 <p>And now to process it through.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu">bower</span><span class="op">(</span><span class="va">csv</span><span class="op">)</span>
@@ -306,12 +160,12 @@
 <span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/snn_graph.html">snn_graph</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">)</span>
 <span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/find_clusters.html">find_clusters</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">)</span>
 <span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/summarize_clusters.html">summarize_clusters</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">)</span>
-<span class="co">#&gt; Downloading udpipe model from https://raw.githubusercontent.com/jwijffels/udpipe.models.ud.2.5/master/inst/udpipe-ud-2.5-191206/english-ewt-ud-2.5-191206.udpipe to /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpHrdq2m/english-ewt-ud-2.5-191206.udpipe</span>
+<span class="co">#&gt; Downloading udpipe model from https://raw.githubusercontent.com/jwijffels/udpipe.models.ud.2.5/master/inst/udpipe-ud-2.5-191206/english-ewt-ud-2.5-191206.udpipe to /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpzwTUrr/english-ewt-ud-2.5-191206.udpipe</span>
 <span class="co">#&gt;  - This model has been trained on version 2.5 of data from https://universaldependencies.org</span>
 <span class="co">#&gt;  - The model is distributed under the CC-BY-SA-NC license: https://creativecommons.org/licenses/by-nc-sa/4.0</span>
 <span class="co">#&gt;  - Visit https://github.com/jwijffels/udpipe.models.ud.2.5 for model license details.</span>
 <span class="co">#&gt;  - For a list of all models and their licenses (most models you can download with this package have either a CC-BY-SA or a CC-BY-SA-NC license) read the documentation at ?udpipe_download_model. For building your own models: visit the documentation by typing vignette('udpipe-train', package = 'udpipe')</span>
-<span class="co">#&gt; Downloading finished, model stored at '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpHrdq2m/english-ewt-ud-2.5-191206.udpipe'</span></code></pre></div>
+<span class="co">#&gt; Downloading finished, model stored at '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpzwTUrr/english-ewt-ud-2.5-191206.udpipe'</span></code></pre></div>
 <p>Or extracting from <code>msigdbr</code>.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://igordot.github.io/msigdbr/">msigdbr</a></span><span class="op">)</span>
@@ -327,53 +181,54 @@
 <span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/snn_graph.html">snn_graph</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">)</span>
 <span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/find_clusters.html">find_clusters</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">)</span>
 <span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/summarize_clusters.html">summarize_clusters</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">)</span>
-<span class="co">#&gt; Downloading udpipe model from https://raw.githubusercontent.com/jwijffels/udpipe.models.ud.2.5/master/inst/udpipe-ud-2.5-191206/english-ewt-ud-2.5-191206.udpipe to /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpHrdq2m/english-ewt-ud-2.5-191206.udpipe</span>
+<span class="co">#&gt; Downloading udpipe model from https://raw.githubusercontent.com/jwijffels/udpipe.models.ud.2.5/master/inst/udpipe-ud-2.5-191206/english-ewt-ud-2.5-191206.udpipe to /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpzwTUrr/english-ewt-ud-2.5-191206.udpipe</span>
 <span class="co">#&gt;  - This model has been trained on version 2.5 of data from https://universaldependencies.org</span>
 <span class="co">#&gt;  - The model is distributed under the CC-BY-SA-NC license: https://creativecommons.org/licenses/by-nc-sa/4.0</span>
 <span class="co">#&gt;  - Visit https://github.com/jwijffels/udpipe.models.ud.2.5 for model license details.</span>
 <span class="co">#&gt;  - For a list of all models and their licenses (most models you can download with this package have either a CC-BY-SA or a CC-BY-SA-NC license) read the documentation at ?udpipe_download_model. For building your own models: visit the documentation by typing vignette('udpipe-train', package = 'udpipe')</span>
-<span class="co">#&gt; Downloading finished, model stored at '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpHrdq2m/english-ewt-ud-2.5-191206.udpipe'</span></code></pre></div>
+<span class="co">#&gt; Downloading finished, model stored at '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpzwTUrr/english-ewt-ud-2.5-191206.udpipe'</span></code></pre></div>
 <p>So what has actually happened? Well, basically <code>bowerbird</code> has learnt which gene sets share more genes with each other, clustered them together and learnt a new summary term.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bwr</span>
 <span class="co">#&gt; BOWER class</span>
 <span class="co">#&gt; number of genesets:  265 </span>
 <span class="co">#&gt; genesets kNN Graph: </span>
-<span class="co">#&gt; IGRAPH 4dc82b9 UNW- 265 843 -- </span>
+<span class="co">#&gt; IGRAPH 065b388 UNW- 265 843 -- </span>
 <span class="co">#&gt; + attr: name (v/c), cluster (v/n), geneset_size (v/n), terms (v/c),</span>
 <span class="co">#&gt; | labels (v/c), weight (e/n)</span>
-<span class="co">#&gt; + edges from 4dc82b9 (vertex names):</span>
+<span class="co">#&gt; + edges from 065b388 (vertex names):</span>
 <span class="co">#&gt; [1] GOBP_ACTIVATED_T_CELL_PROLIFERATION--GOBP_CD8_POSITIVE_ALPHA_BETA_T_CELL_DIFFERENTIATION          </span>
 <span class="co">#&gt; [2] GOBP_ACTIVATED_T_CELL_PROLIFERATION--GOBP_NEGATIVE_REGULATION_OF_ACTIVATED_T_CELL_PROLIFERATION   </span>
 <span class="co">#&gt; [3] GOBP_ACTIVATED_T_CELL_PROLIFERATION--GOBP_NEGATIVE_REGULATION_OF_LYMPHOCYTE_DIFFERENTIATION       </span>
 <span class="co">#&gt; [4] GOBP_ACTIVATED_T_CELL_PROLIFERATION--GOBP_NEGATIVE_REGULATION_OF_T_CELL_RECEPTOR_SIGNALING_PATHWAY</span>
 <span class="co">#&gt; [5] GOBP_ACTIVATION_OF_IMMUNE_RESPONSE --GOBP_ACTIVATION_OF_INNATE_IMMUNE_RESPONSE                    </span>
 <span class="co">#&gt; + ... omitted several edges</span>
-<span class="co">#&gt; number of geneset clusters:  22 </span>
+<span class="co">#&gt; number of geneset clusters:  23 </span>
 <span class="co">#&gt; Core genes:</span>
 <span class="co">#&gt;  First six genes shown</span>
 <span class="co">#&gt;   IMMUNE RESPONSE-1 : AIM2 BCL10 BTRC CARD11 CARD9 CD209 ...</span>
-<span class="co">#&gt;   CD4 ALPHA BETA T CELL DIFFERENTIATION : ANXA1 ATP7A BATF BCL3 BCL6 CBFB ...</span>
+<span class="co">#&gt;   TYPE 2 IMMUNE RESPONSE : IL4 PLCL2 TLR4 IL18 IL18R1 IL4R ...</span>
 <span class="co">#&gt;   IMMUNE RESPONSE : CLNK HLA-E HLA-F IFNA2 IFNB1 IL18 ...</span>
-<span class="co">#&gt;   T CELL MEDIATED CYTOTOXICITY : HLA-A HLA-B HLA-C HLA-E HLA-F HLA-G ...</span>
-<span class="co">#&gt;   B CELL ACTIVATION-1 : ADA BAX BCL6 BLK BTK CD74 ...</span>
 <span class="co">#&gt;   RESPONSE TO INTERFERON BETA : BCL2L11 HIF1A MEF2C ADA SOS1 SOS2 ...</span>
+<span class="co">#&gt;   T CELL MEDIATED CYTOTOXICITY : HLA-A HLA-B HLA-C HLA-E HLA-F HLA-G ...</span>
 <span class="co">#&gt;   CD8 ALPHA BETA T CELL ACTIVATION : HLA-E GATA3 ADCYAP1 BTK C3 CCR7 ...</span>
+<span class="co">#&gt;   CD4 ALPHA BETA T CELL DIFFERENTIATION : ANXA1 ATP7A BATF BCL3 BCL6 CBFB ...</span>
 <span class="co">#&gt;   T CELL DIFFERENTIATION : FCGR2B FGL2 HLA-DOA LILRB2 THBS1 BMP4 ...</span>
 <span class="co">#&gt;   INTERFERON GAMMA PRODUCTION : ABCB9 ACE ACTR10 ACTR1A ACTR1B AP1B1 ...</span>
-<span class="co">#&gt;   T HELPER 1 TYPE IMMUNE RESPONSE : BATF FOXP3 IL6 TBX21 BCL6 IL2 ...</span>
-<span class="co">#&gt;   INTERFERON ALPHA PRODUCTION : IL18 IL18R1 IL4 TLR4 SYK IL13 ...</span>
 <span class="co">#&gt;   TOLL LIKE RECEPTOR SIGNALING PATHWAY : CACTIN PTPRS TICAM1 TLR3 TLR4 TLR9 ...</span>
 <span class="co">#&gt;   T CELL CYTOKINE PRODUCTION : KLRC1 LILRB1 NOD2 PTPRC EGR3 LEF1 ...</span>
-<span class="co">#&gt;   B CELL ACTIVATION : ADA ADAM17 BATF BCL3 BCL6 BTK ...</span>
-<span class="co">#&gt;   ACTIVATED T CELL PROLIFERATION : LILRB4 CD24 CD274 FYN HHLA2 ICOSLG ...</span>
+<span class="co">#&gt;   B CELL ACTIVATION-1 : ADA BAX BCL6 BLK BTK CD74 ...</span>
+<span class="co">#&gt;   B CELL DIFFERENTIATION : IL10 TLR9 SYK ADA BCL3 C17orf99 ...</span>
 <span class="co">#&gt;   LYMPHOCYTE CHEMOTAXIS : CCL2 CCL3 CCL4 CCL5 CCL7 CXCL14 ...</span>
+<span class="co">#&gt;   ACTIVATED T CELL PROLIFERATION : LILRB4 CD24 CD274 FYN HHLA2 ICOSLG ...</span>
+<span class="co">#&gt;   B CELL ACTIVATION : BATF BCL3 BCL6 BTK C17orf99 CCR6 ...</span>
+<span class="co">#&gt;   T CELL SELECTION : TOX BCL2 BATF CTSL FOXP3 IL12B ...</span>
 <span class="co">#&gt;   ALPHA BETA T CELL ACTIVATION : AGER ANXA1 ARG2 ATP7A BATF BCL3 ...</span>
 <span class="co">#&gt;   INFLAMMATORY RESPONSE TO ANTIGENIC STIMULUS : BTK C3 CD28 HLA-E LTA NOD2 ...</span>
-<span class="co">#&gt;   T CELL SELECTION : PTPRC TOX RABL3 STAT5B ZBTB1 IL15 ...</span>
-<span class="co">#&gt;   ANTIGEN PROCESSING AND PRESENTATION OF PEPTIDE ANTIGEN VIA MHC CLASS I : ABCB9 AZGP1 B2M ERAP1 ERAP2 HFE ...</span>
+<span class="co">#&gt;   T CELL APOPTOTIC PROCESS : ADA AKT1 BAK1 BAX BCL10 BCL2L11 ...</span>
 <span class="co">#&gt;   LYMPHOCYTE MIGRATION : ADAM10 ADAM17 ADAM8 AIF1 APP CCL20 ...</span>
-<span class="co">#&gt;   B CELL DIFFERENTIATION : ADA BCL3 C17orf99 CD19 CDH17 CMTM7 ...</span></code></pre></div>
+<span class="co">#&gt;   ANTIGEN PROCESSING AND PRESENTATION OF PEPTIDE ANTIGEN VIA MHC CLASS I : ABCB9 AZGP1 B2M ERAP1 ERAP2 HFE ...</span>
+<span class="co">#&gt;   CELL ACTIVATION INVOLVED IN IMMUNE RESPONSE : ABL1 ADA ANXA1 AP1G1 APBB1IP ATP7A ...</span></code></pre></div>
 <p>We can visualise it with a simple plot</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggraph.data-imaginist.com">ggraph</a></span><span class="op">)</span>
@@ -426,7 +281,7 @@
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">8</span>, face <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span><span class="op">)</span>
 <span class="op">}</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">plot_list</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">@</span><span class="va">scores</span><span class="op">)</span>
-<span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/plot_grid.html">plot_grid</a></span><span class="op">(</span>plotlist <span class="op">=</span> <span class="va">plot_list</span>, scale <span class="op">=</span> <span class="fl">0.9</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></code></pre></div>
+<span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/plot_grid.html">plot_grid</a></span><span class="op">(</span>plotlist <span class="op">=</span> <span class="va">plot_list</span>, scale <span class="op">=</span> <span class="fl">0.9</span><span class="op">)</span></code></pre></div>
 <p><img src="bowerbird_vignette_files/figure-html/unnamed-chunk-13-1.png" width="2880"></p>
 </div>
 <div id="running-fgsea-on-deg-tables-in-a-list-as-an-alternative-to-the-single-cell-methods-" class="section level2">
@@ -456,7 +311,7 @@
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="va">ds</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">'none'</span>, plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">8</span>, face <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span><span class="op">)</span>
 <span class="op">}</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">plot_list</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">@</span><span class="va">scores</span><span class="op">$</span><span class="va">NES</span><span class="op">)</span>
-<span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/plot_grid.html">plot_grid</a></span><span class="op">(</span>plotlist <span class="op">=</span> <span class="va">plot_list</span>, scale <span class="op">=</span> <span class="fl">0.9</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></code></pre></div>
+<span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/plot_grid.html">plot_grid</a></span><span class="op">(</span>plotlist <span class="op">=</span> <span class="va">plot_list</span>, scale <span class="op">=</span> <span class="fl">0.9</span><span class="op">)</span></code></pre></div>
 <p><img src="bowerbird_vignette_files/figure-html/unnamed-chunk-15-1.png" width="2880"></p>
 <p>Coloured by normalized enrichment score.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
@@ -476,7 +331,7 @@
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="va">ds</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">'none'</span>, plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">8</span>, face <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span><span class="op">)</span>
 <span class="op">}</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">plot_list</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">@</span><span class="va">scores</span><span class="op">$</span><span class="va">NES</span><span class="op">)</span>
-<span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/plot_grid.html">plot_grid</a></span><span class="op">(</span>plotlist <span class="op">=</span> <span class="va">plot_list</span>, scale <span class="op">=</span> <span class="fl">0.9</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></code></pre></div>
+<span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/plot_grid.html">plot_grid</a></span><span class="op">(</span>plotlist <span class="op">=</span> <span class="va">plot_list</span>, scale <span class="op">=</span> <span class="fl">0.9</span><span class="op">)</span></code></pre></div>
 <p><img src="bowerbird_vignette_files/figure-html/unnamed-chunk-16-1.png" width="2880"></p>
 </div>
 <div id="using-core-genes-for-enrichment" class="section level2">
@@ -485,12 +340,12 @@
 <p>Same function as above, just specifying <code>core = TRUE</code>. This will grab the intersecting (or outersecting rather) genes in a gene set cluster and perform the enrichment, like a summary gene set of the summarised terms.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/enrich_genesets.html">enrich_genesets</a></span><span class="op">(</span><span class="va">kidneyimmune</span>, <span class="va">bwr</span>, core <span class="op">=</span> <span class="cn">TRUE</span>, groupby <span class="op">=</span> <span class="st">'celltype'</span><span class="op">)</span> <span class="co"># if mode is not specified, the default option is to use AUCell</span>
-<span class="fu">pheatmap</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pheatmap/man/pheatmap.html">pheatmap</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">@</span><span class="va">scores</span>, cellheight <span class="op">=</span> <span class="fl">20</span>, cellwidth <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></code></pre></div>
+<span class="fu">pheatmap</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pheatmap/man/pheatmap.html">pheatmap</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">@</span><span class="va">scores</span>, cellheight <span class="op">=</span> <span class="fl">10</span>, cellwidth <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></code></pre></div>
 <p><img src="bowerbird_vignette_files/figure-html/unnamed-chunk-17-1.png" width="1440"></p>
 <p>Same for the gsea results.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/enrich_genesets.html">enrich_genesets</a></span><span class="op">(</span><span class="va">degs</span>, <span class="va">bwr</span>, core <span class="op">=</span> <span class="cn">TRUE</span>, gene_symbol <span class="op">=</span> <span class="st">'gene'</span>, logfoldchanges <span class="op">=</span> <span class="st">'avg_log2FC'</span>,  pvals <span class="op">=</span> <span class="st">'p_val'</span><span class="op">)</span>
-<span class="fu">pheatmap</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pheatmap/man/pheatmap.html">pheatmap</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">@</span><span class="va">scores</span><span class="op">$</span><span class="va">NES</span>, cellheight <span class="op">=</span> <span class="fl">20</span>, cellwidth <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></code></pre></div>
+<span class="fu">pheatmap</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pheatmap/man/pheatmap.html">pheatmap</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">@</span><span class="va">scores</span><span class="op">$</span><span class="va">NES</span>, cellheight <span class="op">=</span> <span class="fl">10</span>, cellwidth <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></code></pre></div>
 <p><img src="bowerbird_vignette_files/figure-html/unnamed-chunk-18-1.png" width="1440"></p>
 <p>To visualise as a graph, can consider doing:</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
