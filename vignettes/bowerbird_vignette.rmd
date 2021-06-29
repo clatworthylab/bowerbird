@@ -126,7 +126,10 @@ bwr
 
 We can visualise it with a simple plot
 
-```{r, fig.width=7, fig.height=7}
+```{r, message=FALSE, warning=FALSE, fig.width=7, fig.height=7}
+library(ggraph)
+library(ggplot2)
+
 ggraph(bwr@graph, 'igraph', algorithm = 'fr') + 
     geom_edge_link(aes(width = weight), alpha = .25) +
     geom_node_point(aes(color = factor(cluster), size = geneset_size)) + 
@@ -162,9 +165,7 @@ bwr <- enrich_genesets(kidneyimmune, bwr, groupby = 'celltype', mode = 'scanpy')
 
 Visualise as a network plot.
 
-```{r, fig.width=30, fig.height=35}
-library(ggraph)
-library(ggplot2)
+```{r, fig.width=30, fig.height=35, message=FALSE, warning=FALSE}
 plot_list <- lapply(colnames(bwr@scores), function(ds){
   set.seed(100)
   igraph::V(bwr@graph)$score <- bwr@scores[, ds]
