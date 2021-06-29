@@ -82,15 +82,19 @@ summarize_clusters.BOWER <- function(bower, cluster = NULL, pattern = NULL, sep 
   # and also only create a label for the centroid node
   data = .graph_to_data(bower@graph)
   data$`_orig_index` = row.names(data)
-  data <- split(data, data$terms)
+  data <- split(data, data$cluster)
   datax <- lapply(data, function(x) {
     centroid <- .closest_to_centroid(x, 'x', 'y')$`_orig_index`
     return(centroid)})
   idx <- as.numeric(unlist(datax))
   tmp2 <- tmp[cl]
   tmp2[-idx] <- ""
+  tmp2 <- make.unique(tmp2, sep = '-')
+  tmp_idx <- grep('^-', tmp2)
+  tmp2[tmp_idx] <- ""
+
   igraph::V(bower@graph)$labels <- tmp2
-  bower@.graph_data <- .graph_to_data(bower@graph)  
+  bower@.graph_data <- .graph_to_data(bower@graph)
   bower <- extract_core(bower)
 
 	return(bower)
@@ -164,8 +168,10 @@ summarize_clusters.igraph <- function(graph, cluster = NULL, pattern = NULL, sep
     centroid <- .closest_to_centroid(x, 'x', 'y')$`_orig_index`
     return(centroid)})
   idx <- as.numeric(unlist(datax))
-  tmp2 <- tmp[cl]
   tmp2[-idx] <- ""
+  tmp2 <- make.unique(tmp2, sep = '-')
+  tmp_idx <- grep('^-', tmp2)
+  tmp2[tmp_idx] <- ""
   labels <- tmp2
 
 	return(list(result, labels))
