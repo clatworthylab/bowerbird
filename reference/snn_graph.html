@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="snn_graph — snn_graph" />
-<meta property="og:description" content="snn_graph" />
+<meta property="og:description" content="Creates a k-nearest-neighbor graph from a tf-idf matrix." />
 
 
 
@@ -121,12 +121,10 @@
     </div>
 
     <div class="ref-description">
-    <p>snn_graph</p>
+    <p>Creates a k-nearest-neighbor graph from a tf-idf matrix.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>snn_graph</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
-
-<span class='co'># S3 method for BOWER</span>
+    <pre class="usage"><span class='co'># S3 method for BOWER</span>
 <span class='fu'>snn_graph</span><span class='op'>(</span><span class='va'>bower</span>, max_features <span class='op'>=</span> <span class='fl'>100</span>, remove_stopwords <span class='op'>=</span> <span class='cn'>FALSE</span>, k <span class='op'>=</span> <span class='fl'>5</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for list</span>
@@ -135,14 +133,6 @@
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>x</th>
-      <td><p>either a BOWER class or a list.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>passed to superml::TfIdfVectorizer</p></td>
-    </tr>
     <tr>
       <th>max_features</th>
       <td><p>use top features sorted by count to be used in bag of words matrix. The default value is set to 100.</p></td>
@@ -156,6 +146,10 @@
       <td><p>the maximum number of nearest neighbors to search. The default value is set to 5.</p></td>
     </tr>
     <tr>
+      <th>...</th>
+      <td><p>passed to superml::TfIdfVectorizer</p></td>
+    </tr>
+    <tr>
       <th>gs</th>
       <td><p>genesets in list.</p></td>
     </tr>
@@ -163,17 +157,15 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns a SNN geneset graph.</p>
-<p>Returns a matrix of tf-idf score of tokens.</p>
+    <p>Returns a matrix of tf-idf score of tokens.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Given a list of text, it creates a sparse matrix consisting of tf-idf score for tokens from the text. See <code>https://github.com/saraswatmks/superml/blob/master/R/TfidfVectorizer.R</code>. A k shortest-nearest neighbor graph is then computed using the overlap of of the terms.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='va'>gs</span> <span class='op'>&lt;-</span> <span class='fu'>scFA</span><span class='fu'>::</span><span class='fu'>read_geneset</span><span class='op'>(</span><span class='st'>'geneset.gmt'</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in loadNamespace(x): there is no package called ‘scFA’</span></div><div class='input'><span class='va'>mat</span> <span class='op'>&lt;-</span> <span class='fu'>snn_graph</span><span class='op'>(</span><span class='va'>gs</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in snn_graph(gs): object 'gs' not found</span></div><div class='input'><span class='co'># }</span>
+<span class='va'>bwr</span> <span class='op'>&lt;-</span> <span class='fu'>snn_graph</span><span class='op'>(</span><span class='va'>bwr</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in snn_graph(bwr): object 'bwr' not found</span></div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

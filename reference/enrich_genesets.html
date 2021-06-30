@@ -40,9 +40,7 @@
 
 
 <meta property="og:title" content="enrich_genesets — enrich_genesets" />
-<meta property="og:description" content="enrich_genesets
-enrich_genesets
-enrich_genesets" />
+<meta property="og:description" content="Runs geneset tests and store in BOWER class." />
 
 
 
@@ -123,9 +121,7 @@ enrich_genesets" />
     </div>
 
     <div class="ref-description">
-    <p>enrich_genesets</p>
-<p>enrich_genesets</p>
-<p>enrich_genesets</p>
+    <p>Runs geneset tests and store in BOWER class.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for list</span>
@@ -170,9 +166,7 @@ enrich_genesets" />
   ncpus <span class='op'>=</span> <span class='cn'>NULL</span>,
   aucMaxRank_pct <span class='op'>=</span> <span class='fl'>5</span>,
   <span class='va'>...</span>
-<span class='op'>)</span>
-
-<span class='fu'>enrich_genesets</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></pre>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -215,7 +209,7 @@ enrich_genesets" />
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Arguments passed to other methods.</p></td>
+      <td><p>passed to fgsea::fgsea, AUCell::AUCell_buildRankings or Seurat::AddModuleScore</p></td>
     </tr>
     <tr>
       <th>sce</th>
@@ -253,24 +247,23 @@ enrich_genesets" />
       <th>nperm</th>
       <td><p>number of permuation iterations for gsea. Default is 10000.</p></td>
     </tr>
-    <tr>
-      <th>x</th>
-      <td><p>a BOWER class.</p></td>
-    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>Returns a dataframe of average gene set scores.</p>
-<p>Return geneset testing results.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Runs geneset tests and store in BOWER class.</p>
+    
+
+
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='va'>bwr</span> <span class='op'>&lt;-</span> <span class='fu'>enrich</span><span class='op'>(</span><span class='va'>bwr</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in enrich(bwr): could not find function "enrich"</span></div><div class='input'><span class='co'># }</span>
+<span class='va'>bwr</span> <span class='op'>&lt;-</span> <span class='fu'>enrich_genesets</span><span class='op'>(</span><span class='va'>list</span>, <span class='va'>bwr</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in UseMethod(generic = "enrich_genesets"): no applicable method for 'enrich_genesets' applied to an object of class "function"</span></div><div class='input'><span class='va'>bwr</span> <span class='op'>&lt;-</span> <span class='fu'>enrich_genesets</span><span class='op'>(</span><span class='va'>seurat</span>, <span class='va'>bwr</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in enrich_genesets(seurat, bwr): object 'seurat' not found</span></div><div class='input'><span class='va'>bwr</span> <span class='op'>&lt;-</span> <span class='fu'>enrich_genesets</span><span class='op'>(</span><span class='va'>sce</span>, <span class='va'>bwr</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in enrich_genesets(sce, bwr): object 'sce' not found</span></div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

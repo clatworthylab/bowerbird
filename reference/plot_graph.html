@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>summarize_clusters — summarize_clusters.BOWER • bowerbird</title>
+<title>plot_graph — plot_graph • bowerbird</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="summarize_clusters — summarize_clusters.BOWER" />
-<meta property="og:description" content="Summarize the terms of the cluster using pagerank algorithm" />
+<meta property="og:title" content="plot_graph — plot_graph" />
+<meta property="og:description" content="Plot the geneset kNN network as a graph." />
 
 
 
@@ -115,32 +115,48 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>summarize_clusters</h1>
+    <h1>plot_graph</h1>
     
-    <div class="hidden name"><code>summarize_clusters.Rd</code></div>
+    <div class="hidden name"><code>plot_graph.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Summarize the terms of the cluster using pagerank algorithm</p>
+    <p>Plot the geneset kNN network as a graph.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for BOWER</span>
-<span class='fu'>summarize_clusters</span><span class='op'>(</span>
+<span class='fu'>plot_graph</span><span class='op'>(</span>
   <span class='va'>bower</span>,
-  cluster <span class='op'>=</span> <span class='cn'>NULL</span>,
-  pattern <span class='op'>=</span> <span class='cn'>NULL</span>,
-  sep <span class='op'>=</span> <span class='cn'>NULL</span>,
-  ncpus <span class='op'>=</span> <span class='cn'>NULL</span>,
-  <span class='va'>...</span>
+  colorby <span class='op'>=</span> <span class='st'>"cluster"</span>,
+  mode <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"default"</span>, <span class='st'>"gsea"</span><span class='op'>)</span>,
+  gsea.slot <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"padj"</span>, <span class='st'>"pval"</span>, <span class='st'>"NES"</span>, <span class='st'>"ES"</span><span class='op'>)</span>,
+  gsea.pval.cutoff <span class='op'>=</span> <span class='fl'>0.25</span>,
+  node.size <span class='op'>=</span> <span class='st'>"geneset_size"</span>,
+  node.label <span class='op'>=</span> <span class='st'>"labels"</span>,
+  node.label.size <span class='op'>=</span> <span class='fl'>3</span>,
+  title <span class='op'>=</span> <span class='cn'>NULL</span>,
+  title.size <span class='op'>=</span> <span class='fl'>3</span>,
+  edge.width <span class='op'>=</span> <span class='st'>"weight"</span>,
+  edge.width.thickness.range <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span><span class='op'>)</span>,
+  edge.alpha <span class='op'>=</span> <span class='fl'>0.25</span>,
+  dot_max <span class='op'>=</span> <span class='fl'>8</span>,
+  guides.colour <span class='op'>=</span> <span class='cn'>FALSE</span>
 <span class='op'>)</span>
 
 <span class='co'># S3 method for igraph</span>
-<span class='fu'>summarize_clusters</span><span class='op'>(</span>
-  <span class='va'>graph</span>,
-  cluster <span class='op'>=</span> <span class='cn'>NULL</span>,
-  pattern <span class='op'>=</span> <span class='cn'>NULL</span>,
-  sep <span class='op'>=</span> <span class='cn'>NULL</span>,
-  ncpus <span class='op'>=</span> <span class='cn'>NULL</span>,
+<span class='fu'>plot_graph</span><span class='op'>(</span>
+  <span class='va'>gr</span>,
+  colorby <span class='op'>=</span> <span class='st'>"cluster"</span>,
+  node.size <span class='op'>=</span> <span class='st'>"geneset_size"</span>,
+  node.label <span class='op'>=</span> <span class='st'>"labels"</span>,
+  node.label.size <span class='op'>=</span> <span class='fl'>3</span>,
+  title <span class='op'>=</span> <span class='cn'>NULL</span>,
+  title.size <span class='op'>=</span> <span class='fl'>3</span>,
+  edge.width <span class='op'>=</span> <span class='st'>"weight"</span>,
+  edge.width.thickness.range <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span><span class='op'>)</span>,
+  edge.alpha <span class='op'>=</span> <span class='fl'>0.25</span>,
+  dot_max <span class='op'>=</span> <span class='fl'>8</span>,
+  guides.colour <span class='op'>=</span> <span class='cn'>FALSE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
 
@@ -148,42 +164,62 @@
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>cluster</th>
-      <td><p>vector of cluster labels for each geneset.</p></td>
+      <th>bower</th>
+      <td><p>BOWER object</p></td>
     </tr>
     <tr>
-      <th>pattern</th>
-      <td><p>search pattern to remove from the terms. Unless specified, will default to built-in pattern.</p></td>
+      <th>colorby</th>
+      <td><p>name of attribute for colors of nodes.</p></td>
     </tr>
     <tr>
-      <th>sep</th>
-      <td><p>separator used/found in gene set names to be changed to blank spaces. Default value is underscore ('_').</p></td>
+      <th>node.size</th>
+      <td><p>name of attribute for size of nodes or numerical value/vector.</p></td>
     </tr>
     <tr>
-      <th>ncpus</th>
-      <td><p>number of cores used for parallelizing reconstruction.</p></td>
+      <th>node.label</th>
+      <td><p>name of attribute for colors of nodes.</p></td>
+    </tr>
+    <tr>
+      <th>node.label.size</th>
+      <td><p>size of node label.</p></td>
+    </tr>
+    <tr>
+      <th>edge.width</th>
+      <td><p>name of attribute for width of edges.</p></td>
+    </tr>
+    <tr>
+      <th>edge.width.thickness.range</th>
+      <td><p>scale for range of widths of edges.</p></td>
+    </tr>
+    <tr>
+      <th>edge.alpha</th>
+      <td><p>transparency of edges.</p></td>
+    </tr>
+    <tr>
+      <th>guides.colour</th>
+      <td><p>boolean. whether or not to display guide for vertex colour.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>passed to textrank::textrank_sentences.</p></td>
+      <td><p>passed to ggraph::ggraph</p></td>
     </tr>
     <tr>
-      <th>graph</th>
-      <td><p>geneset overlap graph.</p></td>
+      <th>node.max_size</th>
+      <td><p>maximum node size.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns a matrix of tf-idf score of tokens.</p>
+    <p>Returns a ggraph plot.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Given a list of text, it creates a sparse matrix consisting of tf-idf score for tokens from the text. See <code>https://github.com/saraswatmks/superml/blob/master/R/TfidfVectorizer.R</code>. A k shortest-nearest neighbor graph is then computed using the overlap of of the terms.</p>
+    <p>Just a ggraph wrapper to plot the graph.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='va'>terms</span> <span class='op'>&lt;-</span> <span class='fu'>summarize_clusters</span><span class='op'>(</span><span class='va'>mat</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in summarize_clusters(mat): object 'mat' not found</span></div><div class='input'><span class='co'># }</span>
+<span class='fu'>plot_graph</span><span class='op'>(</span><span class='va'>bwr</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in plot_graph(bwr): object 'bwr' not found</span></div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
