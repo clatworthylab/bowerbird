@@ -14,6 +14,7 @@ dependencies:
 - statsmodels
 - numba
 - pytables
+- pip
 - pip:
   - pip
   - scanpy

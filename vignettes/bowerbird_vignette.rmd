@@ -201,7 +201,7 @@ Same for the gsea results.
 
 ```{r, message=FALSE, warning=FALSE, fig.width=15, fig.height=10}
 bwr <- enrich_genesets(degs, bwr, core = TRUE, gene_symbol = 'gene', logfoldchanges = 'avg_log2FC',  pvals = 'p_val')
-pheatmap::pheatmap(bwr@scores$padj, cellheight = 15, cellwidth = 15, cluster_rows = FALSE)
+pheatmap::pheatmap(bwr@scores$padj, cellheight = 15, cellwidth = 15, cluster_rows = FALSE, cluster_cols = FALSE)
 ```
 
 To visualise as a graph, can consider doing:
