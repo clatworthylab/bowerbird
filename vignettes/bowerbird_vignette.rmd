@@ -197,11 +197,15 @@ bwr <- enrich_genesets(kidneyimmune, bwr, core = TRUE, groupby = 'celltype') # i
 pheatmap::pheatmap(bwr@scores, cellheight = 15, cellwidth = 15)
 ```
 
-Same for the gsea results.
-
+Same for the gsea results. First looking at the NES.
 ```{r, message=FALSE, warning=FALSE, fig.width=15, fig.height=10}
 bwr <- enrich_genesets(degs, bwr, core = TRUE, gene_symbol = 'gene', logfoldchanges = 'avg_log2FC',  pvals = 'p_val')
-pheatmap::pheatmap(bwr@scores$padj, cellheight = 15, cellwidth = 15, cluster_rows = FALSE, cluster_cols = FALSE)
+pheatmap::pheatmap(bwr@scores$NES, cellheight = 15, cellwidth = 15)
+```
+
+And now the FDR, remembring that `<0.25` is usually the cut off.
+```{r, message=FALSE, warning=FALSE, fig.width=15, fig.height=10}
+pheatmap::pheatmap(bwr@scores$padj, cellheight = 15, cellwidth = 15, color = viridis::viridis(50, direction = -1))
 ```
 
 To visualise as a graph, can consider doing:
@@ -209,3 +213,7 @@ To visualise as a graph, can consider doing:
 bwr2 <- bower(bwr@coregenes)
 # and so on
 ```
+
+Hopefully you find this interesting and potentially useful.
+
+Please email me at kt16@sanger.ac.uk if you have any queries, feedback or ideas and I'll get back to you!

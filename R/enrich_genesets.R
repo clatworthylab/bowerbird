@@ -53,13 +53,23 @@ enrich_genesets.list <- function(list, bower, core = FALSE, gene_symbol = 'X1', 
   padj <- .retrieve_gsea(res, 'padj')
   leadingEdge <- .retrieve_gsea(res, 'leadingEdge')
   
-  df <- data.frame(row.names = bwr@.graph_data$name, name = bwr@.graph_data$name)
+  if (core){
+    df <- data.frame(row.names = names(bower@coregenes), name = names(bower@coregenes))
+  } else {
+    df <- data.frame(row.names = bwr@.graph_data$name, name = bwr@.graph_data$name)
+  }
 
   NES <- df %>% left_join(NES, by = 'name')
   ES <- df %>% left_join(ES, by = 'name')
   pval <- df %>% left_join(pval, by = 'name')
   padj <- df %>% left_join(padj, by = 'name')
   leadingEdge <- df %>% left_join(leadingEdge, by = 'name')
+
+  row.names(NES) <- NES[,1]
+  row.names(ES) <- ES[,1]
+  row.names(pval) <- pval[,1]
+  row.names(padj) <- padj[,1]
+  row.names(leadingEdge) <- leadingEdge[,1]
 
   NES <- NES[,-1]
   ES <- ES[,-1]
