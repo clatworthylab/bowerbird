@@ -274,5 +274,6 @@ range01 <- function(x){(x-min(x))/(max(x)-min(x))}
   tmp <- Reduce(function(...) merge(..., by='pathway', all.x=TRUE), tmp)
   row.names(tmp) <- tmp$pathway
   tmp <- tmp[, -1]
+  tmp$name <- row.names(tmp)
   return(tmp)
 }
