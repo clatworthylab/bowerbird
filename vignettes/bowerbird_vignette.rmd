@@ -152,7 +152,7 @@ bwr <- enrich_genesets(kidneyimmune, bwr, groupby = 'celltype', mode = 'scanpy')
 
 Visualise as a network plot.
 
-```{r, fig.width=30, fig.height=35, message=FALSE, warning=FALSE}
+```{r, message=FALSE, warning=FALSE, fig.width=45, fig.height=30}
 celltypes <- levels(kidneyimmune) # celtypes stored as Idents in seurat object.
 plot_list <- lapply(celltypes, function(ds){
   g <- plot_graph(bwr, colorby = ds) + viridis::scale_color_viridis() + theme(plot.title = element_text(size = 8, face = "bold"))
@@ -172,7 +172,7 @@ bwr <- enrich_genesets(degs, bwr, gene_symbol = 'gene', logfoldchanges = 'avg_lo
 
 Coloured by adjusted p value.
 
-```{r, message=FALSE, warning=FALSE, fig.width=30, fig.height=30}
+```{r, message=FALSE, warning=FALSE, fig.width=40, fig.height=30}
 plot_list <- lapply(celltypes, function(ds){
   g <- plot_graph(bwr, colorby = ds, mode = 'gsea', gsea.slot = 'padj') + viridis::scale_color_viridis(na.value = '#e7e7e7') + theme(legend.position = 'none', plot.title = element_text(size = 8, face = "bold"))
 })
@@ -181,7 +181,7 @@ cowplot::plot_grid(plotlist = plot_list, scale = 0.9)
 
 Coloured by normalized enrichment score.
 
-```{r, message=FALSE, warning=FALSE, fig.width=30, fig.height=30}
+```{r, message=FALSE, warning=FALSE, fig.width=40, fig.height=30}
 plot_list <- lapply(celltypes, function(ds){
   g <- plot_graph(bwr, colorby = ds, mode = 'gsea', gsea.slot = 'NES') + viridis::scale_color_viridis(na.value = '#e7e7e7') + theme(legend.position = 'none', plot.title = element_text(size = 8, face = "bold"))
 })
@@ -192,20 +192,20 @@ cowplot::plot_grid(plotlist = plot_list, scale = 0.9)
 
 Same function as above, just specifying `core = TRUE`. This will grab the intersecting (or outersecting rather) genes in a gene set cluster and perform the enrichment, like a summary gene set of the summarised terms.
 
-```{r, message=FALSE, warning=FALSE, fig.width=15, fig.height=10}
+```{r, message=FALSE, warning=FALSE, fig.width=12, fig.height=10}
 bwr <- enrich_genesets(kidneyimmune, bwr, core = TRUE, groupby = 'celltype') # if mode is not specified, the default option is to use AUCell
-pheatmap::pheatmap(bwr@scores, cellheight = 15, cellwidth = 15)
+pheatmap::pheatmap(bwr@scores, cellheight = 20, cellwidth = 20)
 ```
 
 Same for the gsea results. First looking at the NES.
-```{r, message=FALSE, warning=FALSE, fig.width=15, fig.height=10}
+```{r, message=FALSE, warning=FALSE, fig.width=12, fig.height=10}
 bwr <- enrich_genesets(degs, bwr, core = TRUE, gene_symbol = 'gene', logfoldchanges = 'avg_log2FC',  pvals = 'p_val')
-pheatmap::pheatmap(bwr@scores$NES, cellheight = 15, cellwidth = 15)
+pheatmap::pheatmap(bwr@scores$NES, cellheight = 20, cellwidth = 20)
 ```
 
-And now the FDR, remembring that `<0.25` is usually the cut off.
-```{r, message=FALSE, warning=FALSE, fig.width=15, fig.height=10}
-pheatmap::pheatmap(bwr@scores$padj, cellheight = 15, cellwidth = 15, color = viridis::viridis(50, direction = -1))
+And now the FDR, remembering that `<0.25` is usually the cut off.
+```{r, message=FALSE, warning=FALSE, fig.width=12, fig.height=10}
+pheatmap::pheatmap(bwr@scores$padj, cellheight = 20, cellwidth = 20, color = viridis::viridis(50, direction = -1))
 ```
 
 To visualise as a graph, can consider doing:
