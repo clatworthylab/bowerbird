@@ -160,12 +160,12 @@
 <span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/snn_graph.html">snn_graph</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">)</span>
 <span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/find_clusters.html">find_clusters</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">)</span>
 <span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu">summarize_clusters</span><span class="op">(</span><span class="va">bwr</span><span class="op">)</span>
-<span class="co">#&gt; Downloading udpipe model from https://raw.githubusercontent.com/jwijffels/udpipe.models.ud.2.5/master/inst/udpipe-ud-2.5-191206/english-ewt-ud-2.5-191206.udpipe to /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpLhsViT/english-ewt-ud-2.5-191206.udpipe</span>
+<span class="co">#&gt; Downloading udpipe model from https://raw.githubusercontent.com/jwijffels/udpipe.models.ud.2.5/master/inst/udpipe-ud-2.5-191206/english-ewt-ud-2.5-191206.udpipe to /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpG1t07w/english-ewt-ud-2.5-191206.udpipe</span>
 <span class="co">#&gt;  - This model has been trained on version 2.5 of data from https://universaldependencies.org</span>
 <span class="co">#&gt;  - The model is distributed under the CC-BY-SA-NC license: https://creativecommons.org/licenses/by-nc-sa/4.0</span>
 <span class="co">#&gt;  - Visit https://github.com/jwijffels/udpipe.models.ud.2.5 for model license details.</span>
 <span class="co">#&gt;  - For a list of all models and their licenses (most models you can download with this package have either a CC-BY-SA or a CC-BY-SA-NC license) read the documentation at ?udpipe_download_model. For building your own models: visit the documentation by typing vignette('udpipe-train', package = 'udpipe')</span>
-<span class="co">#&gt; Downloading finished, model stored at '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpLhsViT/english-ewt-ud-2.5-191206.udpipe'</span></code></pre></div>
+<span class="co">#&gt; Downloading finished, model stored at '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpG1t07w/english-ewt-ud-2.5-191206.udpipe'</span></code></pre></div>
 <p>Or extracting from <code>msigdbr</code>.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://igordot.github.io/msigdbr/">msigdbr</a></span><span class="op">)</span>
@@ -181,22 +181,22 @@
 <span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/snn_graph.html">snn_graph</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">)</span>
 <span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/find_clusters.html">find_clusters</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">)</span>
 <span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu">summarize_clusters</span><span class="op">(</span><span class="va">bwr</span><span class="op">)</span>
-<span class="co">#&gt; Downloading udpipe model from https://raw.githubusercontent.com/jwijffels/udpipe.models.ud.2.5/master/inst/udpipe-ud-2.5-191206/english-ewt-ud-2.5-191206.udpipe to /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpLhsViT/english-ewt-ud-2.5-191206.udpipe</span>
+<span class="co">#&gt; Downloading udpipe model from https://raw.githubusercontent.com/jwijffels/udpipe.models.ud.2.5/master/inst/udpipe-ud-2.5-191206/english-ewt-ud-2.5-191206.udpipe to /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpG1t07w/english-ewt-ud-2.5-191206.udpipe</span>
 <span class="co">#&gt;  - This model has been trained on version 2.5 of data from https://universaldependencies.org</span>
 <span class="co">#&gt;  - The model is distributed under the CC-BY-SA-NC license: https://creativecommons.org/licenses/by-nc-sa/4.0</span>
 <span class="co">#&gt;  - Visit https://github.com/jwijffels/udpipe.models.ud.2.5 for model license details.</span>
 <span class="co">#&gt;  - For a list of all models and their licenses (most models you can download with this package have either a CC-BY-SA or a CC-BY-SA-NC license) read the documentation at ?udpipe_download_model. For building your own models: visit the documentation by typing vignette('udpipe-train', package = 'udpipe')</span>
-<span class="co">#&gt; Downloading finished, model stored at '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpLhsViT/english-ewt-ud-2.5-191206.udpipe'</span></code></pre></div>
+<span class="co">#&gt; Downloading finished, model stored at '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpG1t07w/english-ewt-ud-2.5-191206.udpipe'</span></code></pre></div>
 <p>So what has actually happened? Well, basically <code>bowerbird</code> has learnt which gene sets share more genes with each other, clustered them together and learnt a new summary term.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bwr</span>
 <span class="co">#&gt; BOWER class</span>
 <span class="co">#&gt; number of genesets:  265 </span>
 <span class="co">#&gt; genesets kNN Graph: </span>
-<span class="co">#&gt; IGRAPH fbd78a0 UNW- 265 843 -- </span>
+<span class="co">#&gt; IGRAPH c2a3b61 UNW- 265 843 -- </span>
 <span class="co">#&gt; + attr: name (v/c), cluster (v/n), geneset_size (v/n), terms (v/c),</span>
 <span class="co">#&gt; | labels (v/c), weight (e/n)</span>
-<span class="co">#&gt; + edges from fbd78a0 (vertex names):</span>
+<span class="co">#&gt; + edges from c2a3b61 (vertex names):</span>
 <span class="co">#&gt; [1] GOBP_ACTIVATED_T_CELL_PROLIFERATION--GOBP_CD8_POSITIVE_ALPHA_BETA_T_CELL_DIFFERENTIATION          </span>
 <span class="co">#&gt; [2] GOBP_ACTIVATED_T_CELL_PROLIFERATION--GOBP_NEGATIVE_REGULATION_OF_ACTIVATED_T_CELL_PROLIFERATION   </span>
 <span class="co">#&gt; [3] GOBP_ACTIVATED_T_CELL_PROLIFERATION--GOBP_NEGATIVE_REGULATION_OF_LYMPHOCYTE_DIFFERENTIATION       </span>
@@ -207,27 +207,27 @@
 <span class="co">#&gt; Core genes:</span>
 <span class="co">#&gt;  First six genes shown</span>
 <span class="co">#&gt;   IMMUNE RESPONSE-1 : AIM2 BCL10 BTRC CARD11 CARD9 CD209 ...</span>
+<span class="co">#&gt;   CD4 ALPHA BETA T CELL DIFFERENTIATION : ANXA1 ATP7A BATF BCL3 BCL6 CBFB ...</span>
 <span class="co">#&gt;   IMMUNE RESPONSE : CLNK HLA-E HLA-F IFNA2 IFNB1 IL18 ...</span>
-<span class="co">#&gt;   TYPE 2 IMMUNE RESPONSE : IL4 PLCL2 TLR4 IL18 IL18R1 IL4R ...</span>
-<span class="co">#&gt;   B CELL ACTIVATION-1 : ADA BAX BCL6 BLK BTK CD74 ...</span>
+<span class="co">#&gt;   T CELL MEDIATED CYTOTOXICITY : HLA-A HLA-B HLA-C HLA-E HLA-F HLA-G ...</span>
+<span class="co">#&gt;   B CELL ACTIVATION : ADA BAX BCL6 BLK BTK CD74 ...</span>
 <span class="co">#&gt;   RESPONSE TO INTERFERON BETA : BCL2L11 HIF1A MEF2C ADA SOS1 SOS2 ...</span>
 <span class="co">#&gt;   CD8 ALPHA BETA T CELL ACTIVATION : HLA-E GATA3 ADCYAP1 BTK C3 CCR7 ...</span>
-<span class="co">#&gt;   T CELL MEDIATED CYTOTOXICITY : HLA-A HLA-B HLA-C HLA-E HLA-F HLA-G ...</span>
-<span class="co">#&gt;   CD4 ALPHA BETA T CELL DIFFERENTIATION : ANXA1 ATP7A BATF BCL3 BCL6 CBFB ...</span>
 <span class="co">#&gt;   T CELL DIFFERENTIATION : FCGR2B FGL2 HLA-DOA LILRB2 THBS1 BMP4 ...</span>
 <span class="co">#&gt;   INTERFERON GAMMA PRODUCTION : ABCB9 ACE ACTR10 ACTR1A ACTR1B AP1B1 ...</span>
+<span class="co">#&gt;   T HELPER 1 TYPE IMMUNE RESPONSE : BATF FOXP3 IL6 TBX21 BCL6 IL2 ...</span>
+<span class="co">#&gt;   INTERFERON ALPHA PRODUCTION : IL18 IL18R1 IL4 TLR4 SYK IL13 ...</span>
 <span class="co">#&gt;   TOLL LIKE RECEPTOR SIGNALING PATHWAY : CACTIN PTPRS TICAM1 TLR3 TLR4 TLR9 ...</span>
 <span class="co">#&gt;   T CELL CYTOKINE PRODUCTION : KLRC1 LILRB1 NOD2 PTPRC EGR3 LEF1 ...</span>
-<span class="co">#&gt;   B CELL DIFFERENTIATION : IL10 TLR9 SYK ADA BCL3 C17orf99 ...</span>
-<span class="co">#&gt;   T CELL SELECTION : TOX BCL2 BATF CTSL FOXP3 IL12B ...</span>
-<span class="co">#&gt;   ACTIVATED T CELL PROLIFERATION : LILRB4 CD24 CD274 FYN HHLA2 ICOSLG ...</span>
 <span class="co">#&gt;   LYMPHOCYTE CHEMOTAXIS : CCL2 CCL3 CCL4 CCL5 CCL7 CXCL14 ...</span>
-<span class="co">#&gt;   B CELL ACTIVATION : ADA ADAM17 BATF BCL3 BCL6 BTK ...</span>
+<span class="co">#&gt;   ACTIVATED T CELL PROLIFERATION : LILRB4 CD24 CD274 FYN HHLA2 ICOSLG ...</span>
+<span class="co">#&gt;   B CELL ACTIVATION-1 : BATF BCL3 BCL6 BTK C17orf99 CCR6 ...</span>
 <span class="co">#&gt;   ALPHA BETA T CELL ACTIVATION : AGER ANXA1 ARG2 ATP7A BATF BCL3 ...</span>
 <span class="co">#&gt;   INFLAMMATORY RESPONSE TO ANTIGENIC STIMULUS : BTK C3 CD28 HLA-E LTA NOD2 ...</span>
-<span class="co">#&gt;   LYMPHOCYTE MIGRATION : ADAM10 ADAM17 ADAM8 AIF1 APP CCL20 ...</span>
+<span class="co">#&gt;   T CELL SELECTION : PTPRC TOX RABL3 STAT5B ZBTB1 IL15 ...</span>
 <span class="co">#&gt;   ANTIGEN PROCESSING AND PRESENTATION OF PEPTIDE ANTIGEN VIA MHC CLASS I : ABCB9 AZGP1 B2M ERAP1 ERAP2 HFE ...</span>
-<span class="co">#&gt;   CELL ACTIVATION INVOLVED IN IMMUNE RESPONSE : ABL1 ADA ANXA1 AP1G1 APBB1IP ATP7A ...</span></code></pre></div>
+<span class="co">#&gt;   LYMPHOCYTE MIGRATION : ADAM10 ADAM17 ADAM8 AIF1 APP CCL20 ...</span>
+<span class="co">#&gt;   B CELL DIFFERENTIATION : ADA BCL3 C17orf99 CD19 CDH17 CMTM7 ...</span></code></pre></div>
 <p>We can visualise it with a simple plot</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/plot_graph.html">plot_graph</a></span><span class="op">(</span><span class="va">bwr</span>, colorby <span class="op">=</span> <span class="st">'cluster'</span>, node.size <span class="op">=</span> <span class="st">'geneset_size'</span><span class="op">)</span></code></pre></div>
@@ -258,7 +258,7 @@
   <span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_graph.html">plot_graph</a></span><span class="op">(</span><span class="va">bwr</span>, colorby <span class="op">=</span> <span class="va">ds</span><span class="op">)</span> <span class="op">+</span> <span class="fu">viridis</span><span class="fu">::</span><span class="fu"><a href="https://sjmgarnier.github.io/viridis/reference/scale_viridis.html">scale_color_viridis</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">8</span>, face <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span><span class="op">)</span>
 <span class="op">}</span><span class="op">)</span>
 <span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/plot_grid.html">plot_grid</a></span><span class="op">(</span>plotlist <span class="op">=</span> <span class="va">plot_list</span>, scale <span class="op">=</span> <span class="fl">0.9</span><span class="op">)</span></code></pre></div>
-<p><img src="bowerbird_vignette_files/figure-html/unnamed-chunk-13-1.png" width="2880"></p>
+<p><img src="bowerbird_vignette_files/figure-html/unnamed-chunk-13-1.png" width="4320"></p>
 </div>
 <div id="running-fgsea-on-deg-tables-in-a-list-as-an-alternative-to-the-single-cell-methods-" class="section level2">
 <h2 class="hasAnchor">
@@ -274,14 +274,14 @@
   <span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_graph.html">plot_graph</a></span><span class="op">(</span><span class="va">bwr</span>, colorby <span class="op">=</span> <span class="va">ds</span>, mode <span class="op">=</span> <span class="st">'gsea'</span>, gsea.slot <span class="op">=</span> <span class="st">'padj'</span><span class="op">)</span> <span class="op">+</span> <span class="fu">viridis</span><span class="fu">::</span><span class="fu"><a href="https://sjmgarnier.github.io/viridis/reference/scale_viridis.html">scale_color_viridis</a></span><span class="op">(</span>na.value <span class="op">=</span> <span class="st">'#e7e7e7'</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">'none'</span>, plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">8</span>, face <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span><span class="op">)</span>
 <span class="op">}</span><span class="op">)</span>
 <span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/plot_grid.html">plot_grid</a></span><span class="op">(</span>plotlist <span class="op">=</span> <span class="va">plot_list</span>, scale <span class="op">=</span> <span class="fl">0.9</span><span class="op">)</span></code></pre></div>
-<p><img src="bowerbird_vignette_files/figure-html/unnamed-chunk-15-1.png" width="2880"></p>
+<p><img src="bowerbird_vignette_files/figure-html/unnamed-chunk-15-1.png" width="3840"></p>
 <p>Coloured by normalized enrichment score.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">plot_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">celltypes</span>, <span class="kw">function</span><span class="op">(</span><span class="va">ds</span><span class="op">)</span><span class="op">{</span>
   <span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_graph.html">plot_graph</a></span><span class="op">(</span><span class="va">bwr</span>, colorby <span class="op">=</span> <span class="va">ds</span>, mode <span class="op">=</span> <span class="st">'gsea'</span>, gsea.slot <span class="op">=</span> <span class="st">'NES'</span><span class="op">)</span> <span class="op">+</span> <span class="fu">viridis</span><span class="fu">::</span><span class="fu"><a href="https://sjmgarnier.github.io/viridis/reference/scale_viridis.html">scale_color_viridis</a></span><span class="op">(</span>na.value <span class="op">=</span> <span class="st">'#e7e7e7'</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">'none'</span>, plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">8</span>, face <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span><span class="op">)</span>
 <span class="op">}</span><span class="op">)</span>
 <span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/plot_grid.html">plot_grid</a></span><span class="op">(</span>plotlist <span class="op">=</span> <span class="va">plot_list</span>, scale <span class="op">=</span> <span class="fl">0.9</span><span class="op">)</span></code></pre></div>
-<p><img src="bowerbird_vignette_files/figure-html/unnamed-chunk-16-1.png" width="2880"></p>
+<p><img src="bowerbird_vignette_files/figure-html/unnamed-chunk-16-1.png" width="3840"></p>
 </div>
 <div id="using-core-genes-for-enrichment" class="section level2">
 <h2 class="hasAnchor">
@@ -289,17 +289,17 @@
 <p>Same function as above, just specifying <code>core = TRUE</code>. This will grab the intersecting (or outersecting rather) genes in a gene set cluster and perform the enrichment, like a summary gene set of the summarised terms.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/enrich_genesets.html">enrich_genesets</a></span><span class="op">(</span><span class="va">kidneyimmune</span>, <span class="va">bwr</span>, core <span class="op">=</span> <span class="cn">TRUE</span>, groupby <span class="op">=</span> <span class="st">'celltype'</span><span class="op">)</span> <span class="co"># if mode is not specified, the default option is to use AUCell</span>
-<span class="fu">pheatmap</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pheatmap/man/pheatmap.html">pheatmap</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">@</span><span class="va">scores</span>, cellheight <span class="op">=</span> <span class="fl">15</span>, cellwidth <span class="op">=</span> <span class="fl">15</span><span class="op">)</span></code></pre></div>
-<p><img src="bowerbird_vignette_files/figure-html/unnamed-chunk-17-1.png" width="1440"></p>
+<span class="fu">pheatmap</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pheatmap/man/pheatmap.html">pheatmap</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">@</span><span class="va">scores</span>, cellheight <span class="op">=</span> <span class="fl">20</span>, cellwidth <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></code></pre></div>
+<p><img src="bowerbird_vignette_files/figure-html/unnamed-chunk-17-1.png" width="1152"></p>
 <p>Same for the gsea results. First looking at the NES.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/enrich_genesets.html">enrich_genesets</a></span><span class="op">(</span><span class="va">degs</span>, <span class="va">bwr</span>, core <span class="op">=</span> <span class="cn">TRUE</span>, gene_symbol <span class="op">=</span> <span class="st">'gene'</span>, logfoldchanges <span class="op">=</span> <span class="st">'avg_log2FC'</span>,  pvals <span class="op">=</span> <span class="st">'p_val'</span><span class="op">)</span>
-<span class="fu">pheatmap</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pheatmap/man/pheatmap.html">pheatmap</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">@</span><span class="va">scores</span><span class="op">$</span><span class="va">NES</span>, cellheight <span class="op">=</span> <span class="fl">15</span>, cellwidth <span class="op">=</span> <span class="fl">15</span><span class="op">)</span></code></pre></div>
-<p><img src="bowerbird_vignette_files/figure-html/unnamed-chunk-18-1.png" width="1440"></p>
-<p>And now the FDR, remembring that <code>&lt;0.25</code> is usually the cut off.</p>
+<span class="fu">pheatmap</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pheatmap/man/pheatmap.html">pheatmap</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">@</span><span class="va">scores</span><span class="op">$</span><span class="va">NES</span>, cellheight <span class="op">=</span> <span class="fl">20</span>, cellwidth <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></code></pre></div>
+<p><img src="bowerbird_vignette_files/figure-html/unnamed-chunk-18-1.png" width="1152"></p>
+<p>And now the FDR, remembering that <code>&lt;0.25</code> is usually the cut off.</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">pheatmap</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pheatmap/man/pheatmap.html">pheatmap</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">@</span><span class="va">scores</span><span class="op">$</span><span class="va">padj</span>, cellheight <span class="op">=</span> <span class="fl">15</span>, cellwidth <span class="op">=</span> <span class="fl">15</span>, color <span class="op">=</span> <span class="fu">viridis</span><span class="fu">::</span><span class="fu"><a href="https://sjmgarnier.github.io/viridisLite/reference/viridis.html">viridis</a></span><span class="op">(</span><span class="fl">50</span>, direction <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="bowerbird_vignette_files/figure-html/unnamed-chunk-19-1.png" width="1440"></p>
+<code class="sourceCode R"><span class="fu">pheatmap</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pheatmap/man/pheatmap.html">pheatmap</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">@</span><span class="va">scores</span><span class="op">$</span><span class="va">padj</span>, cellheight <span class="op">=</span> <span class="fl">20</span>, cellwidth <span class="op">=</span> <span class="fl">20</span>, color <span class="op">=</span> <span class="fu">viridis</span><span class="fu">::</span><span class="fu"><a href="https://sjmgarnier.github.io/viridisLite/reference/viridis.html">viridis</a></span><span class="op">(</span><span class="fl">50</span>, direction <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p><img src="bowerbird_vignette_files/figure-html/unnamed-chunk-19-1.png" width="1152"></p>
 <p>To visualise as a graph, can consider doing:</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bwr2</span> <span class="op">&lt;-</span> <span class="fu">bower</span><span class="op">(</span><span class="va">bwr</span><span class="op">@</span><span class="va">coregenes</span><span class="op">)</span>
