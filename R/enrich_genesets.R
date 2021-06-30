@@ -34,7 +34,7 @@
 #' bwr <- enrich_genesets(seurat, bwr)
 #' bwr <- enrich_genesets(sce, bwr)
 #' }
-#' @import fgsea
+#' @import fgsea dplyr
 #' @export
 #' 
 
@@ -53,6 +53,20 @@ enrich_genesets.list <- function(list, bower, core = FALSE, gene_symbol = 'X1', 
   padj <- .retrieve_gsea(res, 'padj')
   leadingEdge <- .retrieve_gsea(res, 'leadingEdge')
   
+  df <- data.frame(row.names = bwr@.graph_data$name, name = bwr@.graph_data$name)
+
+  NES <- df %>% left_join(NES, by = 'name')
+  ES <- df %>% left_join(ES, by = 'name')
+  pval <- df %>% left_join(pval, by = 'name')
+  padj <- df %>% left_join(padj, by = 'name')
+  leadingEdge <- df %>% left_join(leadingEdge, by = 'name')
+
+  NES <- NES[,-1]
+  ES <- ES[,-1]
+  pval <- pval[,-1]
+  padj <- padj[,-1]
+  leadingEdge <- leadingEdge[,-1]
+
   bower@scores <- list(NES = NES, ES = ES, pval = pval, padj = padj, leadingEdge = leadingEdge, full_fgsea = res)
   return(bower)
 }
