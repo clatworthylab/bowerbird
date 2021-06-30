@@ -39,7 +39,8 @@ Imports:
     S4Vectors,
     ggraph,
     leiden,
-    fgsea
+    fgsea,
+    ggplot2
 Suggests:
     SingleCellExperiment,
     SummarizedExperiment,
