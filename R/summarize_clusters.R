@@ -4,7 +4,9 @@
 
 #' Summarize the terms of the cluster using pagerank algorithm
 #' @title summarize_clusters
-#' @name summarize_clusters
+#' @description
+#' Summarize the terms of the cluster using pagerank algorithm
+#' @rdname summarize_clusters
 #' @param graph geneset overlap graph.
 #' @param cluster vector of cluster labels for each geneset.
 #' @param pattern search pattern to remove from the terms. Unless specified, will default to built-in pattern. 
@@ -100,8 +102,7 @@ summarize_clusters.BOWER <- function(bower, cluster = NULL, pattern = NULL, sep 
 	return(bower)
 }
 
-#' @title summarize_clusters
-#' @name summarize_clusters
+#' @rdname summarize_clusters
 #' @export
 summarize_clusters.igraph <- function(graph, cluster = NULL, pattern = NULL, sep = NULL, ncpus = NULL, ...){	
   requireNamespace('igraph')

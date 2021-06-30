@@ -25,6 +25,7 @@ Collate:
     'generics.R'
     'graph.R'
     'io.R'
+    'plot.R'
     'read_geneset.R'
     'summarize_clusters.R'
 Imports:

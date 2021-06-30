@@ -13,7 +13,7 @@
 #' @return Cluster assignment for each geneset.
 #' @examples
 #' \donttest{
-#' result <- find_clusters(object)
+#' bwr <- find_clusters(bwr)
 #' }
 #' @import leiden
 #' @export
@@ -47,7 +47,7 @@ find_clusters.igraph <- function(gr, resolution = 3, ...){
 #' @name set_clusters
 #' @param bower bower class
 #' @param clusters Cluster assignment for each geneset.
-#' @details
+#' @description
 #' Manually sets externally/alternatively determined cluster assignment for each geneset.
 #' @return bower class
 #' @examples

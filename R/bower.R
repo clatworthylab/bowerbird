@@ -1,8 +1,13 @@
 #' @title bower
-#' @include utilities.R
-#'
-#' @export
 #' @rdname bower
+#' @description
+#' A flexible function to initiate a BOWER class from a geneset file or a list of genesets.
+#' @include utilities.R
+#' @examples
+#' \donttest{
+#' bwr <- bower('geneset.gmt')
+#' }
+#' @export
 #'
 
 bower <- function(genesets, graph=NULL, clusters = NULL, ...){

@@ -43,13 +43,13 @@ range01(x)
 .read_geneset(x, ...)
 }
 \arguments{
-\item{x}{.gmx, .gmt, .csv, .tsv, .txt, data.frame or list object containing gene sets.}
+\item{x}{numerical vector}
 
 \item{gs}{list of vectors.}
 
 \item{min_size}{minimum size of geneset otherwise filter out.}
 
-\item{...}{Arguments passed to other methods.}
+\item{...}{passed to ggraph::ggraph.}
 
 \item{snn}{KNN graph.}
 
@@ -90,10 +90,8 @@ range01(x)
 \value{
 appropriate single cell object for enrichment analysis
 
-srted ranked gene list.
-
-Returns a list of gene sets.
+sorted ranked gene list.
 }
 \description{
-misc
+Miscellaneous utility functions.
 }

@@ -1,5 +1,6 @@
 #' @title read_geneset
-#' 
+#' @description
+#' Function to read various geneset file formats and returns a list of vectors containing gene names.
 #' @include utilities.R
 #' @include generics.R
 #' 

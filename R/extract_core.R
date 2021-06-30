@@ -3,10 +3,15 @@
 #' Summarize the core genes for main terms.
 #' 
 #' @title extract_core
+#' @description Summarize the outersection genes for the. summary terms.
 #' @name extract_core
 #' @param bower processed bower object.
 #' @param inplace whether or not to return an updated BOWER class or return the output as a list.
-#' @return Returns a list of genes that interect geneset clusters in coregenes slot or as a list.
+#' @examples
+#' \donttest{
+#' bwr <- extract_core(bwr)
+#' }
+#' @return Returns a list of genes that outersect geneset clusters in coregenes slot or as a list.
 #' @import dplyr
 
 #' @export
@@ -37,7 +42,7 @@ extract_core.BOWER <- function(bower, inplace = TRUE){
 		})
 	}
 	summarydat <- bower@.graph_data[,c('cluster', 'labels')]
-	summarydat <- summarydat[!summarydat$labels == "", ]
+	summarydat <- summarydat[!is.na(summarydat$labels), ]
 	summarydat <- summarydat[order(summarydat$cluster), ]
 	names(gs_2) <- summarydat$labels
 	if (inplace){

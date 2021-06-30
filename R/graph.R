@@ -1,6 +1,6 @@
 #' @title snn_graph
 #' @include utilities.R
-
+#' @description
 #' Creates a k-nearest-neighbor graph from a tf-idf matrix.
 #'
 #' @name snn_graph
@@ -14,8 +14,7 @@
 #' @return Returns a matrix of tf-idf score of tokens.
 #' @examples
 #' \donttest{
-#' gs <- scFA::read_geneset('geneset.gmt')
-#' mat <- snn_graph(gs)
+#' bwr <- snn_graph(bwr)
 #' }
 #' @import superml
 #' @export

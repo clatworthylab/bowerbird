@@ -3,6 +3,8 @@
 #' Performs gene set testing.
 #'
 #' @title enrich_genesets
+#' @description
+#' Runs geneset tests and store in BOWER class.
 #' @name enrich_genesets
 #' @param bower Processed BOWER object.
 #' @param list list containing differentially expressed gene testing results in a data frame.
@@ -24,11 +26,13 @@
 #' @param aucMaxRank_pct percentage to use for aucMaxRank in AUCell::AUCell_calcAUC.
 #' @param ... passed to fgsea::fgsea, AUCell::AUCell_buildRankings or Seurat::AddModuleScore
 #' @details
-#' Runs geneset tests and store in BOWER class.
+#' 
 #' @return Returns a dataframe of average gene set scores.
 #' @examples
 #' \donttest{
-#' bwr <- enrich(bwr)
+#' bwr <- enrich_genesets(list, bwr)
+#' bwr <- enrich_genesets(seurat, bwr)
+#' bwr <- enrich_genesets(sce, bwr)
 #' }
 #' @import fgsea
 #' @export
@@ -53,8 +57,7 @@ enrich_genesets.list <- function(list, bower, core = FALSE, gene_symbol = 'X1', 
   return(bower)
 }
 
-#' @title enrich_genesets
-#' @name enrich_genesets
+#' @rdname enrich_genesets
 #' @export
 enrich_genesets.Seurat <- function(sce, bower, groupby = NULL, core = FALSE, standardize = TRUE, mode = c('AUCell', 'Seurat', 'scanpy'), sce_assay = 'logcounts', seurat_assay = 'RNA', ncpus = NULL, aucMaxRank_pct = 5, ...) {
   if (mode[1] == 'AUCell') {
@@ -229,8 +232,7 @@ enrich_genesets.Seurat <- function(sce, bower, groupby = NULL, core = FALSE, sta
   return(bower)
 }
 
-#' @title enrich_genesets
-#' @name enrich_genesets
+#' @rdname enrich_genesets
 #' @export
 enrich_genesets.SingleCellExperiment <- function(sce, bower, groupby = NULL, core = FALSE, standardize = TRUE, mode = c('AUCell', 'Seurat', 'scanpy'), sce_assay = 'logcounts', seurat_assay = 'RNA', ncpus = NULL, aucMaxRank_pct = 5, ...) {
   if (mode[1] == 'AUCell') {

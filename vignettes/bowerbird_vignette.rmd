@@ -40,7 +40,7 @@ devtools::install_github('clatworthylab/bowerbird', auth_token = "insert_your_pe
 ```
 
 ## Quick Usage
-Pathway analyis is tricky; often there's too many pathways/terms to use and it's not easy to distinguish how important every element is. `bowerbird` attempts to summarise your pathways of interests into potentially meaningful functional annotation modules which you can then take forward to pathway analyses, or the reverse situation where you have a set of pathways that were determined <i>a priori</i> to be significant and you wanted to find out how to interpret it. To do this, we compute a shortest nearest neighbor graph using the genes in the gene sets/pathways and learn a representative summary term from the name of the gene sets that cluster together.
+Pathway analyis is tricky; often there's too many pathways/terms to use and it's not easy to distinguish how important every element is. `bowerbird` attempts to summarise your pathways of interest into potentially meaningful functional annotation modules which you can then take forward to pathway analyses, or the reverse situation where you have a set of pathways that were determined <i><b>a priori</b></i> to be significant and you wanted to find out how to interpret it. To do this, we compute a shortest nearest neighbor graph using the genes in the gene sets/pathways and learn a representative summary term from the name of the gene sets that cluster together.
 
 ```{r, eval = FALSE}
 library(bowerbird)
@@ -125,18 +125,7 @@ bwr
 We can visualise it with a simple plot
 
 ```{r, message=FALSE, warning=FALSE, fig.width=7, fig.height=7}
-library(ggraph)
-library(ggplot2)
-
-ggraph(bwr@graph, 'igraph', algorithm = 'fr') + 
-    geom_edge_link(aes(width = weight), alpha = .25) +
-    geom_node_point(aes(color = factor(cluster), size = geneset_size)) + 
-    scale_size_area(max_size = 8) +
-    geom_node_text(aes(label = labels), size = 3) +
-    theme_bw() +
-    theme_void() +
-    scale_edge_width(range = c(0, 1)) + 
-    guides(colour=FALSE)
+plot_graph(bwr, colorby = 'cluster', node.size = 'geneset_size')
 ```
 
 ## Geneset average expression testing
@@ -164,22 +153,10 @@ bwr <- enrich_genesets(kidneyimmune, bwr, groupby = 'celltype', mode = 'scanpy')
 Visualise as a network plot.
 
 ```{r, fig.width=30, fig.height=35, message=FALSE, warning=FALSE}
-plot_list <- lapply(colnames(bwr@scores), function(ds){
-  set.seed(100)
-  igraph::V(bwr@graph)$score <- bwr@scores[, ds]
-  g <- ggraph(bwr@graph, 'igraph', algorithm = 'fr') + 
-    geom_edge_link(aes(width = weight), alpha = .25) +
-    geom_node_point(aes(color = score, size = geneset_size)) + 
-    scale_size_area(max_size = 8) +
-    geom_node_text(aes(label = labels), size = 4) +
-    theme_bw() +
-    theme_void() +
-    scale_color_viridis() +
-    scale_edge_width(range = c(0, 1)) +
-    ggtitle(ds) +
-    theme(plot.title = element_text(size = 8, face = "bold"))
+celltypes <- levels(kidneyimmune) # celtypes stored as Idents in seurat object.
+plot_list <- lapply(celltypes, function(ds){
+  g <- plot_graph(bwr, colorby = ds) + viridis::scale_color_viridis() + theme(plot.title = element_text(size = 8, face = "bold"))
 })
-names(plot_list) <- colnames(bwr@scores)
 cowplot::plot_grid(plotlist = plot_list, scale = 0.9)
 ```
 
@@ -195,46 +172,19 @@ bwr <- enrich_genesets(degs, bwr, gene_symbol = 'gene', logfoldchanges = 'avg_lo
 
 Coloured by adjusted p value.
 
-```{r, message=FALSE, warning=FALSE, fig.width=30, fig.height=35}
-plot_list <- lapply(colnames(bwr@scores$NES), function(ds){
-  set.seed(100)
-  padj <- bwr@scores$padj[, ds]
-  padj[padj >= 0.25] <- NA
-  igraph::V(bwr@graph)$padj <- padj
-  g <- ggraph(bwr@graph, 'igraph', algorithm = 'fr') + 
-    geom_edge_link(aes(width = weight), alpha = .25) +
-    geom_node_point(aes(color = padj, size = geneset_size)) + 
-    scale_size_area(max_size = 8) +
-    geom_node_text(aes(label = labels), size = 4) +
-    theme_bw() +
-    theme_void() +
-    scale_color_viridis(na.value = '#e7e7e7') +
-    scale_edge_width(range = c(0, 1)) +
-    ggtitle(ds) + theme(legend.position = 'none', plot.title = element_text(size = 8, face = "bold"))
+```{r, message=FALSE, warning=FALSE, fig.width=30, fig.height=30}
+plot_list <- lapply(celltypes, function(ds){
+  g <- plot_graph(bwr, colorby = ds, mode = 'gsea', gsea.slot = 'padj') + viridis::scale_color_viridis(na.value = '#e7e7e7') + theme(legend.position = 'none', plot.title = element_text(size = 8, face = "bold"))
 })
-names(plot_list) <- colnames(bwr@scores$NES)
 cowplot::plot_grid(plotlist = plot_list, scale = 0.9)
 ```
 
 Coloured by normalized enrichment score.
 
-```{r, message=FALSE, warning=FALSE, fig.width=30, fig.height=35}
-plot_list <- lapply(colnames(bwr@scores$NES), function(ds){
-  set.seed(100)
-  NES <- bwr@scores$NES[, ds]
-  igraph::V(bwr@graph)$NES <- NES
-  g <- ggraph(bwr@graph, 'igraph', algorithm = 'fr') + 
-    geom_edge_link(aes(width = weight), alpha = .25) +
-    geom_node_point(aes(color = NES, size = geneset_size)) +
-    scale_size_area(max_size = 8) +
-    geom_node_text(aes(label = labels), size = 4) +
-    theme_bw() +
-    theme_void() +
-    scale_color_viridis() +
-    scale_edge_width(range = c(0, 1)) +
-    ggtitle(ds) + theme(legend.position = 'none', plot.title = element_text(size = 8, face = "bold"))
+```{r, message=FALSE, warning=FALSE, fig.width=30, fig.height=30}
+plot_list <- lapply(celltypes, function(ds){
+  g <- plot_graph(bwr, colorby = ds, mode = 'gsea', gsea.slot = 'NES') + viridis::scale_color_viridis(na.value = '#e7e7e7') + theme(legend.position = 'none', plot.title = element_text(size = 8, face = "bold"))
 })
-names(plot_list) <- colnames(bwr@scores$NES)
 cowplot::plot_grid(plotlist = plot_list, scale = 0.9)
 ```
 
@@ -244,14 +194,14 @@ Same function as above, just specifying `core = TRUE`. This will grab the inters
 
 ```{r, message=FALSE, warning=FALSE, fig.width=15, fig.height=10}
 bwr <- enrich_genesets(kidneyimmune, bwr, core = TRUE, groupby = 'celltype') # if mode is not specified, the default option is to use AUCell
-pheatmap::pheatmap(bwr@scores, cellheight = 10, cellwidth = 10)
+pheatmap::pheatmap(bwr@scores, cellheight = 15, cellwidth = 15)
 ```
 
 Same for the gsea results.
 
 ```{r, message=FALSE, warning=FALSE, fig.width=15, fig.height=10}
 bwr <- enrich_genesets(degs, bwr, core = TRUE, gene_symbol = 'gene', logfoldchanges = 'avg_log2FC',  pvals = 'p_val')
-pheatmap::pheatmap(bwr@scores$NES, cellheight = 10, cellwidth = 10)
+pheatmap::pheatmap(bwr@scores$NES, cellheight = 15, cellwidth = 15)
 ```
 
 To visualise as a graph, can consider doing:

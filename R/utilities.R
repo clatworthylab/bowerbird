@@ -1,4 +1,7 @@
 #' @title misc
+#' @description
+#' Miscellaneous utility functions.
+#' 
 #########################
 # Miscellaneous functions
 #########################
@@ -62,8 +65,19 @@
   } else {
     g <- ggraph::ggraph(gr, ...)
   }
-
-  return(g$data)
+  dat <- g$data
+  for (i in seq_along(colnames(dat))){
+    if (colnames(dat)[i] %in% names(igraph::vertex_attr(gr)))
+      if (colnames(dat)[i] == 'cluster') {
+        dat[,i] <- factor(dat[,i])
+      } else if (colnames(dat)[i] == 'labels') {
+        dat[,i][dat[,i] == ""] <- NA
+        dat[,i] <- factor(dat[,i])
+      } else if (!is.numeric(dat[,i])){
+        dat[,i] <- factor(dat[,i])
+      }
+  }
+  return(dat)
 }
 
 #' @rdname misc
@@ -223,7 +237,7 @@
 #' @param logfoldchanges logfoldchanges
 #' @param pvals pvals
 #' @param remove_mito_ribo boolean. whether or not to remove mitochondial and ribosomal genes from consideration. Default is TRUE.
-#' @return srted ranked gene list.
+#' @return sorted ranked gene list.
 #' 
 .makeRankGeneList <- function(deg, gene_symbol, logfoldchanges, pvals, remove_mito_ribo = TRUE){
   if (remove_mito_ribo) {
