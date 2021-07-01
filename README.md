@@ -89,6 +89,9 @@ bwr <- bower(gs_list)
 bwr <- snn_graph(bwr)
 bwr <- find_clusters(bwr)
 bwr <- summarize_clusters(bwr)
+
+# plot
+plot_graph(bwr, colorby = 'cluster', node.size = 'geneset_size')
 ```
 
 ## geneset enrichment analysis
@@ -109,68 +112,26 @@ bwr <- enrich_genesets(kidneyimmune, bwr, groupby = 'celltype', mode = 'Seurat')
 ## scanpy.tl.score_genes
 bwr <- enrich_genesets(kidneyimmune, bwr, groupby = 'celltype', mode = 'scanpy')
 
-# plot
-library(ggraph)
-library(ggplot2)
-plot_list <- lapply(colnames(bwr@scores), function(ds){
-  set.seed(100)
-  igraph::V(bwr@graph)$score <- bwr@scores[, ds]
-  g <- ggraph(bwr@graph, 'igraph', algorithm = 'fr') + 
-    geom_edge_link(aes(width = weight), alpha = .25) +
-    geom_node_point(aes(color = score, size = geneset_size)) + 
-    scale_size_area(max_size = 3) +
-    geom_node_text(aes(label = labels), size = 1) +
-    theme_bw() +
-    theme_void() +
-    scale_color_viridis() +
-    # scale_color_viridis(limits=c(0, 0.1), oob=scales::squish) +
-    scale_edge_width(range = c(0, 1)) +
-    ggtitle(ds)
-})
-names(plot_list) <- colnames(bwr@scores)
-cowplot::plot_grid(plotlist = plot_list)
-# as a heatmap
-pheatmap::pheatmap(bwr@scores)
-
 # with fgsea on deg tables in a list
 degs <- Seurat::FindAllMarkers(kidneyimmune)
 degs <- split(degs, degs$cluster) # so in practice, there should be one DEG table per comparison in a list.
-bwr <- enrich_genesets(degs, bwr, gene_symbol = 'gene', logfoldchanges = 'avg_logFC',  pvals = 'p_val')
+bwr <- enrich_genesets(degs, bwr, gene_symbol = 'gene', logfoldchanges = 'avg_log2FC',  pvals = 'p_val')
 
 # plot
-plot_list <- lapply(colnames(bwr@scores$NES), function(ds){
-  set.seed(100)
-  NES <- bwr@scores$NES[, ds]
-  padj <- bwr@scores$padj[, ds]
-  padj[padj >= 0.25] <- NA
-  igraph::V(bwr@graph)$NES <- NES
-  igraph::V(bwr@graph)$padj <- padj
-  g <- ggraph(bwr@graph, 'igraph', algorithm = 'fr') + 
-    geom_edge_link(aes(width = weight), alpha = .25) +
-    geom_node_point(aes(color = padj, size = NES)) + 
-    scale_size_area(max_size = 3) +
-    geom_node_text(aes(label = labels), size = 1) +
-    theme_bw() +
-    theme_void() +
-    scale_color_viridis() +
-    # scale_color_viridis(limits=c(0, 0.1), oob=scales::squish) +
-    scale_edge_width(range = c(0, 1)) +
-    ggtitle(ds) + theme(legend.position = 'none')
+celltypes <- levels(kidneyimmune) # celtypes stored as Idents in seurat object.
+plot_list <- lapply(celltypes, function(ds){
+  g <- plot_graph(bwr, colorby = ds) + viridis::scale_color_viridis() + theme(plot.title = element_text(size = 8, face = "bold"))
 })
-names(plot_list) <- colnames(bwr@scores$NES)
-cowplot::plot_grid(plotlist = plot_list)
-
-# as a heatmap
-pheatmap::pheatmap(bwr@scores$NES)
+cowplot::plot_grid(plotlist = plot_list, scale = 0.9)
 ```
 ## Using core genes for enrichment
 ```R
 # same function as above, just specifying core = TRUE.
 bwr <- enrich_genesets(kidneyimmune, bwr, core = TRUE, groupby = 'celltype') # if mode is not specified, defaults to AUCell.
 # output can also be plotted via ggraph as above but i'm using heatmap for convenience.
-pheatmap::pheatmap(bwr@scores)
+pheatmap::pheatmap(bwr@scores, cellheight = 20, cellwidth = 20)
 
 # same for the gsea results.
 bwr <- enrich_genesets(degs, bwr, core = TRUE, gene_symbol = 'gene', logfoldchanges = 'avg_logFC',  pvals = 'p_val')
-pheatmap::pheatmap(bwr@scores$NES)
+pheatmap::pheatmap(bwr@scores$padj, cellheight = 20, cellwidth = 20, color = viridis::viridis(50, direction = -1))
 ```
