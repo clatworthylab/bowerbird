@@ -1,6 +1,6 @@
 Package: bowerbird
 Title: A single-cell package for Functional Annotation + Gene Module Summarization.
-Version: 0.0.1
+Version: 0.0.2
 Authors@R:
     person(given = "Zewen Kelvin",
            family = "Tuong",
@@ -20,10 +20,12 @@ Collate:
     'bower.R'
     'classes.R'
     'cluster.R'
-    'extract.R'
+    'enrich_genesets.R'
+    'extract_core.R'
     'generics.R'
     'graph.R'
     'io.R'
+    'plot.R'
     'read_geneset.R'
     'summarize_clusters.R'
 Imports:
@@ -36,7 +38,24 @@ Imports:
     FNN,
     S4Vectors,
     ggraph,
-    leiden
+    leiden,
+    fgsea,
+    ggplot2
 Suggests:
+    SingleCellExperiment,
+    SummarizedExperiment,
+    AUCell,
+    Seurat,
     devtools,
-    roxygen2
+    roxygen2,
+    msigdbr,
+    pheatmap,
+    cowplot,
+    parallel,
+    doParallel,
+    doRNG,
+    ktplots,
+    rmarkdown,
+    limma
+Remotes:
+    zktuong/ktplots

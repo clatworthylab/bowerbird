@@ -13,7 +13,7 @@
 #' @return Cluster assignment for each geneset.
 #' @examples
 #' \donttest{
-#' result <- find_clusters(object)
+#' bwr <- find_clusters(bwr)
 #' }
 #' @import leiden
 #' @export
@@ -22,6 +22,11 @@ find_clusters.BOWER <- function(bower, resolution = 3, ...){
     if (!is.null(bower@graph)){
         clusters <- leiden::leiden(bower@graph, resolution = 3, ...)
         igraph::V(bower@graph)$cluster <- clusters
+        if (length(bower@genesets) > 0){
+            ds <- data.frame(geneset_size = unlist(lapply(bower@genesets, length)))
+            idx <- match(igraph::V(bower@graph)$name, row.names(ds))
+            igraph::V(bower@graph)$geneset_size <- ds$geneset_size[idx]
+        }
         bower@clusters <- clusters
         bower@.graph_data <- .graph_to_data(bower@graph)
         return(bower)
@@ -42,7 +47,7 @@ find_clusters.igraph <- function(gr, resolution = 3, ...){
 #' @name set_clusters
 #' @param bower bower class
 #' @param clusters Cluster assignment for each geneset.
-#' @details
+#' @description
 #' Manually sets externally/alternatively determined cluster assignment for each geneset.
 #' @return bower class
 #' @examples
@@ -55,6 +60,11 @@ set_clusters.BOWER <- function(bower, clusters){
     bower@clusters <- clusters
     if (!is.null(bower@graph)){
         igraph::V(bower@graph)$cluster <- clusters
+        if (length(bower@genesets) > 0){
+            ds <- data.frame(geneset_size = unlist(lapply(bower@genesets, length)))
+            idx <- match(igraph::V(bower@graph)$name, row.names(ds))
+            igraph::V(bower@graph)$geneset_size <- ds$geneset_size[idx]
+        }
         bower@.graph_data <- .graph_to_data(bower@graph)
     }    
     return(bower)

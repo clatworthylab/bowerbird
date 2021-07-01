@@ -1,64 +1,59 @@
-#' @param x .gmx, .gmt, .csv, .tsv, .txt, data.frame or list object containing gene sets.
-#' @param ... Arguments passed to other methods.
-#
-#' @return Returns a list of gene sets.
-#'
-
+#' @rdname misc
 .read_geneset <- function(x, ...) {
     UseMethod(generic = "read_geneset")
 }
 
-#' @param x either a BOWER class or a list.
-#' @param ... Arguments passed to other methods.
-#
-#' @return Returns a SNN geneset graph.
+
 #' @export
 #'
 
-snn_graph <- function(x, ...) {
+snn_graph <- function(...) {
     UseMethod(generic = "snn_graph")
 }
 
-#' @param x either a BOWER class or an igraph object.
-#' @param ... Arguments passed to other methods.
-#
-#' @return Summarizes labels for genesets.
+
 #' @export
 #'
 
-summarize_clusters <- function(x, ...) {
+summarize_clusters <- function(...) {
     UseMethod(generic = "summarize_clusters")
 }
 
-#' @param x either a BOWER class or an igraph object.
-#' @param ... Arguments passed to other methods.
-#
-#' @return Return leiden clustering assignment for each geneset.
+
 #' @export
 #'
 
-find_clusters <- function(x, ...) {
+find_clusters <- function(...) {
     UseMethod(generic = "find_clusters")
 }
 
-#' @param x BOWER class.
-#' @param ... Arguments passed to other methods.
-#
-#' @return Set cluster labels for each gene set
+
 #' @export
 #'
 
-set_clusters <- function(x, ...) {
+set_clusters <- function(...) {
     UseMethod(generic = "set_clusters")
 }
 
-#' @param x a BOWER class.
-#' @param ... Arguments passed to other methods.
-#
-#' @return Return leiden clustering assignment for each geneset.
+
 #' @export
 #'
 
-extract_core <- function(x, ...) {
+extract_core <- function(...) {
     UseMethod(generic = "extract_core")
+}
+
+
+#' @export
+#'
+
+enrich_genesets <- function(...) {
+    UseMethod(generic = "enrich_genesets")
+}
+
+#' @export
+#'
+
+plot_graph <- function(...) {
+    UseMethod(generic = "plot_graph")
 }

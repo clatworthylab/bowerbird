@@ -1,0 +1,219 @@
+---
+title: "Introduction to bowerbird"
+output: rmarkdown::html_vignette
+date: "`r Sys.Date()`"
+vignette: >
+  %\VignetteIndexEntry{Introduction to bowerbird}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+[![R](https://github.com/clatworthylab/bowerbird/actions/workflows/r.yml/badge.svg?branch=master)](https://github.com/clatworthylab/bowerbird/actions/workflows/r.yml)
+[![vignette](https://github.com/clatworthylab/bowerbird/actions/workflows/vignette.yml/badge.svg)](https://github.com/clatworthylab/bowerbird/actions/workflows/vignette.yml)
+
+# bowerbird
+A single-cell package for Functional Annotation + Gene Module Summarization.
+
+<img src="../img/logo.png" alt="bower" width="200"/>
+
+*Bowerbirds are famous for the elaborate and sometimes whimsical structures that males build to court females.*
+
+<a href="https://blog.nature.org/science/2021/01/04/bowerbirds-meet-the-bird-worlds-kleptomaniac-love-architects/"><img src="https://blog.nature.org/science/files/2020/11/32487196918_8dd537c82a_k.jpg" alt="bower" width="400"/></a>
+
+Picture credits:
+A satin bowerbird’s bower, decorated with blue objects. © Stefan Marks / [Flickr](https://www.flickr.com/photos/stefan_marks/32487196918/)
+
+I'm not sure if this mating ritual is in anyway similar to my attempts to visualise pathway analyses and their association with celltype identities/states... who cares. It's just a name.
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Installation
+```{r, eval = FALSE}
+# because currently private, requires specifying personal github access token
+devtools::install_github('clatworthylab/bowerbird', auth_token = "insert_your_personal_github_access_token")
+# or clone this repo and do devtools::install('path/of/folder/to/bowerbird')
+```
+
+## Quick Usage
+Pathway analyis is tricky; often there's too many pathways/terms to use and it's not easy to distinguish how important every element is. `bowerbird` attempts to summarise your pathways of interest into potentially meaningful functional annotation modules which you can then take forward to pathway analyses, or the reverse situation where you have a set of pathways that were determined <i><b>a priori</b></i> to be significant and you wanted to find out how to interpret it. To do this, we compute a shortest nearest neighbor graph using the genes in the gene sets/pathways and learn a representative summary term from the name of the gene sets that cluster together.
+
+```{r, eval = FALSE}
+library(bowerbird)
+bwr <- bower(gmt_file)
+bwr <- snn_graph(bwr)
+bwr <- find_clusters(bwr)
+bwr <- summarize_clusters(bwr)
+bwr <- enrich_genesets(sce, bwr)
+```
+
+## Full example
+```{r, message = FALSE, warning = FALSE}
+library(bowerbird)
+gmt_file <- system.file("extdata", "h.all.v7.4.symbols.gmt", package = "bowerbird") # read in a .gmt file
+bwr <- bower(gmt_file) # this performs a read_geneset step internally, which accepts .gmt, .gmx, .csv, .tsv, .txt, or R objects as list or data.frame format.
+bwr <- snn_graph(bwr)
+bwr <- find_clusters(bwr)
+bwr <- summarize_clusters(bwr)
+```
+
+Input formats accepts .gmt, .gmx, .csv, .tsv, .txt, or R objects as list or data.frame format.
+
+```{r, message = FALSE, warning = FALSE}
+csv_file <- system.file("extdata", "h.all.v7.4.symbols.csv", package = "bowerbird") # read in a .gmt file
+csv <- read.csv(csv_file)
+# see first 6 rows of the first 3 columns
+csv[1:6, 1:3]
+```
+
+And now to process it through.
+
+```{r, message = FALSE, warning = FALSE}
+bwr <- bower(csv)
+bwr <- snn_graph(bwr)
+bwr <- find_clusters(bwr)
+bwr <- summarize_clusters(bwr)
+```
+
+## Examples of different ways of loading in genesets
+
+Doing some manual editing of a predefined geneset.
+
+```{r}
+# download from msigdb website
+file <- system.file("extdata", "c5.go.bp.v7.4.symbols.gmt", package = "bowerbird")
+# manualy read in to do some fine adjustments/filtering
+geneset <- read_geneset(file) # reads in gene file manually
+# do a bit of manual filtering
+geneset <- geneset[grep('B_CELL|T_CELL|NATURAL_KILLER|ANTIBODY|ANTIGEN|LYMPHOCYTE|IMMUNE|INTERFERON|TOLL|INNATE|ADAPTIVE', names(geneset))]
+geneset <- geneset[!grepl('TROPHOBLAST_CELL|FAT_CELL|ENT_CELL', names(geneset))]
+
+bwr <- bower(geneset)
+bwr <- snn_graph(bwr)
+bwr <- find_clusters(bwr)
+bwr <- summarize_clusters(bwr)
+```
+
+Or extracting from `msigdbr`.
+
+```{r}
+library(msigdbr)
+GO <- data.frame(msigdbr::msigdbr(category = "C5", subcategory = "GO:BP"))
+genesets <- GO[grep('B_CELL|T_CELL|NATURAL_KILLER|ANTIBODY|ANTIGEN|LYMPHOCYTE|IMMUNE|INTERFERON|TOLL|INNATE|ADAPTIVE', GO$gs_name), ]
+genesets <- genesets[!grepl('TROPHOBLAST_CELL|FAT_CELL|ENT_CELL', genesets$gs_name), ]
+
+# convert to list
+gs_list <- lapply(unique(genesets$gs_name), function(x) genesets[genesets$gs_name %in% x, "gene_symbol"])
+names(gs_list) <- unique(genesets$gs_name)
+
+bwr <- bower(gs_list)
+bwr <- snn_graph(bwr)
+bwr <- find_clusters(bwr)
+bwr <- summarize_clusters(bwr)
+```
+
+So what has actually happened? Well, basically `bowerbird` has learnt which gene sets share more genes with each other, clustered them together and learnt a new summary term.
+
+```{r}
+bwr
+```
+
+We can visualise it with a simple plot
+
+```{r, message=FALSE, warning=FALSE, fig.width=7, fig.height=7}
+plot_graph(bwr, colorby = 'cluster', node.size = 'geneset_size')
+```
+
+## Geneset average expression testing
+We can also compute the enrichment score and superimpose the values onto the visualization. To do this, we would need either a single-cell object (`SingleCellExperiment` or `Seurat`), or a list containing differential gene testing results.
+
+```{r, message=FALSE, warning=FALSE}
+# load a dummy dataset
+library(ktplots)
+data(kidneyimmune)
+```
+
+With popular single-cell methods.
+
+```{r, message = FALSE, warning = FALSE}
+## AUCell
+bwr <- enrich_genesets(kidneyimmune, bwr, groupby = 'celltype', mode = 'AUCell')
+
+## Seurat::AddModuleScore
+bwr <- enrich_genesets(kidneyimmune, bwr, groupby = 'celltype', mode = 'Seurat')
+
+## scanpy.tl.score_genes
+bwr <- enrich_genesets(kidneyimmune, bwr, groupby = 'celltype', mode = 'scanpy')
+```
+
+Visualise as a network plot.
+
+```{r, message=FALSE, warning=FALSE, fig.width=45, fig.height=30}
+celltypes <- levels(kidneyimmune) # celtypes stored as Idents in seurat object.
+plot_list <- lapply(celltypes, function(ds){
+  g <- plot_graph(bwr, colorby = ds) + viridis::scale_color_viridis() + theme(plot.title = element_text(size = 8, face = "bold"))
+})
+cowplot::plot_grid(plotlist = plot_list, scale = 0.9)
+```
+
+## Running `fgsea` on deg tables in a list as an alternative to the single-cell methods.
+
+Here we use a differential expression result for marker genes as input.
+
+```{r, message=FALSE, warning=FALSE}
+degs <- Seurat::FindAllMarkers(kidneyimmune)
+degs <- split(degs, degs$cluster) # so in practice, there should be one DEG table per comparison in a list.
+bwr <- enrich_genesets(degs, bwr, gene_symbol = 'gene', logfoldchanges = 'avg_log2FC',  pvals = 'p_val')
+```
+
+Coloured by adjusted p value.
+
+```{r, message=FALSE, warning=FALSE, fig.width=40, fig.height=30}
+plot_list <- lapply(celltypes, function(ds){
+  g <- plot_graph(bwr, colorby = ds, mode = 'gsea', gsea.slot = 'padj') + viridis::scale_color_viridis(na.value = '#e7e7e7') + theme(legend.position = 'none', plot.title = element_text(size = 8, face = "bold"))
+})
+cowplot::plot_grid(plotlist = plot_list, scale = 0.9)
+```
+
+Coloured by normalized enrichment score.
+
+```{r, message=FALSE, warning=FALSE, fig.width=40, fig.height=30}
+plot_list <- lapply(celltypes, function(ds){
+  g <- plot_graph(bwr, colorby = ds, mode = 'gsea', gsea.slot = 'NES') + viridis::scale_color_viridis(na.value = '#e7e7e7') + theme(legend.position = 'none', plot.title = element_text(size = 8, face = "bold"))
+})
+cowplot::plot_grid(plotlist = plot_list, scale = 0.9)
+```
+
+## Using `core` genes for enrichment
+
+Same function as above, just specifying `core = TRUE`. This will grab the intersecting (or outersecting rather) genes in a gene set cluster and perform the enrichment, like a summary gene set of the summarised terms.
+
+```{r, message=FALSE, warning=FALSE, fig.width=12, fig.height=10}
+bwr <- enrich_genesets(kidneyimmune, bwr, core = TRUE, groupby = 'celltype') # if mode is not specified, the default option is to use AUCell
+pheatmap::pheatmap(bwr@scores, cellheight = 20, cellwidth = 20)
+```
+
+Same for the gsea results. First looking at the NES.
+```{r, message=FALSE, warning=FALSE, fig.width=12, fig.height=10}
+bwr <- enrich_genesets(degs, bwr, core = TRUE, gene_symbol = 'gene', logfoldchanges = 'avg_log2FC',  pvals = 'p_val')
+pheatmap::pheatmap(bwr@scores$NES, cellheight = 20, cellwidth = 20)
+```
+
+And now the FDR, remembering that `<0.25` is usually the cut off.
+```{r, message=FALSE, warning=FALSE, fig.width=12, fig.height=10}
+pheatmap::pheatmap(bwr@scores$padj, cellheight = 20, cellwidth = 20, color = viridis::viridis(50, direction = -1))
+```
+
+To visualise as a graph, can consider doing:
+```{r, eval = FALSE}
+bwr2 <- bower(bwr@coregenes)
+# and so on
+```
+
+Hopefully you find this interesting and potentially useful.
+
+Please email me at kt16@sanger.ac.uk if you have any queries, feedback or ideas and I'll get back to you!

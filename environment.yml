@@ -1,0 +1,21 @@
+name: r-reticulate
+channels:
+- conda-forge
+- bioconda
+- anaconda
+- defaults
+- r
+dependencies:
+- python-igraph
+- leidenalg
+- numpy
+- seaborn
+- scikit-learn
+- statsmodels
+- numba
+- pytables
+- pip
+- pip:
+  - pip
+  - scanpy
+  

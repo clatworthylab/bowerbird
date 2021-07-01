@@ -1,0 +1,93 @@
+on:
+  push:
+    branches:
+      - "master"
+  pull_request:
+    branches:
+      - "*"
+
+name: vignette
+
+jobs:
+  vignette:
+    defaults:
+      run:
+        shell: bash -l {0}
+    strategy:
+      matrix:
+        config:
+          - { python-version: 3.8, os: macos-latest }
+    runs-on: ${{ matrix.config.os }}
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+
+      - uses: r-lib/actions/setup-r@v1
+        id: install-r
+
+      - uses: r-lib/actions/setup-pandoc@v1
+
+      - id: bioc
+        name: Check bioc version
+        run: |
+          echo "##[set-output name=mainbiocversion;]$(Rscript -e 'cat(unlist(tools:::.BioC_version_associated_with_R_version()))' | awk '{print $1}')"
+          echo "##[set-output name=subbiocversion;]$(Rscript -e 'cat(unlist(tools:::.BioC_version_associated_with_R_version()))' | awk '{print $2}')"
+          echo "##[set-output name=biocversion;]$(Rscript -e 'cat(as.character(tools:::.BioC_version_associated_with_R_version()))' | awk '{print $1}')"
+        shell: bash -l {0}
+
+      - name: Install pak and query dependencies
+        run: |
+          install.packages("pak", repos = "https://r-lib.github.io/p/pak/dev/")
+          saveRDS(pak::pkg_deps("local::.", dependencies = TRUE), ".github/r-depends.rds")
+        shell: Rscript {0}
+
+      - name: Cache conda
+        uses: actions/cache@v1
+        env:
+          # Increase this value to reset cache if etc/example-environment.yml has not changed
+          CACHE_NUMBER: 0
+        with:
+          path: ~/conda_pkgs_dir
+          key:
+            ${{ runner.os }}-conda-${{ env.CACHE_NUMBER }}-${{
+            hashFiles('environment.yml') }}
+
+      - name: Cache R packages
+        uses: actions/cache@v2
+        with:
+          path: |
+            ${{ env.R_LIBS_USER }}
+            !${{ env.R_LIBS_USER }}/pak
+          key: ${{ env.cache-version }}-${{ matrix.config.os }}-biocversion-RELEASE_${{ steps.bioc.outputs.mainbiocversion}}_${{ steps.bioc.outputs.subbiocversion}}-r-${{ matrix.config.r-version}}-${{ hashFiles('.github/depends.Rds') }}
+          restore-keys: ${{ env.cache-version }}-${{ matrix.config.os }}-biocversion-RELEASE_${{ steps.bioc.outputs.mainbiocversion}}_${{ steps.bioc.outputs.subbiocversion}}-r-${{ matrix.config.r-version}}-
+      - name: Setup Miniconda
+        uses: conda-incubator/setup-miniconda@v2.0.1
+        with:
+          auto-activate-base: true
+          auto-update-conda : true
+          activate-environment: r-reticulate
+          channels: conda-forge, bioconda, anaconda, r, defaults
+          channel-priority: true
+          python-version: ${{ matrix.config.python-version }}
+          environment-file: environment.yml
+          use-only-tar-bz2: true # IMPORTANT: This needs to be set for caching to work properly!
+
+      - name: Install dependencies
+        run: |
+          pak::local_install_dev_deps(upgrade = TRUE, dependencies = c("all", "Config/Needs/website"))
+          pak::pkg_install("pkgdown")
+        shell: Rscript {0}
+
+      - name: Install package
+        run: R CMD INSTALL .
+
+      - name: Build and deploy pkgdown site
+        run: |
+          git config --local user.name "$GITHUB_ACTOR"
+          git config --local user.email "$GITHUB_ACTOR@users.noreply.github.com"
+          Rscript -e 'Sys.setenv(RETICULATE_PYTHON = reticulate::conda_python(envname="r-reticulate")); pkgdown::deploy_to_branch(new_process = FALSE)'
+        shell: bash -l {0}

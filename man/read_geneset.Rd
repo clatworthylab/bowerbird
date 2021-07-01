@@ -15,7 +15,7 @@ read_geneset(x, min_size = 15)
 Returns a list of gene sets
 }
 \description{
-read_geneset
+Function to read various geneset file formats and returns a list of vectors containing gene names.
 }
 \examples{
 \donttest{
