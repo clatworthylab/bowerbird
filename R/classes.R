@@ -66,7 +66,11 @@ setMethod("show","BOWER",function(object) {
     }
     if (!is.null(object@coregenes)){
         cathead <- function(x){
-            return(cat(head(x), "...\n"))
+            if (length(head(x)) > 6){
+                return(cat(head(x), "...\n"))
+            } else {
+                return(cat(head(x), "\n"))
+            }
         }
         cat("Core genes:\n")
         cat("\tFirst six genes shown\n")
