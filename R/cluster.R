@@ -20,7 +20,7 @@
 
 find_clusters.BOWER <- function(bower, resolution = 3, ...){
     if (!is.null(bower@graph)){
-        clusters <- leiden::leiden(bower@graph, resolution = 3, ...)
+        clusters <- leiden::leiden(bower@graph, resolution = resolution, ...)
         igraph::V(bower@graph)$cluster <- clusters
         if (length(bower@genesets) > 0){
             ds <- data.frame(geneset_size = unlist(lapply(bower@genesets, length)))
@@ -37,7 +37,7 @@ find_clusters.BOWER <- function(bower, resolution = 3, ...){
 #' @name find_clusters
 #' @export
 find_clusters.igraph <- function(gr, resolution = 3, ...){
-    clusters <- leiden::leiden(gr, resolution = 3, ...)    
+    clusters <- leiden::leiden(gr, resolution = resolution, ...)    
     return(clusters)
 }
 
