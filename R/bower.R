@@ -4,9 +4,8 @@
 #' A flexible function to initiate a BOWER class from a geneset file or a list of genesets.
 #' @include utilities.R
 #' @examples
-#' \donttest{
-#' bwr <- bower('geneset.gmt')
-#' }
+#' gmt_file <- system.file("extdata", "h.all.v7.4.symbols.gmt", package = "bowerbird")
+#' bwr <- bower(gmt_file)
 #' @export
 #'
 
@@ -23,9 +22,9 @@ bower <- function(genesets, graph=NULL, clusters = NULL, ...){
     } else if (length(graph) > 0){
         if (length(genesets) > 0){
             if (length(clusters) > 0){
-                out <- new('BOWER', genesets = read_geneset(genesets, ...), graph = graph, clusters = clusters, ...)
+                out <- new('BOWER', genesets = .sanitize(read_geneset(genesets, ...)), graph = graph, clusters = clusters, ...)
             } else {
-                out <- new('BOWER', genesets = read_geneset(genesets, ...), graph = graph, clusters = NULL, ...)
+                out <- new('BOWER', genesets = .sanitize(read_geneset(genesets, ...)), graph = graph, clusters = NULL, ...)
             }            
         } else {
             if (length(clusters) > 0){
@@ -36,9 +35,9 @@ bower <- function(genesets, graph=NULL, clusters = NULL, ...){
         }
     } else {
         if (length(clusters) > 0){
-            out <- new('BOWER', genesets = read_geneset(genesets, ...), graph = NULL, clusters = clusters, ...)
+            out <- new('BOWER', genesets = .sanitize(read_geneset(genesets, ...)), graph = NULL, clusters = clusters, ...)
         } else {
-            out <- new('BOWER', genesets = read_geneset(genesets, ...), graph = NULL, clusters = NULL, ...)
+            out <- new('BOWER', genesets = .sanitize(read_geneset(genesets, ...)), graph = NULL, clusters = NULL, ...)
         }
     }
 

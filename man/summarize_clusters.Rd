@@ -11,6 +11,7 @@
   pattern = NULL,
   sep = NULL,
   ncpus = NULL,
+  clean_graph = TRUE,
   ...
 )
 
@@ -20,6 +21,7 @@
   pattern = NULL,
   sep = NULL,
   ncpus = NULL,
+  clean_graph = TRUE,
   ...
 )
 }
@@ -31,6 +33,8 @@
 \item{sep}{separator used/found in gene set names to be changed to blank spaces. Default value is underscore ('_').}
 
 \item{ncpus}{number of cores used for parallelizing reconstruction.}
+
+\item{clean_graph}{return a graph connecting only nodes in a cluster.}
 
 \item{...}{passed to textrank::textrank_sentences.}
 

@@ -11,6 +11,17 @@
 
 .is_blank <- function(x) x == ""
 
+
+#' @rdname misc
+#' @param x named list.
+#' 
+
+.sanitize <- function(x) {
+  names(x) <- make.unique(names(x), sep = '_')
+  return(x)
+}
+
+
 #' @rdname misc
 #' @param gs list of vectors.
 #' @param min_size minimum size of geneset otherwise filter out.

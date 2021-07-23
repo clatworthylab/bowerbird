@@ -1,5 +1,6 @@
 [![R](https://github.com/clatworthylab/bowerbird/actions/workflows/r.yml/badge.svg?branch=master)](https://github.com/clatworthylab/bowerbird/actions/workflows/r.yml)
 [![vignette](https://github.com/clatworthylab/bowerbird/actions/workflows/vignette.yml/badge.svg)](https://github.com/clatworthylab/bowerbird/actions/workflows/vignette.yml)
+[![Codecov test coverage](https://codecov.io/gh/clatworthylab/bowerbird/branch/master/graph/badge.svg)](https://codecov.io/gh/clatworthylab/bowerbird?branch=master)
 
 # bowerbird
 A single-cell package for Functional Annotation + Gene Module Summarization.

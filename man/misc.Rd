@@ -2,6 +2,7 @@
 % Please edit documentation in R/utilities.R, R/generics.R
 \name{.is_blank}
 \alias{.is_blank}
+\alias{.sanitize}
 \alias{.filter_geneset}
 \alias{.emptyBOWER}
 \alias{.create_graph}
@@ -15,6 +16,8 @@
 \title{misc}
 \usage{
 .is_blank(x)
+
+.sanitize(x)
 
 .filter_geneset(gs, min_size)
 

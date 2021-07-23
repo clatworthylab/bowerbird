@@ -1,0 +1,8 @@
+gmt_file <- system.file("extdata", "h.all.v7.4.symbols.gmt", package = "bowerbird")
+bwr <- bower(gmt_file)
+bwr <- snn_graph(bwr)
+bwr <- find_clusters(bwr)
+bwr <- summarize_clusters(bwr)
+p <- plot_graph(bwr, colorby = 'cluster', node.size = 'geneset_size')
+
+expect_s4_class(bwr, "BOWER")
