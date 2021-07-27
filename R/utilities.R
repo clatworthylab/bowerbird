@@ -1,18 +1,15 @@
-#' @title misc
 #' @description
 #' Miscellaneous utility functions.
 #'
 #########################
 # Miscellaneous functions
 #########################
-#' @rdname misc
 #' @param x vector.
 #'
 
 .is_blank <- function(x) x == ""
 
 
-#' @rdname misc
 #' @param x named list.
 #'
 
@@ -22,7 +19,6 @@
 }
 
 
-#' @rdname misc
 #' @param gs list of vectors.
 #' @param min_size minimum size of geneset otherwise filter out.
 #'
@@ -39,7 +35,6 @@
 }
 
 
-#' @rdname misc
 #' @param ... does nothing.
 #'
 
@@ -52,7 +47,6 @@
   out
 }
 
-#' @rdname misc
 #' @param snn KNN graph.
 #' @param mode Character scalar, specifies how igraph should interpret the supplied matrix. See also the weighted argument, the interpretation depends on that too. Possible values are: directed, undirected, upper, lower, max, min, plus. See ?igraph::graph_from_adjacency_matrix.
 #' @param weighted This argument specifies whether to create a weighted graph from an adjacency matrix. If it is NULL then an unweighted graph is created and the elements of the adjacency matrix gives the number of edges between the vertices. If it is a character constant then for every non-zero matrix entry an edge is created and the value of the entry is added as an edge attribute named by the weighted argument. If it is TRUE then a weighted graph is created and the name of the edge attribute will be weight. See ?igraph::graph_from_adjacency_matrix.
@@ -67,7 +61,6 @@
 }
 
 
-#' @rdname misc
 #' @param gr igraph
 #' @param ... passed to ggraph::ggraph.
 #'
@@ -94,7 +87,6 @@
 }
 
 
-#' @rdname misc
 #' @param gr data matrix or data.frame that contains at least two columns.
 #' @param x_column name of x column/axis.
 #' @param y_column name of y column/axis.
@@ -197,7 +189,6 @@
 }
 
 
-#' @rdname misc
 #' @param sce Single cell object. Accepts either a Seurat object of SingleCellExperiment object.
 #' @param mode mode of conversion. Accepts one of AUCell, SingleCellExperiment, Seurat, scanpy.
 #' @param sce_assay name of assay in SingleCellExperiment object.
@@ -247,7 +238,6 @@
 }
 
 
-#' @rdname misc
 #' @param deg deg table. must at least have a column for gene symbol, log fold changes and pvalues.
 #' @param gene_symbol gene_symbol
 #' @param logfoldchanges logfoldchanges
@@ -271,13 +261,11 @@
 }
 
 
-#' @rdname misc
 #' @param x numerical vector
 #'
 range01 <- function(x){(x-min(x))/(max(x)-min(x))}
 
 
-#' @rdname misc
 #' @param res fgsea result data.frame.
 #' @param query column name in fgsea results.
 #'
@@ -297,7 +285,6 @@ range01 <- function(x){(x-min(x))/(max(x)-min(x))}
 }
 
 
-#' @rdname misc
 #' @param filename, string. The filename of the file in the package cache.
 #' @param mustWork, logical. Whether an error should be created if the file does not exist. If mustWork=FALSE and the file does not exist, the empty string is returned.
 #' @import pkgfilecache
@@ -310,7 +297,6 @@ get_optional_data_filepath <- function(filename, mustWork=TRUE) {
 }
 
 
-#' @rdname misc
 #' @import udpipe pkgfilecache rappdirs
 #' @return Access a single file from the package cache by its file name.
 #' @export

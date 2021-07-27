@@ -1,4 +1,3 @@
-#' @rdname misc
 .read_geneset <- function(x, ...) {
     UseMethod(generic = "read_geneset")
 }
