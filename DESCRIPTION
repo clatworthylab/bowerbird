@@ -40,7 +40,9 @@ Imports:
     ggraph,
     leiden,
     fgsea,
-    ggplot2
+    ggplot2,
+    pkgfilecache,
+    rappdirs
 Suggests:
     SingleCellExperiment,
     SummarizedExperiment,

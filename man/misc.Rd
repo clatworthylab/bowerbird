@@ -12,6 +12,8 @@
 \alias{.makeRankGeneList}
 \alias{range01}
 \alias{.retrieve_gsea}
+\alias{get_optional_data_filepath}
+\alias{check_udpipemodel}
 \alias{.read_geneset}
 \title{misc}
 \usage{
@@ -42,6 +44,10 @@
 range01(x)
 
 .retrieve_gsea(res, query)
+
+get_optional_data_filepath(filename, mustWork = TRUE)
+
+check_udpipemodel()
 
 .read_geneset(x, ...)
 }
@@ -89,11 +95,19 @@ range01(x)
 \item{res}{fgsea result data.frame.}
 
 \item{query}{column name in fgsea results.}
+
+\item{filename, }{string. The filename of the file in the package cache.}
+
+\item{mustWork, }{logical. Whether an error should be created if the file does not exist. If mustWork=FALSE and the file does not exist, the empty string is returned.}
 }
 \value{
 appropriate single cell object for enrichment analysis
 
 sorted ranked gene list.
+
+Access a single file from the package cache by its file name.
+
+Access a single file from the package cache by its file name.
 }
 \description{
 Miscellaneous utility functions.

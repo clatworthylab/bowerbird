@@ -300,24 +300,24 @@ range01 <- function(x){(x-min(x))/(max(x)-min(x))}
 #' @rdname misc
 #' @param filename, string. The filename of the file in the package cache.
 #' @param mustWork, logical. Whether an error should be created if the file does not exist. If mustWork=FALSE and the file does not exist, the empty string is returned.
+#' @import pkgfilecache
 #' @return Access a single file from the package cache by its file name.
 #'
 #' @export
 get_optional_data_filepath <- function(filename, mustWork=TRUE) {
-  requireNamespace('pkgfilecache')
-  pkg_info = pkgfilecache::get_pkg_info("bowerbird");
-  return(pkgfilecache::get_filepath(pkg_info, filename, mustWork=mustWork));
+  pkg_info = get_pkg_info("bowerbird");
+  return(get_filepath(pkg_info, filename, mustWork=mustWork));
 }
 
 
 #' @rdname misc
-#' @import udpipe
+#' @import udpipe pkgfilecache rappdirs
 #' @return Access a single file from the package cache by its file name.
 #' @export
 check_udpipemodel <- function(){
-  pkg_info = pkgfilecache::get_pkg_info("bowerbird");
+  pkg_info = get_pkg_info("bowerbird");
   local_filenames = 'english-ewt-ud-2.5-191206.udpipe' # need to modify this if it gets updated?
-  files_exist = pkgfilecache::are_files_available(pkg_info, local_filenames)
+  files_exist = are_files_available(pkg_info, local_filenames)
   if (files_exist){
     tagger <- data.frame(
                          language = 'english-ewt',
@@ -326,7 +326,7 @@ check_udpipemodel <- function(){
                          download_failed = FALSE,
                          download_message = "OK")
   } else {
-    tagger <- udpipe_download_model("english", model_dir = tempdir())
+    tagger <- udpipe_download_model("english", model_dir = file.path(user_data_dir(), 'bowerbird'))
   }
   return(tagger)
 }
