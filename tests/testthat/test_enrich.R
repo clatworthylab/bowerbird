@@ -34,7 +34,6 @@ test_that("enrich genesets seurat", {
 	bwr <- enrich_genesets(kidneyimmune, bwr, groupby = 'celltype', mode = 'Seurat')
 
 	## scanpy.tl.score_genes
-	expect_true(reticulate::py_module_available("numpy"))
 	bwr <- enrich_genesets(kidneyimmune, bwr, groupby = 'celltype', mode = 'scanpy')
 })
 
@@ -57,7 +56,5 @@ test_that("enrich genesets sce", {
 	bwr <- enrich_genesets(scex, bwr, groupby = 'celltype', mode = 'Seurat')
 	
 	## scanpy.tl.score_genes
-	reticulate::use_condaenv("r-reticulate", required = TRUE)	
-	expect_true(reticulate::py_module_available("numpy"))
 	bwr <- enrich_genesets(scex, bwr, groupby = 'celltype', mode = 'scanpy')
 })

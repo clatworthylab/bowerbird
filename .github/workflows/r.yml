@@ -92,7 +92,12 @@ jobs:
           install.packages(c("rcmdcheck", "covr"))
           remotes::install_deps(dependencies = TRUE)
         shell: Rscript {0}
-        
+      
+      - name: Fix reticulate path
+        run: |
+          echo "Sys.setenv(RETICULATE_PYTHON = '/usr/share/miniconda/envs/r-reticulate/envs/r-reticulate')" >> ~/.RProfile
+        shell: bash -l {0}
+
       - name: Check
         run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "error")
         shell: Rscript {0}
