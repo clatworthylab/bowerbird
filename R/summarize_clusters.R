@@ -23,6 +23,7 @@
 #' bwr <- snn_graph(bwr)
 #' bwr <- find_clusters(bwr)
 #' bwr <- summarize_clusters(bwr)
+#' bwr
 #' @import textrank udpipe dplyr pbmcapply
 #' @export
 #'

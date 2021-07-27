@@ -1,37 +1,30 @@
-#' The BOWER container class
-#'
-
-#' @title BOWER_class
-#' @description
-#' The BOWER class for Functional annotation + Gene Module Summarization
-
-#' @rdname BOWER_class
 setClassUnion("genesets", c("list", "character", "data.frame"))
 
-#' @rdname BOWER_class
 setClassUnion("clusters", c("character", "factor", "numeric", "NULL"))
 
 setClass("igraph")
-#' @rdname BOWER_class
 setClassUnion("graph", c("igraph", "NULL"))
 
-#' @rdname BOWER_class
 setClassUnion("coregenes", c("list", "NULL"))
 
-#' @rdname BOWER_class
 setClassUnion("scores", c("data.frame", "matrix", "list", "NULL"))
 
 setClass("layout_tbl_graph")
 setClass("layout_ggraph")
 setClassUnion("hidden", c("data.frame", "layout_tbl_graph", "layout_ggraph", "NULL"))
 
+#' The BOWER container class
+#'
+#' @title BOWER_class
+#' @rdname BOWER_class
+#' @description
+#' The BOWER class for Functional annotation + Gene Module Summarization
 #' @slot genesets A list of containing vectors of genes.
 #' @slot graph An igraph object that represents the kNN graph.
 #' @slot clusters A vector holding the cluster labels for each geneset.
 #' @slot coregenes A list of containing vectors of core genes.
 #' @slot scores A dataframe or list containg the geneset testing results.
 #'
-#' @rdname BOWER_class
 #' @export
 #'
 setClass("BOWER",

@@ -16,6 +16,7 @@
 #' gmt_file <- system.file("extdata", "h.all.v7.4.symbols.gmt", package = "bowerbird")
 #' bwr <- bower(gmt_file)
 #' bwr <- snn_graph(bwr)
+#' bwr
 #' @import superml
 #' @export
 

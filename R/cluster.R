@@ -16,6 +16,7 @@
 #' bwr <- bower(gmt_file)
 #' bwr <- snn_graph(bwr)
 #' bwr <- find_clusters(bwr)
+#' bwr
 #' @import leiden
 #' @export
 
