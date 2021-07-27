@@ -145,10 +145,39 @@
     <p>Returns a list of genes that outersect geneset clusters in coregenes slot or as a list.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='va'>bwr</span> <span class='op'>&lt;-</span> <span class='fu'>extract_core</span><span class='op'>(</span><span class='va'>bwr</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in extract_core(bwr): object 'bwr' not found</span></div><div class='input'><span class='co'># }</span>
-</div></pre>
+    <pre class="examples"><div class='input'><span class='va'>gmt_file</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"h.all.v7.4.symbols.gmt"</span>, package <span class='op'>=</span> <span class='st'>"bowerbird"</span><span class='op'>)</span>
+<span class='va'>bwr</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bower.html'>bower</a></span><span class='op'>(</span><span class='va'>gmt_file</span><span class='op'>)</span>
+<span class='va'>bwr</span> <span class='op'>&lt;-</span> <span class='fu'><a href='snn_graph.html'>snn_graph</a></span><span class='op'>(</span><span class='va'>bwr</span><span class='op'>)</span>
+<span class='va'>bwr</span> <span class='op'>&lt;-</span> <span class='fu'><a href='find_clusters.html'>find_clusters</a></span><span class='op'>(</span><span class='va'>bwr</span><span class='op'>)</span>
+<span class='va'>bwr</span> <span class='op'>&lt;-</span> <span class='fu'>summarize_clusters</span><span class='op'>(</span><span class='va'>bwr</span><span class='op'>)</span>
+<span class='fu'>extract_core</span><span class='op'>(</span><span class='va'>bwr</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; BOWER class
+#&gt; number of genesets:  50 
+#&gt; genesets kNN Graph: 
+#&gt; IGRAPH 942ee53 UNW- 50 124 -- 
+#&gt; + attr: name (v/c), cluster (v/n), geneset_size (v/n), terms (v/c),
+#&gt; | labels (v/c), weight (e/n)
+#&gt; + edges from 942ee53 (vertex names):
+#&gt; [1] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_HYPOXIA                
+#&gt; [2] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_TGF_BETA_SIGNALING     
+#&gt; [3] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_IL6_JAK_STAT3_SIGNALING
+#&gt; [4] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_APOPTOSIS              
+#&gt; [5] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_MYOGENESIS             
+#&gt; [6] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_COMPLEMENT             
+#&gt; + ... omitted several edges
+#&gt; number of geneset clusters:  10 
+#&gt; Core genes:
+#&gt; 	First six genes shown
+#&gt; 	 XENOBIOTIC METABOLISM : LIFR DNAJB9 CD36 ACOX1 IDH1 ECH1 ...
+#&gt; 	 E2F TARGETS : SAC3D1 KIF11 KIF23 RACGAP1 NUMA1 KIF2C ...
+#&gt; 	 ESTROGEN RESPONSE EARLY : JAG1 CTNNB1 GNAI1 FDFT1 DHCR7 FASN ...
+#&gt; 	 HEDGEHOG SIGNALING : VEGFA VLDLR MYH9 ERO1A DDIT4 STC2 ...
+#&gt; 	 INTERFERON GAMMA RESPONSE : IL4R IRF9 CSF1 CXCL10 STAT2 IRF1 ...
+#&gt; 	 MYOGENESIS : ATF3 IER3 BIRC3 JUN EGR3 IL1B ...
+#&gt; 	 APICAL JUNCTION : EGFR ADAM10 CLTC AP2M1 ARF1 MAPK1 ...
+#&gt; 	 P53 PATHWAY : BTG2 TAP1 CDKN2B ATF3 BTG1 RRAD ...
+#&gt; 	 TGF BETA SIGNALING : TGFB1 PMEPA1 SERPINE1 ID2 THBS1 PPP1R15A ...
+#&gt; 	 COMPLEMENT : C2 C1S CFB C1R SERPINE1 MMP14 ...</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

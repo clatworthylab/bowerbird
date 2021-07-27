@@ -144,9 +144,8 @@
     <p>Returns a list of gene sets</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='va'>gs</span> <span class='op'>&lt;-</span> <span class='fu'>read_geneset</span><span class='op'>(</span><span class='st'>'geneset.gmt'</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: cannot open file 'geneset.gmt': No such file or directory</span></div><div class='output co'>#&gt; <span class='error'>Error in count.fields(x, sep = "\t"): cannot open the connection</span></div><div class='input'><span class='co'># }</span>
+    <pre class="examples"><div class='input'><span class='va'>gmt_file</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"h.all.v7.4.symbols.gmt"</span>, package <span class='op'>=</span> <span class='st'>"bowerbird"</span><span class='op'>)</span>
+<span class='va'>gs</span> <span class='op'>&lt;-</span> <span class='fu'>read_geneset</span><span class='op'>(</span><span class='va'>gmt_file</span><span class='op'>)</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
