@@ -58,6 +58,7 @@ Suggests:
     rmarkdown,
     limma,
     testthat,
+    reticulate,
     covr
 Remotes:
     zktuong/ktplots
