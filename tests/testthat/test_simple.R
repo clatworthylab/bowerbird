@@ -1,0 +1,20 @@
+test_that("simple running mode", {
+	expect_error(bower())
+	expect_s4_class(bower(list()), "BOWER")
+
+	gmt_file <- system.file("extdata", "h.all.v7.4.symbols.gmt", package = "bowerbird")
+	bwr <- bower(gmt_file)
+	bwr <- snn_graph(bwr)
+	bwr <- find_clusters(bwr)
+	bwr <- summarize_clusters(bwr)
+	p <- plot_graph(bwr, colorby = 'cluster', node.size = 'geneset_size')
+	p <- plot_graph(bwr@graph, colorby = 'cluster', node.size = 'geneset_size')
+	expect_s4_class(bwr, "BOWER")
+
+	new_clusters <- rev(bwr@clusters)
+	bwr <- set_clusters(bwr, new_clusters)
+	bwr <- summarize_clusters(bwr)
+	l <- snn_graph(bwr@coregenes)
+	expect_type(l, "list")
+	expect_s4_class(bwr, "BOWER")
+})

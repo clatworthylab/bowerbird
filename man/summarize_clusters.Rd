@@ -11,7 +11,7 @@
   pattern = NULL,
   sep = NULL,
   ncpus = NULL,
-  clean_graph = TRUE,
+  disconnect_graph = FALSE,
   ...
 )
 
@@ -21,7 +21,7 @@
   pattern = NULL,
   sep = NULL,
   ncpus = NULL,
-  clean_graph = TRUE,
+  disconnect_graph = FALSE,
   ...
 )
 }
@@ -34,7 +34,7 @@
 
 \item{ncpus}{number of cores used for parallelizing reconstruction.}
 
-\item{clean_graph}{return a graph connecting only nodes in a cluster.}
+\item{disconnect_graph}{return a graph connecting only nodes in a cluster.}
 
 \item{...}{passed to textrank::textrank_sentences.}
 

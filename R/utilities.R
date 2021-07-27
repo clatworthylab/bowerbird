@@ -205,13 +205,13 @@
   requireNamespace(c('Seurat', 'SummarizedExperiment'))
   if (mode[1] == 'AUCell' | mode[1] == 'SingleCellExperiment'){
     if (cls == 'Seurat'){
-      scex <- Seurat::as.SingleCellExperiment(kidneyimmune)
+      scex <- Seurat::as.SingleCellExperiment(sce)
     } else if (cls == 'SingleCellExperiment') {
       scex <- sce
     }
   } else if (mode[1] == 'Seurat'){
     if (cls == 'SingleCellExperiment'){
-      scex <- Seurat::as.Seurat(kidneyimmune)
+      scex <- Seurat::as.Seurat(sce)
     } else if (cls == 'Seurat') {
       scex <- sce
     }
