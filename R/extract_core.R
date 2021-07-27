@@ -8,9 +8,12 @@
 #' @param bower processed bower object.
 #' @param inplace whether or not to return an updated BOWER class or return the output as a list.
 #' @examples
-#' \donttest{
-#' bwr <- extract_core(bwr)
-#' }
+#' gmt_file <- system.file("extdata", "h.all.v7.4.symbols.gmt", package = "bowerbird")
+#' bwr <- bower(gmt_file)
+#' bwr <- snn_graph(bwr)
+#' bwr <- find_clusters(bwr)
+#' bwr <- summarize_clusters(bwr)
+#' extract_core(bwr)
 #' @return Returns a list of genes that outersect geneset clusters in coregenes slot or as a list.
 #' @import dplyr
 

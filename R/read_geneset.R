@@ -12,9 +12,8 @@
 #' @param min_size minimum size of geneset otherwise filter out.
 #' @return Returns a list of gene sets
 #' @examples
-#' \donttest{
-#' gs <- read_geneset('geneset.gmt')
-#' }
+#' gmt_file <- system.file("extdata", "h.all.v7.4.symbols.gmt", package = "bowerbird")
+#' gs <- read_geneset(gmt_file)
 #' @export
 #'
 

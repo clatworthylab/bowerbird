@@ -29,11 +29,14 @@
 #' 
 #' @return Returns a dataframe of average gene set scores.
 #' @examples
-#' \donttest{
-#' bwr <- enrich_genesets(list, bwr)
-#' bwr <- enrich_genesets(seurat, bwr)
-#' bwr <- enrich_genesets(sce, bwr)
-#' }
+#' library(ktplots)
+#' data(kidneyimmune)
+#' gmt_file <- system.file("extdata", "h.all.v7.4.symbols.gmt", package = "bowerbird")
+#' bwr <- bower(gmt_file)
+#' bwr <- snn_graph(bwr)
+#' bwr <- find_clusters(bwr)
+#' bwr <- summarize_clusters(bwr)
+#' bwr <- enrich_genesets(kidneyimmune, bwr, groupby = 'celltype')
 #' @import fgsea dplyr
 #' @export
 #' 

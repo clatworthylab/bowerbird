@@ -19,7 +19,10 @@ Returns a list of genes that outersect geneset clusters in coregenes slot or as 
 Summarize the outersection genes for the. summary terms.
 }
 \examples{
-\donttest{
-bwr <- extract_core(bwr)
-}
+gmt_file <- system.file("extdata", "h.all.v7.4.symbols.gmt", package = "bowerbird")
+bwr <- bower(gmt_file)
+bwr <- snn_graph(bwr)
+bwr <- find_clusters(bwr)
+bwr <- summarize_clusters(bwr)
+extract_core(bwr)
 }

@@ -18,7 +18,6 @@ Returns a list of gene sets
 Function to read various geneset file formats and returns a list of vectors containing gene names.
 }
 \examples{
-\donttest{
-gs <- read_geneset('geneset.gmt')
-}
+gmt_file <- system.file("extdata", "h.all.v7.4.symbols.gmt", package = "bowerbird")
+gs <- read_geneset(gmt_file)
 }

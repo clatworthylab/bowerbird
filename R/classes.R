@@ -1,24 +1,24 @@
 #' The BOWER container class
 #'
 
-#' @title BOWER
+#' @title BOWER_class
 #' @description
 #' The BOWER class for Functional annotation + Gene Module Summarization
 
-#' @rdname BOWER
+#' @rdname BOWER_class
 setClassUnion("genesets", c("list", "character", "data.frame"))
 
-#' @rdname BOWER
+#' @rdname BOWER_class
 setClassUnion("clusters", c("character", "factor", "numeric", "NULL"))
 
 setClass("igraph")
-#' @rdname BOWER
+#' @rdname BOWER_class
 setClassUnion("graph", c("igraph", "NULL"))
 
-#' @rdname BOWER
+#' @rdname BOWER_class
 setClassUnion("coregenes", c("list", "NULL"))
 
-#' @rdname BOWER
+#' @rdname BOWER_class
 setClassUnion("scores", c("data.frame", "matrix", "list", "NULL"))
 
 setClass("layout_tbl_graph")
@@ -31,8 +31,7 @@ setClassUnion("hidden", c("data.frame", "layout_tbl_graph", "layout_ggraph", "NU
 #' @slot coregenes A list of containing vectors of core genes.
 #' @slot scores A dataframe or list containg the geneset testing results.
 #'
-#' @aliases BOWER
-#' @rdname BOWER
+#' @rdname BOWER_class
 #' @export
 #'
 setClass("BOWER",

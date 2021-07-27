@@ -1,4 +1,5 @@
 #' @title bower
+#' @name bower
 #' @rdname bower
 #' @description
 #' A flexible function to initiate a BOWER class from a geneset file or a list of genesets.

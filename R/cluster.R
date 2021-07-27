@@ -12,9 +12,10 @@
 #' Performs clustering of SNN graph of genesets.
 #' @return Cluster assignment for each geneset.
 #' @examples
-#' \donttest{
+#' gmt_file <- system.file("extdata", "h.all.v7.4.symbols.gmt", package = "bowerbird")
+#' bwr <- bower(gmt_file)
+#' bwr <- snn_graph(bwr)
 #' bwr <- find_clusters(bwr)
-#' }
 #' @import leiden
 #' @export
 

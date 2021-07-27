@@ -31,7 +31,7 @@ Creates a k-nearest-neighbor graph from a tf-idf matrix.
 Given a list of text, it creates a sparse matrix consisting of tf-idf score for tokens from the text. See \verb{https://github.com/saraswatmks/superml/blob/master/R/TfidfVectorizer.R}. A k shortest-nearest neighbor graph is then computed using the overlap of of the terms.
 }
 \examples{
-\donttest{
+gmt_file <- system.file("extdata", "h.all.v7.4.symbols.gmt", package = "bowerbird")
+bwr <- bower(gmt_file)
 bwr <- snn_graph(bwr)
-}
 }
