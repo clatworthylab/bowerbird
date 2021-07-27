@@ -12,7 +12,7 @@
 #' @param pattern search pattern to remove from the terms. Unless specified, will default to built-in pattern. 
 #' @param sep separator used/found in gene set names to be changed to blank spaces. Default value is underscore ('_').
 #' @param ncpus number of cores used for parallelizing reconstruction.
-#' @param clean_graph return a graph connecting only nodes in a cluster.
+#' @param disconnect_graph return a graph connecting only nodes in a cluster.
 #' @param ... passed to textrank::textrank_sentences.
 #' @details
 #' Given a list of text, it creates a sparse matrix consisting of tf-idf score for tokens from the text. See `https://github.com/saraswatmks/superml/blob/master/R/TfidfVectorizer.R`. A k shortest-nearest neighbor graph is then computed using the overlap of of the terms.
@@ -25,7 +25,7 @@
 #' @export
 #'
 
-summarize_clusters.BOWER <- function(bower, cluster = NULL, pattern = NULL, sep = NULL, ncpus = NULL, clean_graph = TRUE, ...){	
+summarize_clusters.BOWER <- function(bower, cluster = NULL, pattern = NULL, sep = NULL, ncpus = NULL, disconnect_graph = FALSE, ...){	
   requireNamespace('igraph')
   requireNamespace('parallel')
 	if (is.null(pattern)){
@@ -83,7 +83,7 @@ summarize_clusters.BOWER <- function(bower, cluster = NULL, pattern = NULL, sep 
 	igraph::V(bower@graph)$terms <- tmp[cl]
 
   # and also only create a label for the centroid node
-  if (clean_graph){
+  if (disconnect_graph){
   	edges <- igraph::as_data_frame(bower@graph)
   	vertices <- igraph::as_data_frame(bower@graph, "vertices")
   	clx <- vertices$cluster
@@ -116,7 +116,7 @@ summarize_clusters.BOWER <- function(bower, cluster = NULL, pattern = NULL, sep 
 
 #' @rdname summarize_clusters
 #' @export
-summarize_clusters.igraph <- function(graph, cluster = NULL, pattern = NULL, sep = NULL, ncpus = NULL, clean_graph = TRUE, ...){	
+summarize_clusters.igraph <- function(graph, cluster = NULL, pattern = NULL, sep = NULL, ncpus = NULL, disconnect_graph = FALSE, ...){	
   requireNamespace('igraph')
   requireNamespace('parallel')
 	if (is.null(pattern)){
@@ -174,7 +174,7 @@ summarize_clusters.igraph <- function(graph, cluster = NULL, pattern = NULL, sep
   result1 <- tmp[cl]
   igraph::V(graph)$terms <- tmp[cl]
   # and also only create a label for the centroid node
-  if (clean_graph){
+  if (disconnect_graph){
   	edges <- igraph::as_data_frame(graph)
   	vertices <- igraph::as_data_frame(graph, "vertices")
   	clx <- vertices$cluster
