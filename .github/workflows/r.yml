@@ -18,7 +18,7 @@ on:
 
 env:
   cache-version: 'cache-v1'
-  
+
 jobs:
   build:
     strategy:
@@ -36,24 +36,24 @@ jobs:
       TZ: UTC
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-      
+
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
-      
+
       - name: Set up R
         uses: r-lib/actions/setup-r@v1
         with:
           r-version: ${{ matrix.config.r-version}}
-      
+
       - name: Set up Python
         uses: actions/setup-python@v2
 
-      - name: Setup r-lib/remotes      
+      - name: Setup r-lib/remotes
         run: |
           install.packages('remotes')
         shell: Rscript {0}
-      
+
       - id: bioc
         name: Check bioc version
         run: |
@@ -61,7 +61,7 @@ jobs:
           echo "##[set-output name=subbiocversion;]$(Rscript -e 'cat(unlist(tools:::.BioC_version_associated_with_R_version()))' | awk '{print $2}')"
           echo "##[set-output name=biocversion;]$(Rscript -e 'cat(as.character(tools:::.BioC_version_associated_with_R_version()))' | awk '{print $1}')"
         shell: bash -l {0}
-        
+
       - name: Install ubuntu system dependencies
         if: matrix.config.os == 'ubuntu-latest'
         run: |
@@ -73,7 +73,7 @@ jobs:
         if: matrix.config.os == 'macos-latest'
         run: |
           brew install cairo pkg-config autoconf automake libtool
-      
+
       - name: Cache ubuntu R packages
         if: "!contains(github.event.head_commit.message, '/nocache') && matrix.config.os == 'ubuntu-latest'"
         uses: actions/cache@v2
@@ -89,7 +89,7 @@ jobs:
           path: ${{ env.R_LIBS_USER }}
           key: ${{ env.cache-version }}-${{ matrix.config.os }}-biocversion-RELEASE_${{ steps.bioc.outputs.mainbiocversion}}_${{ steps.bioc.outputs.subbiocversion}}-r-${{ matrix.config.r-version}}-${{ hashFiles('.github/depends.Rds') }}
           restore-keys: ${{ env.cache-version }}-${{ matrix.config.os }}-biocversion-RELEASE_${{ steps.bioc.outputs.mainbiocversion}}_${{ steps.bioc.outputs.subbiocversion}}-r-${{ matrix.config.r-version}}-
-      
+
       - name: Cache conda
         uses: actions/cache@v1
         env:
@@ -118,12 +118,13 @@ jobs:
           install.packages(c("rcmdcheck", "covr"))
           remotes::install_deps(dependencies = TRUE)
         shell: Rscript {0}
-      
+
       - name: Check
-        run:           
+        run: |
           Rscript -e 'Sys.setenv(RETICULATE_PYTHON = reticulate::conda_python(envname="r-reticulate")); rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "error")'
         shell: bash -l {0}
 
       - name: Test coverage
-        run: covr::codecov(token = "${{ secrets.CODECOV_TOKEN }}")
-        shell: Rscript {0}
+        run: |
+          Rscript -e 'Sys.setenv(RETICULATE_PYTHON = reticulate::conda_python(envname="r-reticulate")); covr::codecov(token = "${{ secrets.CODECOV_TOKEN }}")'
+        shell: bash -l {0}
