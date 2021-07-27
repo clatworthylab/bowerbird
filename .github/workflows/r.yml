@@ -95,8 +95,7 @@ jobs:
       
       - name: Check
         run: |
-          Sys.setenv(RETICULATE_PYTHON = '/usr/share/miniconda/envs/r-reticulate/envs/r-reticulate')
-          reticulate::py_config()
+          Sys.setenv(RETICULATE_PYTHON = reticulate::conda_python(envname="r-reticulate"))
           rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "error")
         shell: Rscript {0}
 
