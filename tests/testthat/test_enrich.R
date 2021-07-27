@@ -10,9 +10,7 @@ test_that("enrich genesets deg", {
 
 	degs <- Seurat::FindAllMarkers(kidneyimmune)
 	degs <- split(degs, degs$cluster) # so in practice, there should be one DEG table per comparison in a list.
-	bwr <- tryCatch(enrich_genesets(degs, bwr, gene_symbol = 'gene', logfoldchanges = 'avg_logFC',  pvals = 'p_val'), error = function(e) {
-		enrich_genesets(degs, bwr, gene_symbol = 'gene', logfoldchanges = 'avg_log2FC',  pvals = 'p_val')
-	})
+	bwr <- enrich_genesets(degs, bwr, gene_symbol = 'gene', logfoldchanges = 'avg_log2FC',  pvals = 'p_val')
 	
 	plot_list <- lapply(celltypes, function(ds){
 		g <- plot_graph(bwr, colorby = ds, mode = 'gsea', gsea.slot = 'NES')
@@ -44,7 +42,7 @@ test_that("enrich genesets sce", {
 	data(kidneyimmune)
 	celltypes <- levels(kidneyimmune)
 
-	kidneyimmune <- as.SingleCellExperiment(kidneyimmune)
+	scex <- as.SingleCellExperiment(kidneyimmune)
 
 	gmt_file <- system.file("extdata", "h.all.v7.4.symbols.gmt", package = "bowerbird")
 	bwr <- bower(gmt_file)
@@ -52,11 +50,11 @@ test_that("enrich genesets sce", {
 	bwr <- find_clusters(bwr)
 	bwr <- summarize_clusters(bwr)
 
-	bwr <- enrich_genesets(kidneyimmune, bwr, groupby = 'celltype', mode = 'AUCell')
+	bwr <- enrich_genesets(scex, bwr, groupby = 'celltype', mode = 'AUCell')
 
 	## Seurat::AddModuleScore
-	bwr <- enrich_genesets(kidneyimmune, bwr, groupby = 'celltype', mode = 'Seurat')
+	bwr <- enrich_genesets(scex, bwr, groupby = 'celltype', mode = 'Seurat')
 
 	## scanpy.tl.score_genes
-	bwr <- enrich_genesets(kidneyimmune, bwr, groupby = 'celltype', mode = 'scanpy')
+	bwr <- enrich_genesets(scex, bwr, groupby = 'celltype', mode = 'scanpy')
 })
