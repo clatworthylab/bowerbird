@@ -34,7 +34,7 @@ test_that("enrich genesets seurat", {
 	bwr <- enrich_genesets(kidneyimmune, bwr, groupby = 'celltype', mode = 'Seurat')
 
 	## scanpy.tl.score_genes
-	bwr <- enrich_genesets(kidneyimmune, bwr, groupby = 'celltype', mode = 'scanpy')
+	bwr <- enrich_genesets(kidneyimmune, bwr, groupby = 'celltype', mode = 'scanpy') # until i work out how to make my test script find numpy...
 })
 
 test_that("enrich genesets sce", {
@@ -56,5 +56,5 @@ test_that("enrich genesets sce", {
 	bwr <- enrich_genesets(scex, bwr, groupby = 'celltype', mode = 'Seurat')
 	
 	## scanpy.tl.score_genes
-	bwr <- enrich_genesets(scex, bwr, groupby = 'celltype', mode = 'scanpy')
+	bwr <- enrich_genesets(scex, bwr, groupby = 'celltype', mode = 'scanpy') # until i work out how to make my test script find numpy...
 })

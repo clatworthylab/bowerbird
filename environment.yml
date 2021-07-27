@@ -18,6 +18,3 @@ dependencies:
 - pip:
   - pip
   - scanpy
-  - numpy
-  - leidenalg
-  - python-igraph

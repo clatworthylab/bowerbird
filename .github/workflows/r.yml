@@ -94,7 +94,9 @@ jobs:
         shell: Rscript {0}
       
       - name: Check
-        run: Rscript -e 'Sys.setenv(RETICULATE_PYTHON = reticulate::conda_python(envname="r-reticulate")); rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "error")'
+        run: 
+          pip install numpy leidenalg python-igraph
+          Rscript -e 'Sys.setenv(RETICULATE_PYTHON = reticulate::conda_python(envname="r-reticulate")); rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "error")'
         shell: bash -l {0}
 
       - name: Test coverage
