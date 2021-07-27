@@ -160,12 +160,12 @@
 <span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/snn_graph.html">snn_graph</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">)</span>
 <span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/find_clusters.html">find_clusters</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">)</span>
 <span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu">summarize_clusters</span><span class="op">(</span><span class="va">bwr</span><span class="op">)</span>
-<span class="co">#&gt; Downloading udpipe model from https://raw.githubusercontent.com/jwijffels/udpipe.models.ud.2.5/master/inst/udpipe-ud-2.5-191206/english-ewt-ud-2.5-191206.udpipe to /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmp8R6r6m/english-ewt-ud-2.5-191206.udpipe</span>
+<span class="co">#&gt; Downloading udpipe model from https://raw.githubusercontent.com/jwijffels/udpipe.models.ud.2.5/master/inst/udpipe-ud-2.5-191206/english-ewt-ud-2.5-191206.udpipe to /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmpn5hu8z/english-ewt-ud-2.5-191206.udpipe</span>
 <span class="co">#&gt;  - This model has been trained on version 2.5 of data from https://universaldependencies.org</span>
 <span class="co">#&gt;  - The model is distributed under the CC-BY-SA-NC license: https://creativecommons.org/licenses/by-nc-sa/4.0</span>
 <span class="co">#&gt;  - Visit https://github.com/jwijffels/udpipe.models.ud.2.5 for model license details.</span>
 <span class="co">#&gt;  - For a list of all models and their licenses (most models you can download with this package have either a CC-BY-SA or a CC-BY-SA-NC license) read the documentation at ?udpipe_download_model. For building your own models: visit the documentation by typing vignette('udpipe-train', package = 'udpipe')</span>
-<span class="co">#&gt; Downloading finished, model stored at '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmp8R6r6m/english-ewt-ud-2.5-191206.udpipe'</span></code></pre></div>
+<span class="co">#&gt; Downloading finished, model stored at '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmpn5hu8z/english-ewt-ud-2.5-191206.udpipe'</span></code></pre></div>
 <p>Or extracting from <code>msigdbr</code>.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://igordot.github.io/msigdbr/">msigdbr</a></span><span class="op">)</span>
@@ -181,53 +181,52 @@
 <span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/snn_graph.html">snn_graph</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">)</span>
 <span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/find_clusters.html">find_clusters</a></span><span class="op">(</span><span class="va">bwr</span><span class="op">)</span>
 <span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu">summarize_clusters</span><span class="op">(</span><span class="va">bwr</span><span class="op">)</span>
-<span class="co">#&gt; Downloading udpipe model from https://raw.githubusercontent.com/jwijffels/udpipe.models.ud.2.5/master/inst/udpipe-ud-2.5-191206/english-ewt-ud-2.5-191206.udpipe to /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmp8R6r6m/english-ewt-ud-2.5-191206.udpipe</span>
+<span class="co">#&gt; Downloading udpipe model from https://raw.githubusercontent.com/jwijffels/udpipe.models.ud.2.5/master/inst/udpipe-ud-2.5-191206/english-ewt-ud-2.5-191206.udpipe to /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmpn5hu8z/english-ewt-ud-2.5-191206.udpipe</span>
 <span class="co">#&gt;  - This model has been trained on version 2.5 of data from https://universaldependencies.org</span>
 <span class="co">#&gt;  - The model is distributed under the CC-BY-SA-NC license: https://creativecommons.org/licenses/by-nc-sa/4.0</span>
 <span class="co">#&gt;  - Visit https://github.com/jwijffels/udpipe.models.ud.2.5 for model license details.</span>
 <span class="co">#&gt;  - For a list of all models and their licenses (most models you can download with this package have either a CC-BY-SA or a CC-BY-SA-NC license) read the documentation at ?udpipe_download_model. For building your own models: visit the documentation by typing vignette('udpipe-train', package = 'udpipe')</span>
-<span class="co">#&gt; Downloading finished, model stored at '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmp8R6r6m/english-ewt-ud-2.5-191206.udpipe'</span></code></pre></div>
+<span class="co">#&gt; Downloading finished, model stored at '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmpn5hu8z/english-ewt-ud-2.5-191206.udpipe'</span></code></pre></div>
 <p>So what has actually happened? Well, basically <code>bowerbird</code> has learnt which gene sets share more genes with each other, clustered them together and learnt a new summary term.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bwr</span>
 <span class="co">#&gt; BOWER class</span>
 <span class="co">#&gt; number of genesets:  265 </span>
 <span class="co">#&gt; genesets kNN Graph: </span>
-<span class="co">#&gt; IGRAPH 85ae357 UNW- 265 783 -- </span>
+<span class="co">#&gt; IGRAPH c77c135 UNW- 265 843 -- </span>
 <span class="co">#&gt; + attr: name (v/c), cluster (v/n), geneset_size (v/n), terms (v/c),</span>
 <span class="co">#&gt; | labels (v/c), weight (e/n)</span>
-<span class="co">#&gt; + edges from 85ae357 (vertex names):</span>
+<span class="co">#&gt; + edges from c77c135 (vertex names):</span>
 <span class="co">#&gt; [1] GOBP_ACTIVATED_T_CELL_PROLIFERATION--GOBP_CD8_POSITIVE_ALPHA_BETA_T_CELL_DIFFERENTIATION          </span>
 <span class="co">#&gt; [2] GOBP_ACTIVATED_T_CELL_PROLIFERATION--GOBP_NEGATIVE_REGULATION_OF_ACTIVATED_T_CELL_PROLIFERATION   </span>
 <span class="co">#&gt; [3] GOBP_ACTIVATED_T_CELL_PROLIFERATION--GOBP_NEGATIVE_REGULATION_OF_LYMPHOCYTE_DIFFERENTIATION       </span>
 <span class="co">#&gt; [4] GOBP_ACTIVATED_T_CELL_PROLIFERATION--GOBP_NEGATIVE_REGULATION_OF_T_CELL_RECEPTOR_SIGNALING_PATHWAY</span>
 <span class="co">#&gt; [5] GOBP_ACTIVATION_OF_IMMUNE_RESPONSE --GOBP_ACTIVATION_OF_INNATE_IMMUNE_RESPONSE                    </span>
 <span class="co">#&gt; + ... omitted several edges</span>
-<span class="co">#&gt; number of geneset clusters:  22 </span>
+<span class="co">#&gt; number of geneset clusters:  21 </span>
 <span class="co">#&gt; Core genes:</span>
 <span class="co">#&gt;  First six genes shown</span>
 <span class="co">#&gt;   IMMUNE RESPONSE-1 : AIM2 BCL10 BTRC CARD11 CARD9 CD209 ...</span>
+<span class="co">#&gt;   CD4 ALPHA BETA T CELL DIFFERENTIATION : ANXA1 ATP7A BATF BCL3 BCL6 CBFB ...</span>
 <span class="co">#&gt;   TYPE 2 IMMUNE RESPONSE : IL4 PLCL2 TLR4 IL18 IL18R1 IL4R ...</span>
 <span class="co">#&gt;   IMMUNE RESPONSE : CLNK HLA-E HLA-F IFNA2 IFNB1 IL18 ...</span>
-<span class="co">#&gt;   B CELL ACTIVATION-1 : ADA BAX BCL6 BLK BTK CD74 ...</span>
-<span class="co">#&gt;   RESPONSE TO INTERFERON BETA : BCL2L11 HIF1A MEF2C ADA SOS1 SOS2 ...</span>
 <span class="co">#&gt;   T CELL MEDIATED CYTOTOXICITY : HLA-A HLA-B HLA-C HLA-E HLA-F HLA-G ...</span>
+<span class="co">#&gt;   B CELL ACTIVATION : ADA BAX BCL6 BLK BTK CD74 ...</span>
+<span class="co">#&gt;   RESPONSE TO INTERFERON BETA : BCL2L11 HIF1A MEF2C ADA SOS1 SOS2 ...</span>
 <span class="co">#&gt;   CD8 ALPHA BETA T CELL ACTIVATION : HLA-E GATA3 ADCYAP1 BTK C3 CCR7 ...</span>
-<span class="co">#&gt;   CD4 ALPHA BETA T CELL DIFFERENTIATION : ANXA1 ATP7A BATF BCL3 BCL6 CBFB ...</span>
 <span class="co">#&gt;   T CELL DIFFERENTIATION : FCGR2B FGL2 HLA-DOA LILRB2 THBS1 BMP4 ...</span>
 <span class="co">#&gt;   INTERFERON GAMMA PRODUCTION : ABCB9 ACE ACTR10 ACTR1A ACTR1B AP1B1 ...</span>
 <span class="co">#&gt;   TOLL LIKE RECEPTOR SIGNALING PATHWAY : CACTIN PTPRS TICAM1 TLR3 TLR4 TLR9 ...</span>
 <span class="co">#&gt;   T CELL CYTOKINE PRODUCTION : KLRC1 LILRB1 NOD2 PTPRC EGR3 LEF1 ...</span>
 <span class="co">#&gt;   B CELL DIFFERENTIATION : IL10 TLR9 SYK ADA BCL3 C17orf99 ...</span>
-<span class="co">#&gt;   T CELL SELECTION : TOX BCL2 BATF CTSL FOXP3 IL12B ...</span>
-<span class="co">#&gt;   B CELL ACTIVATION : ADA ADAM17 BATF BCL3 BCL6 BTK ...</span>
 <span class="co">#&gt;   ACTIVATED T CELL PROLIFERATION : LILRB4 CD24 CD274 FYN HHLA2 ICOSLG ...</span>
+<span class="co">#&gt;   T CELL SELECTION : TOX BCL2 BATF CTSL FOXP3 IL12B ...</span>
 <span class="co">#&gt;   LYMPHOCYTE CHEMOTAXIS : CCL2 CCL3 CCL4 CCL5 CCL7 CXCL14 ...</span>
+<span class="co">#&gt;   B CELL ACTIVATION-1 : ADA ADAM17 BATF BCL3 BCL6 BTK ...</span>
 <span class="co">#&gt;   ALPHA BETA T CELL ACTIVATION : AGER ANXA1 ARG2 ATP7A BATF BCL3 ...</span>
 <span class="co">#&gt;   INFLAMMATORY RESPONSE TO ANTIGENIC STIMULUS : BTK C3 CD28 HLA-E LTA NOD2 ...</span>
-<span class="co">#&gt;   LYMPHOCYTE MIGRATION : ADAM10 ADAM17 ADAM8 AIF1 APP CCL20 ...</span>
 <span class="co">#&gt;   ANTIGEN PROCESSING AND PRESENTATION OF PEPTIDE ANTIGEN VIA MHC CLASS I : ABCB9 AZGP1 B2M ERAP1 ERAP2 HFE ...</span>
-<span class="co">#&gt;   CELL ACTIVATION INVOLVED IN IMMUNE RESPONSE : ABL1 ADA ANXA1 AP1G1 APBB1IP ATP7A ...</span></code></pre></div>
+<span class="co">#&gt;   LYMPHOCYTE MIGRATION : ADAM10 ADAM17 ADAM8 AIF1 APP CCL20 ...</span></code></pre></div>
 <p>We can visualise it with a simple plot</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/plot_graph.html">plot_graph</a></span><span class="op">(</span><span class="va">bwr</span>, colorby <span class="op">=</span> <span class="st">'cluster'</span>, node.size <span class="op">=</span> <span class="st">'geneset_size'</span><span class="op">)</span></code></pre></div>
