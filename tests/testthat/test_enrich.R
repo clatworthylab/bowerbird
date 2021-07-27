@@ -10,7 +10,7 @@ test_that("enrich genesets deg", {
 
 	degs <- Seurat::FindAllMarkers(kidneyimmune)
 	degs <- split(degs, degs$cluster) # so in practice, there should be one DEG table per comparison in a list.
-	bwr <- enrich_genesets(degs, bwr, gene_symbol = 'gene', logfoldchanges = 'avg_log2FC',  pvals = 'p_val')
+	bwr <- enrich_genesets(degs, bwr, gene_symbol = 'gene', logfoldchanges = 'avg_logFC',  pvals = 'p_val')
 	
 	plot_list <- lapply(celltypes, function(ds){
 		g <- plot_graph(bwr, colorby = ds, mode = 'gsea', gsea.slot = 'NES')
@@ -34,6 +34,8 @@ test_that("enrich genesets seurat", {
 	bwr <- enrich_genesets(kidneyimmune, bwr, groupby = 'celltype', mode = 'Seurat')
 
 	## scanpy.tl.score_genes
+	reticulate::use_condaenv("r-reticulate", required = TRUE)
+	expect_true(py_module_available("numpy"))
 	bwr <- enrich_genesets(kidneyimmune, bwr, groupby = 'celltype', mode = 'scanpy')
 })
 
@@ -54,7 +56,8 @@ test_that("enrich genesets sce", {
 
 	## Seurat::AddModuleScore
 	bwr <- enrich_genesets(scex, bwr, groupby = 'celltype', mode = 'Seurat')
-
+	reticulate::use_condaenv("r-reticulate", required = TRUE)
+	expect_true(py_module_available("numpy"))
 	## scanpy.tl.score_genes
 	bwr <- enrich_genesets(scex, bwr, groupby = 'celltype', mode = 'scanpy')
 })
