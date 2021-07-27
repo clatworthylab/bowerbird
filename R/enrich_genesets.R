@@ -56,7 +56,7 @@ enrich_genesets.list <- function(list, bower, core = FALSE, gene_symbol = 'X1', 
   if (core){
     df <- data.frame(row.names = names(bower@coregenes), name = names(bower@coregenes))
   } else {
-    df <- data.frame(row.names = bwr@.graph_data$name, name = bwr@.graph_data$name)
+    df <- data.frame(row.names = bower@.graph_data$name, name = bower@.graph_data$name)
   }
 
   NES <- df %>% left_join(NES, by = 'name')
