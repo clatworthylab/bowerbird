@@ -152,6 +152,10 @@
 
 <span class='fu'>.retrieve_gsea</span><span class='op'>(</span><span class='va'>res</span>, <span class='va'>query</span><span class='op'>)</span>
 
+<span class='fu'>get_optional_data_filepath</span><span class='op'>(</span><span class='va'>filename</span>, mustWork <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+
+<span class='fu'>check_udpipemodel</span><span class='op'>(</span><span class='op'>)</span>
+
 <span class='fu'>.read_geneset</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -245,12 +249,22 @@
       <th>query</th>
       <td><p>column name in fgsea results.</p></td>
     </tr>
+    <tr>
+      <th>filename, </th>
+      <td><p>string. The filename of the file in the package cache.</p></td>
+    </tr>
+    <tr>
+      <th>mustWork, </th>
+      <td><p>logical. Whether an error should be created if the file does not exist. If mustWork=FALSE and the file does not exist, the empty string is returned.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>appropriate single cell object for enrichment analysis</p>
 <p>sorted ranked gene list.</p>
+<p>Access a single file from the package cache by its file name.</p>
+<p>Access a single file from the package cache by its file name.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
