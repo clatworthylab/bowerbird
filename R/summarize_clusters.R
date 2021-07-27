@@ -171,7 +171,7 @@ summarize_clusters.igraph <- function(graph, cluster = NULL, pattern = NULL, sep
 	}, mc.cores = n_cpus)
 
 	tmp <- do.call(rbind, res)	
-  result1 <- tmp[cl]
+  result <- tmp[cl]
   igraph::V(graph)$terms <- tmp[cl]
   # and also only create a label for the centroid node
   if (disconnect_graph){
