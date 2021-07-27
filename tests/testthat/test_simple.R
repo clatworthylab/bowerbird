@@ -17,4 +17,7 @@ test_that("simple running mode", {
 	l <- snn_graph(bwr@coregenes)
 	expect_type(l, "list")
 	expect_s4_class(bwr, "BOWER")
+
+	graph <- summarize_clusters(bwr@graph)
+	expect_s4_class(graph, "igraph")
 })
