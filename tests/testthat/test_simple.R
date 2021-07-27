@@ -19,5 +19,5 @@ test_that("simple running mode", {
 	expect_s4_class(bwr, "BOWER")
 
 	graph <- summarize_clusters(bwr@graph)
-	expect_s4_class(graph, "igraph")
+	expect_type(graph, "igraph")
 })
