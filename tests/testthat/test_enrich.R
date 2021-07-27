@@ -10,7 +10,7 @@ test_that("enrich genesets deg", {
 
 	degs <- Seurat::FindAllMarkers(kidneyimmune)
 	degs <- split(degs, degs$cluster) # so in practice, there should be one DEG table per comparison in a list.
-	bwr <- enrich_genesets(degs, bwr, gene_symbol = 'gene', logfoldchanges = 'avg_logFC',  pvals = 'p_val')
+	bwr <- enrich_genesets(degs, bwr, gene_symbol = 'gene', logfoldchanges = 'avg_log2FC',  pvals = 'p_val')
 	
 	plot_list <- lapply(celltypes, function(ds){
 		g <- plot_graph(bwr, colorby = ds, mode = 'gsea', gsea.slot = 'NES')
