@@ -29,12 +29,23 @@ test_that("enrich genesets seurat", {
 	bwr <- summarize_clusters(bwr)
 
 	bwr <- enrich_genesets(kidneyimmune, bwr, groupby = 'celltype', mode = 'AUCell')
-
+	bwr <- enrich_genesets(kidneyimmune, bwr, groupby = 'celltype', mode = 'AUCell', core = TRUE)
 	## Seurat::AddModuleScore
 	bwr <- enrich_genesets(kidneyimmune, bwr, groupby = 'celltype', mode = 'Seurat')
-
+	bwr <- enrich_genesets(kidneyimmune, bwr, groupby = 'celltype', mode = 'Seurat', core = TRUE)
 	## scanpy.tl.score_genes
-	bwr <- enrich_genesets(kidneyimmune, bwr, groupby = 'celltype', mode = 'scanpy') # until i work out how to make my test script find numpy...
+	bwr <- enrich_genesets(kidneyimmune, bwr, groupby = 'celltype', mode = 'scanpy')
+	bwr <- enrich_genesets(kidneyimmune, bwr, groupby = 'celltype', mode = 'scanpy', core = TRUE)
+
+	kidneyimmune$celltype2 <- as.character(kidneyimmune$celltype)
+	bwr <- enrich_genesets(kidneyimmune, bwr, groupby = 'celltype2', mode = 'AUCell')
+	bwr <- enrich_genesets(kidneyimmune, bwr, groupby = 'celltype2', mode = 'AUCell', core = TRUE)
+	## Seurat::AddModuleScore
+	bwr <- enrich_genesets(kidneyimmune, bwr, groupby = 'celltype2', mode = 'Seurat')
+	bwr <- enrich_genesets(kidneyimmune, bwr, groupby = 'celltype2', mode = 'Seurat', core = TRUE)
+	## scanpy.tl.score_genes
+	bwr <- enrich_genesets(kidneyimmune, bwr, groupby = 'celltype2', mode = 'scanpy')
+	bwr <- enrich_genesets(kidneyimmune, bwr, groupby = 'celltype2', mode = 'scanpy', core = TRUE)
 })
 
 test_that("enrich genesets sce", {
@@ -51,10 +62,22 @@ test_that("enrich genesets sce", {
 	bwr <- summarize_clusters(bwr)
 
 	bwr <- enrich_genesets(scex, bwr, groupby = 'celltype', mode = 'AUCell')
-
+	bwr <- enrich_genesets(scex, bwr, groupby = 'celltype', mode = 'AUCell', core = TRUE)
 	## Seurat::AddModuleScore
 	bwr <- enrich_genesets(scex, bwr, groupby = 'celltype', mode = 'Seurat')
-	
+	bwr <- enrich_genesets(scex, bwr, groupby = 'celltype', mode = 'Seurat', core = TRUE)
 	## scanpy.tl.score_genes
-	bwr <- enrich_genesets(scex, bwr, groupby = 'celltype', mode = 'scanpy') # until i work out how to make my test script find numpy...
+	bwr <- enrich_genesets(scex, bwr, groupby = 'celltype', mode = 'scanpy')
+	bwr <- enrich_genesets(scex, bwr, groupby = 'celltype', mode = 'scanpy', core = TRUE)
+
+	scex$celltype2 <- as.character(scex$celltype)
+	bwr <- enrich_genesets(scex, bwr, groupby = 'celltype2', mode = 'AUCell')
+	bwr <- enrich_genesets(scex, bwr, groupby = 'celltype2', mode = 'AUCell', core = TRUE)
+	## Seurat::AddModuleScore
+	bwr <- enrich_genesets(scex, bwr, groupby = 'celltype2', mode = 'Seurat')
+	bwr <- enrich_genesets(scex, bwr, groupby = 'celltype2', mode = 'Seurat', core = TRUE)
+	## scanpy.tl.score_genes
+	bwr <- enrich_genesets(scex, bwr, groupby = 'celltype2', mode = 'scanpy')
+	bwr <- enrich_genesets(scex, bwr, groupby = 'celltype2', mode = 'scanpy', core = TRUE)
+
 })
