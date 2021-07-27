@@ -28,6 +28,7 @@
 summarize_clusters.BOWER <- function(bower, cluster = NULL, pattern = NULL, sep = NULL, ncpus = NULL, disconnect_graph = FALSE, ...){	
   requireNamespace('igraph')
   requireNamespace('parallel')
+  requireNamespace('pkgfilecache')
 	if (is.null(pattern)){
 		pattern = '^GO_|^KEGG_|^REACTOME_|^HALLMARK_|POSITIVE_|NEGATIVE_|REGULATION_OF|^GOBP_'
 	} 
@@ -55,7 +56,7 @@ summarize_clusters.BOWER <- function(bower, cluster = NULL, pattern = NULL, sep 
 		return(x)
 	}, mc.cores = n_cpus)
 
-	tagger <- udpipe_download_model("english", model_dir = tempdir())
+	tagger <- check_udpipemodel()
 	tagger <- udpipe_load_model(tagger$file_model)
 	res <- pbmclapply(df_split, function(x) {
 		annt <- udpipe_annotate(tagger, paste(x, collapse = '.\n'))
@@ -119,6 +120,7 @@ summarize_clusters.BOWER <- function(bower, cluster = NULL, pattern = NULL, sep 
 summarize_clusters.igraph <- function(graph, cluster = NULL, pattern = NULL, sep = NULL, ncpus = NULL, disconnect_graph = FALSE, ...){	
   requireNamespace('igraph')
   requireNamespace('parallel')
+  requireNamespace('pkgfilecache')
 	if (is.null(pattern)){
 		pattern = '^GO_|^KEGG_|^REACTOME_|^HALLMARK_|POSITIVE_|NEGATIVE_|REGULATION_OF|^GOBP_'
 	} 
@@ -146,7 +148,7 @@ summarize_clusters.igraph <- function(graph, cluster = NULL, pattern = NULL, sep
 		return(x)
 	})
 
-	tagger <- udpipe_download_model("english", model_dir = tempdir())
+	tagger <- check_udpipemodel()
 	tagger <- udpipe_load_model(tagger$file_model)
 	res <- pbmclapply(df_split, function(x) {
 		annt <- udpipe_annotate(tagger, paste(x, collapse = '.\n'))

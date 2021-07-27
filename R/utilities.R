@@ -1,20 +1,20 @@
 #' @title misc
 #' @description
 #' Miscellaneous utility functions.
-#' 
+#'
 #########################
 # Miscellaneous functions
 #########################
 #' @rdname misc
 #' @param x vector.
-#' 
+#'
 
 .is_blank <- function(x) x == ""
 
 
 #' @rdname misc
 #' @param x named list.
-#' 
+#'
 
 .sanitize <- function(x) {
   names(x) <- make.unique(names(x), sep = '_')
@@ -25,7 +25,7 @@
 #' @rdname misc
 #' @param gs list of vectors.
 #' @param min_size minimum size of geneset otherwise filter out.
-#' 
+#'
 
 .filter_geneset <- function(gs, min_size) {
   gs <- lapply(gs, function(x) x[!.is_blank(x)])
@@ -38,9 +38,10 @@
   return(gs)
 }
 
+
 #' @rdname misc
 #' @param ... does nothing.
-#' 
+#'
 
 .emptyBOWER <- function(...) {
   out <- new("BOWER",
@@ -65,10 +66,11 @@
   return(gr)
 }
 
+
 #' @rdname misc
 #' @param gr igraph
 #' @param ... passed to ggraph::ggraph.
-#' 
+#'
 .graph_to_data <- function(gr, ...) {
   requireNamespace('ggraph')
   if (length(list(...)) == 0){
@@ -91,13 +93,14 @@
   return(dat)
 }
 
+
 #' @rdname misc
 #' @param gr data matrix or data.frame that contains at least two columns.
 #' @param x_column name of x column/axis.
 #' @param y_column name of y column/axis.
 #' @param n (numeric) number of points that are close to the centroid to be detected. Default = 1.
 #' @param id_column (character or numeric) name or numeric index of the column in data containing identifiers of one or distinct sets of points. If, NULL, the default, only one set is assumed.
-#' 
+#'
 .closest_to_centroid <- function(data, x_column, y_column, n = 1, id_column = NULL) {
   # adapted from https://rdrr.io/github/claununez/biosurvey/src/R/selection_helpers.R
   requireNamespace('stats')
@@ -117,7 +120,7 @@
   }
   if (!y_column %in% coln) {
     stop(y_column, " is not one o the columns in 'data'.")
-  }  
+  }
 
   if (!is.numeric(data[,x_column])){
     data[,x_column] <- as.numeric(data[,x_column])
@@ -193,13 +196,14 @@
   return(do.call(rbind, ucent))
 }
 
+
 #' @rdname misc
 #' @param sce Single cell object. Accepts either a Seurat object of SingleCellExperiment object.
 #' @param mode mode of conversion. Accepts one of AUCell, SingleCellExperiment, Seurat, scanpy.
 #' @param sce_assay name of assay in SingleCellExperiment object.
 #' @param seurat_assay name of assay in Seurat object.
 #' @return appropriate single cell object for enrichment analysis
-#' 
+#'
 .typecheck <- function(sce, mode, sce_assay = 'logcounts', seurat_assay = 'RNA'){
   cls <- class(sce)
   requireNamespace(c('Seurat', 'SummarizedExperiment'))
@@ -242,6 +246,7 @@
   return(scex)
 }
 
+
 #' @rdname misc
 #' @param deg deg table. must at least have a column for gene symbol, log fold changes and pvalues.
 #' @param gene_symbol gene_symbol
@@ -249,42 +254,79 @@
 #' @param pvals pvals
 #' @param remove_mito_ribo boolean. whether or not to remove mitochondial and ribosomal genes from consideration. Default is TRUE.
 #' @return sorted ranked gene list.
-#' 
+#'
 .makeRankGeneList <- function(deg, gene_symbol, logfoldchanges, pvals, remove_mito_ribo = TRUE){
   if (remove_mito_ribo) {
     y <- grepl('^RPS|^RPL|^MRPL|^MRPS|^MT-|^Rps|^Rpl|^Mrpl|^Mrps|^mt-', deg[,gene_symbol])
     deg <- deg[!y, ]
-  } 
+  }
   deg <- deg[, c(gene_symbol, logfoldchanges, pvals)]
   deg$nedegog10pval <- -log10(deg[, pvals])
   rank <- unlist(deg$nedegog10pval * sign(deg[,logfoldchanges]))
   rank[rank == Inf] = 300
   rank[rank == -Inf] = -300
   names(rank) <- deg[,gene_symbol]
-  rank <- rev(sort(rank))    
+  rank <- rev(sort(rank))
   return(rank)
 }
 
+
 #' @rdname misc
 #' @param x numerical vector
-#' 
+#'
 range01 <- function(x){(x-min(x))/(max(x)-min(x))}
+
 
 #' @rdname misc
 #' @param res fgsea result data.frame.
 #' @param query column name in fgsea results.
-#' 
+#'
 .retrieve_gsea <- function(res, query){
   tmp <- lapply(res, function(x) {
     q <- tryCatch(data.frame(pathway = x[,'pathway'], query = x[,query]), error = function(e) data.frame(pathway = x[,'pathway'], query = do.call(rbind, lapply(x[,query], paste0, collapse = '|'))))
     return(q)
   })
   for (i in seq_along(tmp)){
-    colnames(tmp[[i]]) <- c('pathway', names(tmp)[i])  
+    colnames(tmp[[i]]) <- c('pathway', names(tmp)[i])
   }
   tmp <- Reduce(function(...) merge(..., by='pathway', all.x=TRUE), tmp)
   row.names(tmp) <- tmp$pathway
   tmp <- tmp[, -1]
   tmp$name <- row.names(tmp)
   return(tmp)
+}
+
+
+#' @rdname misc
+#' @param filename, string. The filename of the file in the package cache.
+#' @param mustWork, logical. Whether an error should be created if the file does not exist. If mustWork=FALSE and the file does not exist, the empty string is returned.
+#' @return Access a single file from the package cache by its file name.
+#'
+#' @export
+get_optional_data_filepath <- function(filename, mustWork=TRUE) {
+  requireNamespace('pkgfilecache')
+  pkg_info = pkgfilecache::get_pkg_info("bowerbird");
+  return(pkgfilecache::get_filepath(pkg_info, filename, mustWork=mustWork));
+}
+
+
+#' @rdname misc
+#' @import udpipe
+#' @return Access a single file from the package cache by its file name.
+#' @export
+check_udpipemodel <- function(){
+  pkg_info = pkgfilecache::get_pkg_info("bowerbird");
+  local_filenames = 'english-ewt-ud-2.5-191206.udpipe' # need to modify this if it gets updated?
+  files_exist = pkgfilecache::are_files_available(pkg_info, local_filenames)
+  if (files_exist){
+    tagger <- data.frame(
+                         language = 'english-ewt',
+                         file_model = get_optional_data_filepath(local_filenames),
+                         url = 'https://raw.githubusercontent.com/jwijffels/udpipe.models.ud.2.5/master/inst/udpipe-ud-2.5-191206/english-ewt-ud-2.5-191206.udpipe',
+                         download_failed = FALSE,
+                         download_message = "OK")
+  } else {
+    tagger <- udpipe_download_model("english", model_dir = tempdir())
+  }
+  return(tagger)
 }
