@@ -7,6 +7,9 @@ test_that("simple running mode", {
 	bwr <- snn_graph(bwr)
 	bwr <- find_clusters(bwr)
 	bwr <- summarize_clusters(bwr)
+
+	print(bwr)
+	
 	p <- plot_graph(bwr, colorby = 'cluster', node.size = 'geneset_size')
 	p <- plot_graph(bwr@graph, colorby = 'cluster', node.size = 'geneset_size')
 	expect_s4_class(bwr, "BOWER")
