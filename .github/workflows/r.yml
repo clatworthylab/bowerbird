@@ -25,10 +25,10 @@ jobs:
       max-parallel: 5
       matrix:
         config:
-          - { r-version: 4.0, os: ubuntu-latest }
-          - { r-version: 4.1, os: ubuntu-latest }
-          - { r-version: 4.0, os: macos-latest }
-          - { r-version: 4.1, os: macos-latest }
+          - { r-version: 4.0, os: ubuntu-latest, python-version: 3.8 }
+          - { r-version: 4.1, os: ubuntu-latest, python-version: 3.8 }
+          - { r-version: 4.0, os: macos-latest, python-version: 3.8 }
+          - { r-version: 4.1, os: macos-latest, python-version: 3.8 }
     runs-on: ${{ matrix.config.os }}
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
@@ -46,6 +46,9 @@ jobs:
         with:
           r-version: ${{ matrix.config.r-version}}
       
+      - name: Set up Python
+        uses: actions/setup-python@v2
+
       - name: Setup r-lib/remotes      
         run: |
           install.packages('remotes')
@@ -87,6 +90,29 @@ jobs:
           key: ${{ env.cache-version }}-${{ matrix.config.os }}-biocversion-RELEASE_${{ steps.bioc.outputs.mainbiocversion}}_${{ steps.bioc.outputs.subbiocversion}}-r-${{ matrix.config.r-version}}-${{ hashFiles('.github/depends.Rds') }}
           restore-keys: ${{ env.cache-version }}-${{ matrix.config.os }}-biocversion-RELEASE_${{ steps.bioc.outputs.mainbiocversion}}_${{ steps.bioc.outputs.subbiocversion}}-r-${{ matrix.config.r-version}}-
       
+      - name: Cache conda
+        uses: actions/cache@v1
+        env:
+          # Increase this value to reset cache if etc/example-environment.yml has not changed
+          CACHE_NUMBER: 0
+        with:
+          path: ~/conda_pkgs_dir
+          key:
+            ${{ runner.os }}-conda-${{ env.CACHE_NUMBER }}-${{
+            hashFiles('environment.yml') }}
+
+      - name: Setup Miniconda
+        uses: conda-incubator/setup-miniconda@v2.0.1
+        with:
+          auto-activate-base: true
+          auto-update-conda : true
+          activate-environment: r-reticulate
+          channels: conda-forge, bioconda, anaconda, r, defaults
+          channel-priority: true
+          python-version: ${{ matrix.config.python-version }}
+          environment-file: environment.yml
+          use-only-tar-bz2: true # IMPORTANT: This needs to be set for caching to work properly!
+
       - name: Install dependencies
         run: |
           install.packages(c("rcmdcheck", "covr"))
@@ -94,8 +120,7 @@ jobs:
         shell: Rscript {0}
       
       - name: Check
-        run: 
-          pip install numpy leidenalg python-igraph
+        run:           
           Rscript -e 'Sys.setenv(RETICULATE_PYTHON = reticulate::conda_python(envname="r-reticulate")); rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "error")'
         shell: bash -l {0}
 
