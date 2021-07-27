@@ -104,5 +104,5 @@ bwr <- bower(gmt_file)
 bwr <- snn_graph(bwr)
 bwr <- find_clusters(bwr)
 bwr <- summarize_clusters(bwr)
-bwr <- enrich_genesets(kidneyimmune, bwr, groupby = 'celltype')
+bwr <- enrich_genesets(kidneyimmune, bwr, groupby = 'celltype', mode = 'Seurat')
 }
