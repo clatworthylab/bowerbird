@@ -121,7 +121,7 @@ jobs:
 
       - name: Check
         run: |
-          Rscript -e 'Sys.setenv(RETICULATE_PYTHON = reticulate::conda_python(envname="r-reticulate")); rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "error")'
+          Rscript -e 'Sys.setenv(RETICULATE_PYTHON = reticulate::conda_python(envname="r-reticulate")); rcmdcheck::rcmdcheck(args = "--no-manual --no-tests", error_on = "error")'
         shell: bash -l {0}
 
       - name: Test coverage
