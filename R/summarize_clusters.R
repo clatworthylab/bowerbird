@@ -192,6 +192,7 @@ summarize_clusters.igraph <- function(graph, cluster = NULL, pattern = NULL, sep
     centroid <- .closest_to_centroid(x, 'x', 'y')$`_orig_index`
     return(centroid)})
   idx <- as.numeric(unlist(datax))
+  tmp2 <- tmp[cl]
   tmp2[-idx] <- ""
   tmp2 <- make.unique(tmp2, sep = '-')
   tmp_idx <- grep('^-', tmp2)
