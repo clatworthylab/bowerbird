@@ -19,7 +19,7 @@ bower class
 Manually sets externally/alternatively determined cluster assignment for each geneset.
 }
 \examples{
-\donttest{
-bower <- set_clusters(bower, c(1,1,1,2,2,2,3,3,3))
-}
+gmt_file <- system.file("extdata", "h.all.v7.4.symbols.gmt", package = "bowerbird")
+bwr <- bower(gmt_file)
+bwr <- set_clusters(bwr, rep(1:5, each = 10)) # e.g. randomly make 5 blocks of 10 clusters
 }
