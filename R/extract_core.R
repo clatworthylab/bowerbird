@@ -12,7 +12,7 @@
 #' bwr <- bower(gmt_file)
 #' bwr <- snn_graph(bwr)
 #' bwr <- find_clusters(bwr)
-#' bwr <- summarize_clusters(bwr)
+#' bwr <- summarize_clusters(bwr, ncpus = 1)
 #' extract_core(bwr)
 #' @return Returns a list of genes that outersect geneset clusters in coregenes slot or as a list.
 #' @import dplyr

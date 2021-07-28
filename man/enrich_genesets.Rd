@@ -103,6 +103,7 @@ gmt_file <- system.file("extdata", "h.all.v7.4.symbols.gmt", package = "bowerbir
 bwr <- bower(gmt_file)
 bwr <- snn_graph(bwr)
 bwr <- find_clusters(bwr)
-bwr <- summarize_clusters(bwr)
-bwr <- enrich_genesets(kidneyimmune, bwr, groupby = 'celltype', mode = 'Seurat')
+bwr <- summarize_clusters(bwr, ncpus = 1)
+bwr <- enrich_genesets(kidneyimmune, bwr, groupby = 'celltype', ncpus = 1)
+bwr
 }
