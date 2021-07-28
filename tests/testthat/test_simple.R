@@ -8,7 +8,7 @@ test_that("simple running mode", {
 	bwr <- find_clusters(bwr)
 	bwr <- summarize_clusters(bwr)
 
-	expect_visible(print(bwr))
+	print(bwr)
 	
 	bwr2 <- summarize_clusters(bwr, disconnect_graph = TRUE)
 	expect_error(expect_equal(bwr2, bwr))
@@ -25,8 +25,5 @@ test_that("simple running mode", {
 	expect_s4_class(bwr, "BOWER")
 
 	graph <- summarize_clusters(bwr@graph)
-	expect_is(graph, 'igraph')
 	graph <- summarize_clusters(bwr@graph, disconnect_graph = TRUE)
-	expect_is(graph, 'igraph')
-
 })
