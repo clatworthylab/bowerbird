@@ -266,25 +266,36 @@
 <span class='va'>bwr</span> <span class='op'>&lt;-</span> <span class='fu'><a href='snn_graph.html'>snn_graph</a></span><span class='op'>(</span><span class='va'>bwr</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>Loading required namespace: FNN</span></div><div class='input'><span class='va'>bwr</span> <span class='op'>&lt;-</span> <span class='fu'><a href='find_clusters.html'>find_clusters</a></span><span class='op'>(</span><span class='va'>bwr</span><span class='op'>)</span>
 <span class='va'>bwr</span> <span class='op'>&lt;-</span> <span class='fu'>summarize_clusters</span><span class='op'>(</span><span class='va'>bwr</span>, ncpus <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in pbmclapply(df_split, function(x) {    x &lt;- x %&gt;% select(name) %&gt;% unlist %&gt;% as.character    x &lt;- gsub(sep, " ", x)    return(x)}, mc.cores = n_cpus): object 'n_cpus' not found</span></div><div class='input'><span class='va'>bwr</span> <span class='op'>&lt;-</span> <span class='fu'>enrich_genesets</span><span class='op'>(</span><span class='va'>kidneyimmune</span>, <span class='va'>bwr</span>, groupby <span class='op'>=</span> <span class='st'>'celltype'</span>, ncpus <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Downloading udpipe model from https://raw.githubusercontent.com/jwijffels/udpipe.models.ud.2.5/master/inst/udpipe-ud-2.5-191206/english-ewt-ud-2.5-191206.udpipe to ~/Library/Application Support/bowerbird/english-ewt-ud-2.5-191206.udpipe</span></div><div class='output co'>#&gt; <span class='message'> - This model has been trained on version 2.5 of data from https://universaldependencies.org</span></div><div class='output co'>#&gt; <span class='message'> - The model is distributed under the CC-BY-SA-NC license: https://creativecommons.org/licenses/by-nc-sa/4.0</span></div><div class='output co'>#&gt; <span class='message'> - Visit https://github.com/jwijffels/udpipe.models.ud.2.5 for model license details.</span></div><div class='output co'>#&gt; <span class='message'> - For a list of all models and their licenses (most models you can download with this package have either a CC-BY-SA or a CC-BY-SA-NC license) read the documentation at ?udpipe_download_model. For building your own models: visit the documentation by typing vignette('udpipe-train', package = 'udpipe')</span></div><div class='output co'>#&gt; <span class='message'>Downloading finished, model stored at '~/Library/Application Support/bowerbird/english-ewt-ud-2.5-191206.udpipe'</span></div><div class='input'><span class='va'>bwr</span> <span class='op'>&lt;-</span> <span class='fu'>enrich_genesets</span><span class='op'>(</span><span class='va'>kidneyimmune</span>, <span class='va'>bwr</span>, groupby <span class='op'>=</span> <span class='st'>'celltype'</span>, ncpus <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>Loading required package: Seurat</span></div><div class='output co'>#&gt; <span class='message'>Registered S3 method overwritten by 'spatstat.geom':</span>
 #&gt; <span class='message'>  method     from</span>
-#&gt; <span class='message'>  print.boxx cli </span></div><div class='output co'>#&gt; <span class='message'>Attaching SeuratObject</span></div><div class='output co'>#&gt; <span class='message'>Loading required namespace: AUCell</span></div><div class='output co'>#&gt; <span class='error'>Error in AUCell::AUCell_buildRankings(SummarizedExperiment::assays(scex)[[sce_assay]],     nCores = n_cpus, plotStats = FALSE, verbose = FALSE, ...): object 'n_cpus' not found</span></div><div class='input'><span class='va'>bwr</span>
+#&gt; <span class='message'>  print.boxx cli </span></div><div class='output co'>#&gt; <span class='message'>Attaching SeuratObject</span></div><div class='output co'>#&gt; <span class='message'>Loading required namespace: AUCell</span></div><div class='input'><span class='va'>bwr</span>
 </div><div class='output co'>#&gt; BOWER class
 #&gt; number of genesets:  50 
 #&gt; genesets kNN Graph: 
-#&gt; IGRAPH 403452d UNW- 50 124 -- 
-#&gt; + attr: name (v/c), cluster (v/n), geneset_size (v/n), weight (e/n)
-#&gt; + edges from 403452d (vertex names):
-#&gt; [1] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_HYPOXIA                          
-#&gt; [2] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_TGF_BETA_SIGNALING               
-#&gt; [3] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_IL6_JAK_STAT3_SIGNALING          
-#&gt; [4] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_APOPTOSIS                        
-#&gt; [5] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_MYOGENESIS                       
-#&gt; [6] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_COMPLEMENT                       
-#&gt; [7] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_EPITHELIAL_MESENCHYMAL_TRANSITION
+#&gt; IGRAPH 1866b98 UNW- 50 124 -- 
+#&gt; + attr: name (v/c), cluster (v/n), geneset_size (v/n), terms (v/c),
+#&gt; | labels (v/c), weight (e/n)
+#&gt; + edges from 1866b98 (vertex names):
+#&gt; [1] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_HYPOXIA                
+#&gt; [2] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_TGF_BETA_SIGNALING     
+#&gt; [3] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_IL6_JAK_STAT3_SIGNALING
+#&gt; [4] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_APOPTOSIS              
+#&gt; [5] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_MYOGENESIS             
+#&gt; [6] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_COMPLEMENT             
 #&gt; + ... omitted several edges
-#&gt; number of geneset clusters:  10 </div></pre>
+#&gt; number of geneset clusters:  9 
+#&gt; Core genes:
+#&gt; 	First six genes shown
+#&gt; 	 XENOBIOTIC METABOLISM : LIFR DNAJB9 CD36 ACOX1 IDH1 ECH1 ...
+#&gt; 	 E2F TARGETS : SAC3D1 KIF11 KIF23 RACGAP1 NUMA1 KIF2C ...
+#&gt; 	 ESTROGEN RESPONSE EARLY : JAG1 CTNNB1 GNAI1 FDFT1 DHCR7 FASN ...
+#&gt; 	 HEDGEHOG SIGNALING : VEGFA VLDLR MYH9 ERO1A DDIT4 STC2 ...
+#&gt; 	 APOPTOSIS : SPTAN1 CDKN1A GSN GPX3 CLU GADD45B ...
+#&gt; 	 IL2 STAT5 SIGNALING : JUNB PPP1R15A SERPINE1 ID2 IFNGR2 PMEPA1 ...
+#&gt; 	 INTERFERON ALPHA RESPONSE : MX1 ISG15 IFIT3 IFI44 IFI35 IRF7 ...
+#&gt; 	 APICAL JUNCTION : EGFR ADAM10 CLTC AP2M1 ARF1 MAPK1 ...
+#&gt; 	 EPITHELIAL MESENCHYMAL TRANSITION : FBN1 FN1 SERPINE1 SPARC MMP2 THBS1 ...</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
