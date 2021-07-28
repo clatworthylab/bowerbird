@@ -8,8 +8,11 @@ test_that("simple running mode", {
 	bwr <- find_clusters(bwr)
 	bwr <- summarize_clusters(bwr)
 
-	print(bwr)
+	expect_visible(print(bwr))
 	
+	bwr2 <- summarize_clusters(bwr, disconnect_graph = TRUE)
+	expect_error(expect_equal(bwr2, bwr))
+
 	p <- plot_graph(bwr, colorby = 'cluster', node.size = 'geneset_size')
 	p <- plot_graph(bwr@graph, colorby = 'cluster', node.size = 'geneset_size')
 	expect_s4_class(bwr, "BOWER")
@@ -22,4 +25,8 @@ test_that("simple running mode", {
 	expect_s4_class(bwr, "BOWER")
 
 	graph <- summarize_clusters(bwr@graph)
+	expect_is(graph, 'igraph')
+	graph <- summarize_clusters(bwr@graph, disconnect_graph = TRUE)
+	expect_is(graph, 'igraph')
+
 })
