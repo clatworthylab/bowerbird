@@ -149,34 +149,9 @@
 <span class='va'>bwr</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bower.html'>bower</a></span><span class='op'>(</span><span class='va'>gmt_file</span><span class='op'>)</span>
 <span class='va'>bwr</span> <span class='op'>&lt;-</span> <span class='fu'><a href='snn_graph.html'>snn_graph</a></span><span class='op'>(</span><span class='va'>bwr</span><span class='op'>)</span>
 <span class='va'>bwr</span> <span class='op'>&lt;-</span> <span class='fu'><a href='find_clusters.html'>find_clusters</a></span><span class='op'>(</span><span class='va'>bwr</span><span class='op'>)</span>
-<span class='va'>bwr</span> <span class='op'>&lt;-</span> <span class='fu'>summarize_clusters</span><span class='op'>(</span><span class='va'>bwr</span><span class='op'>)</span>
-<span class='fu'>extract_core</span><span class='op'>(</span><span class='va'>bwr</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; BOWER class
-#&gt; number of genesets:  50 
-#&gt; genesets kNN Graph: 
-#&gt; IGRAPH b604a46 UNW- 50 124 -- 
-#&gt; + attr: name (v/c), cluster (v/n), geneset_size (v/n), terms (v/c),
-#&gt; | labels (v/c), weight (e/n)
-#&gt; + edges from b604a46 (vertex names):
-#&gt; [1] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_HYPOXIA                
-#&gt; [2] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_TGF_BETA_SIGNALING     
-#&gt; [3] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_IL6_JAK_STAT3_SIGNALING
-#&gt; [4] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_APOPTOSIS              
-#&gt; [5] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_MYOGENESIS             
-#&gt; [6] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_COMPLEMENT             
-#&gt; + ... omitted several edges
-#&gt; number of geneset clusters:  9 
-#&gt; Core genes:
-#&gt; 	First six genes shown
-#&gt; 	 XENOBIOTIC METABOLISM : LIFR DNAJB9 CD36 ACOX1 IDH1 ECH1 ...
-#&gt; 	 E2F TARGETS : SAC3D1 KIF11 KIF23 RACGAP1 NUMA1 KIF2C ...
-#&gt; 	 ESTROGEN RESPONSE EARLY : JAG1 CTNNB1 GNAI1 FDFT1 DHCR7 FASN ...
-#&gt; 	 IL2 STAT5 SIGNALING : JUNB PPP1R15A SERPINE1 ID2 IFNGR2 PMEPA1 ...
-#&gt; 	 APOPTOSIS : SPTAN1 CDKN1A GSN GPX3 CLU GADD45B ...
-#&gt; 	 INTERFERON ALPHA RESPONSE : MX1 ISG15 IFIT3 IFI44 IFI35 IRF7 ...
-#&gt; 	 HEDGEHOG SIGNALING : VEGFA VLDLR MYH9 ERO1A DDIT4 STC2 ...
-#&gt; 	 APICAL JUNCTION : EGFR ADAM10 CLTC AP2M1 ARF1 MAPK1 ...
-#&gt; 	 EPITHELIAL MESENCHYMAL TRANSITION : COL3A1 COL5A2 COL1A1 SERPINE1 COL1A2 LAMC1 ...</div></pre>
+<span class='va'>bwr</span> <span class='op'>&lt;-</span> <span class='fu'>summarize_clusters</span><span class='op'>(</span><span class='va'>bwr</span>, ncpus <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in pbmclapply(df_split, function(x) {    x &lt;- x %&gt;% select(name) %&gt;% unlist %&gt;% as.character    x &lt;- gsub(sep, " ", x)    return(x)}, mc.cores = n_cpus): object 'n_cpus' not found</span></div><div class='input'><span class='fu'>extract_core</span><span class='op'>(</span><span class='va'>bwr</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in `[.data.frame`(bower@.graph_data, , c("cluster", "labels")): undefined columns selected</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

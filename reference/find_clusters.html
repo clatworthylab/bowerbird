@@ -160,7 +160,22 @@
 <span class='va'>bwr</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bower.html'>bower</a></span><span class='op'>(</span><span class='va'>gmt_file</span><span class='op'>)</span>
 <span class='va'>bwr</span> <span class='op'>&lt;-</span> <span class='fu'><a href='snn_graph.html'>snn_graph</a></span><span class='op'>(</span><span class='va'>bwr</span><span class='op'>)</span>
 <span class='va'>bwr</span> <span class='op'>&lt;-</span> <span class='fu'>find_clusters</span><span class='op'>(</span><span class='va'>bwr</span><span class='op'>)</span>
-</div></pre>
+<span class='va'>bwr</span>
+</div><div class='output co'>#&gt; BOWER class
+#&gt; number of genesets:  50 
+#&gt; genesets kNN Graph: 
+#&gt; IGRAPH 848817b UNW- 50 124 -- 
+#&gt; + attr: name (v/c), cluster (v/n), geneset_size (v/n), weight (e/n)
+#&gt; + edges from 848817b (vertex names):
+#&gt; [1] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_HYPOXIA                          
+#&gt; [2] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_TGF_BETA_SIGNALING               
+#&gt; [3] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_IL6_JAK_STAT3_SIGNALING          
+#&gt; [4] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_APOPTOSIS                        
+#&gt; [5] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_MYOGENESIS                       
+#&gt; [6] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_COMPLEMENT                       
+#&gt; [7] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_EPITHELIAL_MESENCHYMAL_TRANSITION
+#&gt; + ... omitted several edges
+#&gt; number of geneset clusters:  9 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
