@@ -47,7 +47,7 @@ summarize_clusters.BOWER <- function(bower, cluster = NULL, pattern = NULL, sep 
 	}
 
 	if (is.null(ncpus)){
-		n_cpus = parallel::detectCores()
+		ncpus = parallel::detectCores()
 	}
 
 	df <- data.frame(name = igraph::V(bower@graph)$name, cluster = igraph::V(bower@graph)$cluster)
@@ -57,7 +57,7 @@ summarize_clusters.BOWER <- function(bower, cluster = NULL, pattern = NULL, sep 
 		x <- x %>% select(name) %>% unlist %>% as.character
 		x <- gsub(sep, ' ', x)
 		return(x)
-	}, mc.cores = n_cpus)
+	}, mc.cores = ncpus)
 
 	tagger <- check_udpipemodel()
 	tagger <- udpipe_load_model(tagger$file_model)
@@ -81,7 +81,7 @@ summarize_clusters.BOWER <- function(bower, cluster = NULL, pattern = NULL, sep 
 		s <- summary(tr, n = 1, keep.sentence.order = TRUE)
 		s <- gsub('[.]', '', s)
 		return(s)
-	}, mc.cores = n_cpus)
+	}, mc.cores = ncpus)
 
 	tmp <- do.call(rbind, res)
 	igraph::V(bower@graph)$terms <- tmp[cl]
@@ -139,7 +139,7 @@ summarize_clusters.igraph <- function(graph, cluster = NULL, pattern = NULL, sep
 	}
 
 	if (is.null(ncpus)){
-		n_cpus = parallel::detectCores()
+		ncpus = parallel::detectCores()
 	}
 
 	df <- data.frame(name = igraph::V(graph)$name, cluster = igraph::V(graph)$cluster)
@@ -173,7 +173,7 @@ summarize_clusters.igraph <- function(graph, cluster = NULL, pattern = NULL, sep
 		s <- summary(tr, n = 1, keep.sentence.order = TRUE)
 		s <- gsub('[.]', '', s)
 		return(s)
-	}, mc.cores = n_cpus)
+	}, mc.cores = ncpus)
 
 	tmp <- do.call(rbind, res)	
   result <- tmp[cl]

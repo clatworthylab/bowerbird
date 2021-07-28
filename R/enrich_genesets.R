@@ -92,9 +92,9 @@ enrich_genesets.Seurat <- function(sce, bower, groupby = NULL, core = FALSE, sta
     requireNamespace(c('AUCell', 'SingleCellExperiment', 'SummarizedExperiment'))
     scex <- .typecheck(sce, mode = mode, sce_assay = sce_assay, seurat_assay = seurat_assay)
     if (is.null(ncpus)){
-      n_cpus = parallel::detectCores()
+      ncpus = parallel::detectCores()
     }
-    cells_rankings <- AUCell::AUCell_buildRankings(SummarizedExperiment::assays(scex)[[sce_assay]], nCores = n_cpus, plotStats = FALSE, verbose = FALSE, ...)
+    cells_rankings <- AUCell::AUCell_buildRankings(SummarizedExperiment::assays(scex)[[sce_assay]], nCores = ncpus, plotStats = FALSE, verbose = FALSE, ...)
     if (core){
       cells_AUC <- AUCell::AUCell_calcAUC(bower@coregenes, cells_rankings, aucMaxRank = nrow(cells_rankings) * (aucMaxRank_pct/100), verbose = FALSE)
     } else {
@@ -267,9 +267,9 @@ enrich_genesets.SingleCellExperiment <- function(sce, bower, groupby = NULL, cor
     requireNamespace(c('AUCell', 'SingleCellExperiment', 'SummarizedExperiment'))
     scex <- .typecheck(sce, mode = mode, sce_assay = sce_assay, seurat_assay = seurat_assay)
     if (is.null(ncpus)){
-      n_cpus = parallel::detectCores()
+      ncpus = parallel::detectCores()
     }
-    cells_rankings <- AUCell::AUCell_buildRankings(SummarizedExperiment::assays(scex)[[sce_assay]], nCores = n_cpus, plotStats = FALSE, verbose = FALSE, ...)
+    cells_rankings <- AUCell::AUCell_buildRankings(SummarizedExperiment::assays(scex)[[sce_assay]], nCores = ncpus, plotStats = FALSE, verbose = FALSE, ...)
     if (core){
       cells_AUC <- AUCell::AUCell_calcAUC(bower@coregenes, cells_rankings, aucMaxRank = nrow(cells_rankings) * (aucMaxRank_pct/100), verbose = FALSE)
     } else {
