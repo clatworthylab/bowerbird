@@ -2,7 +2,7 @@ library(ktplots)
 library(ggplot2)
 data(kidneyimmune)
 seu <- kidneyimmune
-sce <- as.SingleCellExperiment(seu)
+sce <- Seurat::as.SingleCellExperiment(seu)
 celltypes <- levels(seu)
 gmt_file <- system.file("extdata", "h.all.v7.4.symbols.gmt", package = "bowerbird")
 bwr <- bower(gmt_file)
