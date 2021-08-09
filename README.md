@@ -66,7 +66,6 @@ file <- system.file("extdata", "c5.go.bp.v7.4.symbols.gmt", package = "bowerbird
 geneset <- read_geneset(file) # reads in gene file manually
 # do a bit of manual filtering
 geneset <- geneset[grep('B_CELL|T_CELL|NATURAL_KILLER|ANTIBODY|ANTIGEN|LYMPHOCYTE|IMMUNE|INTERFERON|TOLL|INNATE|ADAPTIVE', names(geneset))]
-geneset <- geneset[!grepl('TROPHOBLAST_CELL|FAT_CELL|ENT_CELL|NEURAL_CREST', names(geneset))]
 
 bwr <- bower(geneset)
 bwr <- snn_graph(bwr)
@@ -79,7 +78,7 @@ Example #2 Extracting from `msigdbr`.
 library(bowerbird)
 library(msigdbr)
 GO <- data.frame(msigdbr::msigdbr(category = "C5", subcategory = "GO:BP"))
-genesets <- GO[grep('B_CELL|T_CELL|NATURAL_KILLER|ANTIBODY|ANTIGEN|LYMPHOCYTE|IMMUNE|INTERFERON|TOLL|INNATE|ADAPTIVE', GO$gs_name), ]
+genesets <- GO[grep('_B_CELL|_T_CELL|NATURAL_KILLER|ANTIBODY|ANTIGEN|LYMPHOCYTE|IMMUNE|INTERFERON|TOLL|INNATE|ADAPTIVE', GO$gs_name), ]
 genesets <- genesets[!grepl('TROPHOBLAST_CELL|FAT_CELL|ENT_CELL', genesets$gs_name), ]
 
 # convert to list
