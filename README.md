@@ -66,7 +66,7 @@ file <- system.file("extdata", "c5.go.bp.v7.4.symbols.gmt", package = "bowerbird
 geneset <- read_geneset(file) # reads in gene file manually
 # do a bit of manual filtering
 geneset <- geneset[grep('B_CELL|T_CELL|NATURAL_KILLER|ANTIBODY|ANTIGEN|LYMPHOCYTE|IMMUNE|INTERFERON|TOLL|INNATE|ADAPTIVE', names(geneset))]
-geneset <- geneset[!grepl('TROPHOBLAST_CELL|FAT_CELL|ENT_CELL', names(geneset))]
+geneset <- geneset[!grepl('TROPHOBLAST_CELL|FAT_CELL|ENT_CELL|NEURAL_CREST', names(geneset))]
 
 bwr <- bower(geneset)
 bwr <- snn_graph(bwr)
