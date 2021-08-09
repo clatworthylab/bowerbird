@@ -103,7 +103,7 @@ Or extracting from `msigdbr`.
 ```{r}
 library(msigdbr)
 GO <- data.frame(msigdbr::msigdbr(category = "C5", subcategory = "GO:BP"))
-genesets <- GO[grep('_B_CELL|_T_CELL|NATURAL_KILLER|ANTIBODY|ANTIGEN|LYMPHOCYTE|IMMUNE|INTERFERON|TOLL|INNATE|ADAPTIVE', GO$gs_name), ]
+genesets <- GO[grep('_B_CELL|_T_CELL|NATURAL_KILLER|ANTIBODY|ANTIGEN|LYMPHOCYTE|IMMUNE|INTERFERON|TOLL|INNATE_IMM|ADAPTIVE_IMM', GO$gs_name), ]
 
 # convert to list
 gs_list <- lapply(unique(genesets$gs_name), function(x) genesets[genesets$gs_name %in% x, "gene_symbol"])
