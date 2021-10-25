@@ -16,6 +16,8 @@ A satin bowerbird’s bower, decorated with blue objects. © Stefan Marks / [Fli
 
 I'm not sure if this mating ritual is in anyway similar to my attempts to visualise pathway analyses and their association with celltype identities/states... who cares. It's just a name.
 
+This is being rebuilt from the ground-up in a separate implemenation.
+
 ## Installation
 ```R
 # because currently private, requires specifying personal github access token
