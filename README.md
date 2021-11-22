@@ -1,6 +1,8 @@
 [![R](https://github.com/clatworthylab/bowerbird/actions/workflows/r.yml/badge.svg?branch=master)](https://github.com/clatworthylab/bowerbird/actions/workflows/r.yml)
 [![vignette](https://github.com/clatworthylab/bowerbird/actions/workflows/vignette.yml/badge.svg)](https://github.com/clatworthylab/bowerbird/actions/workflows/vignette.yml)
 [![codecov](https://codecov.io/gh/clatworthylab/bowerbird/branch/master/graph/badge.svg?token=NPXokMhnc2)](https://codecov.io/gh/clatworthylab/bowerbird)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5717950.svg)](https://doi.org/10.5281/zenodo.5717950)
+
 
 # bowerbird
 A single-cell package for Functional Annotation + Gene Module Summarization.
