@@ -217,13 +217,16 @@
     <p>Just a ggraph wrapper to plot the graph.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>gmt_file</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"h.all.v7.4.symbols.gmt"</span>, package <span class='op'>=</span> <span class='st'>"bowerbird"</span><span class='op'>)</span>
-<span class='va'>bwr</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bower.html'>bower</a></span><span class='op'>(</span><span class='va'>gmt_file</span><span class='op'>)</span>
-<span class='va'>bwr</span> <span class='op'>&lt;-</span> <span class='fu'><a href='snn_graph.html'>snn_graph</a></span><span class='op'>(</span><span class='va'>bwr</span><span class='op'>)</span>
-<span class='va'>bwr</span> <span class='op'>&lt;-</span> <span class='fu'><a href='find_clusters.html'>find_clusters</a></span><span class='op'>(</span><span class='va'>bwr</span><span class='op'>)</span>
-<span class='va'>bwr</span> <span class='op'>&lt;-</span> <span class='fu'>summarize_clusters</span><span class='op'>(</span><span class='va'>bwr</span>, ncpus <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
-<span class='fu'>plot_graph</span><span class='op'>(</span><span class='va'>bwr</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; = "none")` instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 41 rows containing missing values (geom_text).</span></div><div class='img'><img src='plot_graph-1.png' alt='' width='700' height='433' /></div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>gmt_file</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"h.all.v7.4.symbols.gmt"</span>, package <span class='op'>=</span> <span class='st'>"bowerbird"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>bwr</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bower.html'>bower</a></span><span class='op'>(</span><span class='va'>gmt_file</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>bwr</span> <span class='op'>&lt;-</span> <span class='fu'><a href='snn_graph.html'>snn_graph</a></span><span class='op'>(</span><span class='va'>bwr</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>bwr</span> <span class='op'>&lt;-</span> <span class='fu'><a href='find_clusters.html'>find_clusters</a></span><span class='op'>(</span><span class='va'>bwr</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>bwr</span> <span class='op'>&lt;-</span> <span class='fu'>summarize_clusters</span><span class='op'>(</span><span class='va'>bwr</span>, ncpus <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>plot_graph</span><span class='op'>(</span><span class='va'>bwr</span><span class='op'>)</span></span>
+<span class='r-wrn co'><span class='r-pr'>#&gt;</span> <span class='warning'>Warning: </span>`guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; = "none")` instead.</span>
+<span class='r-wrn co'><span class='r-pr'>#&gt;</span> <span class='warning'>Warning: </span>Removed 41 rows containing missing values (geom_text).</span>
+<span class='r-plt img'><img src='plot_graph-1.png' alt='' width='700' height='433' /></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

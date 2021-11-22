@@ -74,7 +74,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Introduction to bowerbird</h1>
             
-            <h4 class="date">2021-10-28</h4>
+            <h4 class="date">2021-11-22</h4>
       
       
       <div class="hidden name"><code>bowerbird_vignette.rmd</code></div>
@@ -166,7 +166,7 @@
 <span class="va">genesets</span> <span class="op">&lt;-</span> <span class="va">GO</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">grep</a></span><span class="op">(</span><span class="st">'_B_CELL|_T_CELL|NATURAL_KILLER|ANTIBODY|ANTIGEN|LYMPHOCYTE|IMMUNE|INTERFERON|TOLL|INNATE_IMM|ADAPTIVE_IMM'</span>, <span class="va">GO</span><span class="op">$</span><span class="va">gs_name</span><span class="op">)</span>, <span class="op">]</span>
 
 <span class="co"># convert to list</span>
-<span class="va">gs_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">genesets</span><span class="op">$</span><span class="va">gs_name</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">genesets</span><span class="op">[</span><span class="va">genesets</span><span class="op">$</span><span class="va">gs_name</span> <span class="op">%in%</span> <span class="va">x</span>, <span class="st">"gene_symbol"</span><span class="op">]</span><span class="op">)</span>
+<span class="va">gs_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">genesets</span><span class="op">$</span><span class="va">gs_name</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">genesets</span><span class="op">[</span><span class="va">genesets</span><span class="op">$</span><span class="va">gs_name</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">x</span>, <span class="st">"gene_symbol"</span><span class="op">]</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">gs_list</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">genesets</span><span class="op">$</span><span class="va">gs_name</span><span class="op">)</span>
 
 <span class="va">bwr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bower.html">bower</a></span><span class="op">(</span><span class="va">gs_list</span><span class="op">)</span>
@@ -179,10 +179,10 @@
 <span class="co">#&gt; BOWER class</span>
 <span class="co">#&gt; number of genesets:  254 </span>
 <span class="co">#&gt; genesets kNN Graph: </span>
-<span class="co">#&gt; IGRAPH 98caf1a UNW- 254 799 -- </span>
+<span class="co">#&gt; IGRAPH bd2602e UNW- 254 799 -- </span>
 <span class="co">#&gt; + attr: name (v/c), cluster (v/n), geneset_size (v/n), terms (v/c),</span>
 <span class="co">#&gt; | labels (v/c), weight (e/n)</span>
-<span class="co">#&gt; + edges from 98caf1a (vertex names):</span>
+<span class="co">#&gt; + edges from bd2602e (vertex names):</span>
 <span class="co">#&gt; [1] GOBP_ACTIVATED_T_CELL_PROLIFERATION--GOBP_CD8_POSITIVE_ALPHA_BETA_T_CELL_DIFFERENTIATION          </span>
 <span class="co">#&gt; [2] GOBP_ACTIVATED_T_CELL_PROLIFERATION--GOBP_NEGATIVE_REGULATION_OF_ACTIVATED_T_CELL_PROLIFERATION   </span>
 <span class="co">#&gt; [3] GOBP_ACTIVATED_T_CELL_PROLIFERATION--GOBP_NEGATIVE_REGULATION_OF_LYMPHOCYTE_DIFFERENTIATION       </span>
@@ -196,21 +196,21 @@
 <span class="co">#&gt;   CD4 ALPHA BETA T CELL DIFFERENTIATION : ANXA1 ATP7A BATF BCL3 BCL6 CBFB ...</span>
 <span class="co">#&gt;   IMMUNE RESPONSE : CLNK HLA-E HLA-F IFNA2 IFNB1 IL18 ...</span>
 <span class="co">#&gt;   T CELL MEDIATED CYTOTOXICITY : HLA-A HLA-B HLA-C HLA-E HLA-F HLA-G ...</span>
-<span class="co">#&gt;   TYPE 2 IMMUNE RESPONSE : CAMP DEFA1 DEFA1B DEFA3 DEFA4 DEFA5 ...</span>
-<span class="co">#&gt;   B CELL PROLIFERATION : ADA BAX BCL6 BLK BTK CD74 ...</span>
 <span class="co">#&gt;   CD8 ALPHA BETA T CELL ACTIVATION : HLA-E GATA3 ADCYAP1 BTK C3 CCR7 ...</span>
+<span class="co">#&gt;   B CELL PROLIFERATION : ADA BAX BCL6 BLK BTK CD74 ...</span>
+<span class="co">#&gt;   B CELL DIFFERENTIATION : CAMP DEFA1 DEFA1B DEFA3 DEFA4 DEFA5 ...</span>
 <span class="co">#&gt;   T CELL DIFFERENTIATION : FCGR2B FGL2 HLA-DOA LILRB2 THBS1 BMP4 ...</span>
 <span class="co">#&gt;   INTERFERON GAMMA PRODUCTION : ABCB9 ACE ACTR10 ACTR1A ACTR1B AP1B1 ...</span>
-<span class="co">#&gt;   T CELL CYTOKINE PRODUCTION : KLRC1 LILRB1 NOD2 PTPRC EGR3 LEF1 ...</span>
+<span class="co">#&gt;   T HELPER 1 TYPE IMMUNE RESPONSE : IFNB1 IL4 IL6 TBX21 BCL6 FOXP3 ...</span>
 <span class="co">#&gt;   TOLL LIKE RECEPTOR SIGNALING PATHWAY : CACTIN PTPRS TICAM1 TLR3 TLR4 TLR9 ...</span>
-<span class="co">#&gt;   B CELL DIFFERENTIATION : IL10 TLR9 SYK ADA BCL3 C17orf99 ...</span>
+<span class="co">#&gt;   T CELL CYTOKINE PRODUCTION : KLRC1 LILRB1 NOD2 PTPRC EGR3 LEF1 ...</span>
 <span class="co">#&gt;   RESPONSE TO INTERFERON BETA : ADA SOS1 SOS2 IRF1 TLR3 IRGM ...</span>
 <span class="co">#&gt;   T CELL SELECTION : TOX BCL2 BATF CTSL FOXP3 IL12B ...</span>
-<span class="co">#&gt;   LYMPHOCYTE CHEMOTAXIS : CCL2 CCL3 CCL4 CCL5 CCL7 CXCL14 ...</span>
-<span class="co">#&gt;   ACTIVATED T CELL PROLIFERATION : LILRB4 CD24 CD274 FYN HHLA2 ICOSLG ...</span>
 <span class="co">#&gt;   B CELL ACTIVATION : ADA ADAM17 BATF BCL3 BCL6 BTK ...</span>
-<span class="co">#&gt;   ALPHA BETA T CELL ACTIVATION : AGER ANXA1 ARG2 ATP7A BATF BCL3 ...</span>
+<span class="co">#&gt;   ACTIVATED T CELL PROLIFERATION : LILRB4 CD24 CD274 FYN HHLA2 ICOSLG ...</span>
+<span class="co">#&gt;   LYMPHOCYTE CHEMOTAXIS : CCL2 CCL3 CCL4 CCL5 CCL7 CXCL14 ...</span>
 <span class="co">#&gt;   INFLAMMATORY RESPONSE TO ANTIGENIC STIMULUS : BTK C3 CD28 HLA-E LTA NOD2 ...</span>
+<span class="co">#&gt;   ALPHA BETA T CELL ACTIVATION : AGER ANXA1 ARG2 ATP7A BATF BCL3 ...</span>
 <span class="co">#&gt;   LYMPHOCYTE MIGRATION : ADAM10 ADAM17 ADAM8 AIF1 APP CCL20 ...</span>
 <span class="co">#&gt;   ANTIGEN PROCESSING AND PRESENTATION OF PEPTIDE ANTIGEN VIA MHC CLASS I : ABCB9 AZGP1 B2M ERAP1 ERAP2 HFE ...</span></code></pre></div>
 <p>We can visualise it with a simple plot</p>
@@ -240,7 +240,7 @@
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">celltypes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op">(</span><span class="va">kidneyimmune</span><span class="op">)</span> <span class="co"># celtypes stored as Idents in seurat object.</span>
 <span class="va">plot_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">celltypes</span>, <span class="kw">function</span><span class="op">(</span><span class="va">ds</span><span class="op">)</span><span class="op">{</span>
-  <span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_graph.html">plot_graph</a></span><span class="op">(</span><span class="va">bwr</span>, colorby <span class="op">=</span> <span class="va">ds</span><span class="op">)</span> <span class="op">+</span> <span class="fu">viridis</span><span class="fu">::</span><span class="fu"><a href="https://sjmgarnier.github.io/viridis/reference/scale_viridis.html">scale_color_viridis</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">theme</span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">8</span>, face <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span><span class="op">)</span>
+  <span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_graph.html">plot_graph</a></span><span class="op">(</span><span class="va">bwr</span>, colorby <span class="op">=</span> <span class="va">ds</span><span class="op">)</span> <span class="op">+</span> <span class="fu">viridis</span><span class="fu">::</span><span class="fu"><a href="https://sjmgarnier.github.io/viridis/reference/scale_viridis.html">scale_color_viridis</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">8</span>, face <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span><span class="op">)</span>
 <span class="op">}</span><span class="op">)</span>
 <span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/plot_grid.html">plot_grid</a></span><span class="op">(</span>plotlist <span class="op">=</span> <span class="va">plot_list</span>, scale <span class="op">=</span> <span class="fl">0.9</span><span class="op">)</span></code></pre></div>
 <p><img src="bowerbird_vignette_files/figure-html/unnamed-chunk-13-1.png" width="4320"></p>
@@ -256,14 +256,14 @@
 <p>Coloured by adjusted p value.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">plot_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">celltypes</span>, <span class="kw">function</span><span class="op">(</span><span class="va">ds</span><span class="op">)</span><span class="op">{</span>
-  <span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_graph.html">plot_graph</a></span><span class="op">(</span><span class="va">bwr</span>, colorby <span class="op">=</span> <span class="va">ds</span>, mode <span class="op">=</span> <span class="st">'gsea'</span>, gsea.slot <span class="op">=</span> <span class="st">'padj'</span><span class="op">)</span> <span class="op">+</span> <span class="fu">viridis</span><span class="fu">::</span><span class="fu"><a href="https://sjmgarnier.github.io/viridis/reference/scale_viridis.html">scale_color_viridis</a></span><span class="op">(</span>na.value <span class="op">=</span> <span class="st">'#e7e7e7'</span><span class="op">)</span> <span class="op">+</span> <span class="fu">theme</span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">'none'</span>, plot.title <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">8</span>, face <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span><span class="op">)</span>
+  <span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_graph.html">plot_graph</a></span><span class="op">(</span><span class="va">bwr</span>, colorby <span class="op">=</span> <span class="va">ds</span>, mode <span class="op">=</span> <span class="st">'gsea'</span>, gsea.slot <span class="op">=</span> <span class="st">'padj'</span><span class="op">)</span> <span class="op">+</span> <span class="fu">viridis</span><span class="fu">::</span><span class="fu"><a href="https://sjmgarnier.github.io/viridis/reference/scale_viridis.html">scale_color_viridis</a></span><span class="op">(</span>na.value <span class="op">=</span> <span class="st">'#e7e7e7'</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">'none'</span>, plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">8</span>, face <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span><span class="op">)</span>
 <span class="op">}</span><span class="op">)</span>
 <span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/plot_grid.html">plot_grid</a></span><span class="op">(</span>plotlist <span class="op">=</span> <span class="va">plot_list</span>, scale <span class="op">=</span> <span class="fl">0.9</span><span class="op">)</span></code></pre></div>
 <p><img src="bowerbird_vignette_files/figure-html/unnamed-chunk-15-1.png" width="3840"></p>
 <p>Coloured by normalized enrichment score.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">plot_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">celltypes</span>, <span class="kw">function</span><span class="op">(</span><span class="va">ds</span><span class="op">)</span><span class="op">{</span>
-  <span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_graph.html">plot_graph</a></span><span class="op">(</span><span class="va">bwr</span>, colorby <span class="op">=</span> <span class="va">ds</span>, mode <span class="op">=</span> <span class="st">'gsea'</span>, gsea.slot <span class="op">=</span> <span class="st">'NES'</span><span class="op">)</span> <span class="op">+</span> <span class="fu">viridis</span><span class="fu">::</span><span class="fu"><a href="https://sjmgarnier.github.io/viridis/reference/scale_viridis.html">scale_color_viridis</a></span><span class="op">(</span>na.value <span class="op">=</span> <span class="st">'#e7e7e7'</span><span class="op">)</span> <span class="op">+</span> <span class="fu">theme</span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">'none'</span>, plot.title <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">8</span>, face <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span><span class="op">)</span>
+  <span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_graph.html">plot_graph</a></span><span class="op">(</span><span class="va">bwr</span>, colorby <span class="op">=</span> <span class="va">ds</span>, mode <span class="op">=</span> <span class="st">'gsea'</span>, gsea.slot <span class="op">=</span> <span class="st">'NES'</span><span class="op">)</span> <span class="op">+</span> <span class="fu">viridis</span><span class="fu">::</span><span class="fu"><a href="https://sjmgarnier.github.io/viridis/reference/scale_viridis.html">scale_color_viridis</a></span><span class="op">(</span>na.value <span class="op">=</span> <span class="st">'#e7e7e7'</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">'none'</span>, plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">8</span>, face <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span><span class="op">)</span>
 <span class="op">}</span><span class="op">)</span>
 <span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/plot_grid.html">plot_grid</a></span><span class="op">(</span>plotlist <span class="op">=</span> <span class="va">plot_list</span>, scale <span class="op">=</span> <span class="fl">0.9</span><span class="op">)</span></code></pre></div>
 <p><img src="bowerbird_vignette_files/figure-html/unnamed-chunk-16-1.png" width="3840"></p>

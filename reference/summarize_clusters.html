@@ -187,39 +187,39 @@
     <p>Given a list of text, it creates a sparse matrix consisting of tf-idf score for tokens from the text. See <code>https://github.com/saraswatmks/superml/blob/master/R/TfidfVectorizer.R</code>. A k shortest-nearest neighbor graph is then computed using the overlap of of the terms.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>gmt_file</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"h.all.v7.4.symbols.gmt"</span>, package <span class='op'>=</span> <span class='st'>"bowerbird"</span><span class='op'>)</span>
-<span class='va'>bwr</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bower.html'>bower</a></span><span class='op'>(</span><span class='va'>gmt_file</span><span class='op'>)</span>
-<span class='va'>bwr</span> <span class='op'>&lt;-</span> <span class='fu'><a href='snn_graph.html'>snn_graph</a></span><span class='op'>(</span><span class='va'>bwr</span><span class='op'>)</span>
-<span class='va'>bwr</span> <span class='op'>&lt;-</span> <span class='fu'><a href='find_clusters.html'>find_clusters</a></span><span class='op'>(</span><span class='va'>bwr</span><span class='op'>)</span>
-<span class='va'>bwr</span> <span class='op'>&lt;-</span> <span class='fu'>summarize_clusters</span><span class='op'>(</span><span class='va'>bwr</span>, ncpus <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
-<span class='va'>bwr</span>
-</div><div class='output co'>#&gt; BOWER class
-#&gt; number of genesets:  50 
-#&gt; genesets kNN Graph: 
-#&gt; IGRAPH 80df8f8 UNW- 50 124 -- 
-#&gt; + attr: name (v/c), cluster (v/n), geneset_size (v/n), terms (v/c),
-#&gt; | labels (v/c), weight (e/n)
-#&gt; + edges from 80df8f8 (vertex names):
-#&gt; [1] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_HYPOXIA                
-#&gt; [2] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_TGF_BETA_SIGNALING     
-#&gt; [3] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_IL6_JAK_STAT3_SIGNALING
-#&gt; [4] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_APOPTOSIS              
-#&gt; [5] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_MYOGENESIS             
-#&gt; [6] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_COMPLEMENT             
-#&gt; + ... omitted several edges
-#&gt; number of geneset clusters:  10 
-#&gt; Core genes:
-#&gt; 	First six genes shown
-#&gt; 	 XENOBIOTIC METABOLISM : LIFR DNAJB9 CD36 ACOX1 IDH1 ECH1 ...
-#&gt; 	 ESTROGEN RESPONSE EARLY : JAG1 CTNNB1 GNAI1 FDFT1 DHCR7 FASN ...
-#&gt; 	 E2F TARGETS : SAC3D1 KIF11 KIF23 RACGAP1 NUMA1 KIF2C ...
-#&gt; 	 APOPTOSIS : ATF3 IER3 BIRC3 JUN EGR3 IL1B ...
-#&gt; 	 INTERFERON ALPHA RESPONSE : MX1 ISG15 IFIT3 IFI44 IFI35 IRF7 ...
-#&gt; 	 HEDGEHOG SIGNALING : VEGFA VLDLR MYH9 ERO1A DDIT4 STC2 ...
-#&gt; 	 APICAL JUNCTION : EGFR ADAM10 CLTC AP2M1 ARF1 MAPK1 ...
-#&gt; 	 TGF BETA SIGNALING : TGFB1 PMEPA1 SERPINE1 ID2 THBS1 PPP1R15A ...
-#&gt; 	 IL6 JAK STAT3 SIGNALING : IL4R IFNGR1 IL1R2 IL3RA TNFRSF1B CSF1 ...
-#&gt; 	 UV RESPONSE DN COAGULATION : SERPINE1 FYN F3 ITGB3 </div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>gmt_file</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"h.all.v7.4.symbols.gmt"</span>, package <span class='op'>=</span> <span class='st'>"bowerbird"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>bwr</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bower.html'>bower</a></span><span class='op'>(</span><span class='va'>gmt_file</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>bwr</span> <span class='op'>&lt;-</span> <span class='fu'><a href='snn_graph.html'>snn_graph</a></span><span class='op'>(</span><span class='va'>bwr</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>bwr</span> <span class='op'>&lt;-</span> <span class='fu'><a href='find_clusters.html'>find_clusters</a></span><span class='op'>(</span><span class='va'>bwr</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>bwr</span> <span class='op'>&lt;-</span> <span class='fu'>summarize_clusters</span><span class='op'>(</span><span class='va'>bwr</span>, ncpus <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>bwr</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> BOWER class</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> number of genesets:  50 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> genesets kNN Graph: </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> IGRAPH 64116cd UNW- 50 124 -- </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> + attr: name (v/c), cluster (v/n), geneset_size (v/n), terms (v/c),</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> | labels (v/c), weight (e/n)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> + edges from 64116cd (vertex names):</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_HYPOXIA                </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [2] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_TGF_BETA_SIGNALING     </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [3] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_IL6_JAK_STAT3_SIGNALING</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [4] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_APOPTOSIS              </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [5] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_MYOGENESIS             </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [6] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_COMPLEMENT             </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> + ... omitted several edges</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> number of geneset clusters:  9 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Core genes:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 	First six genes shown</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 	 XENOBIOTIC METABOLISM : LIFR DNAJB9 CD36 ACOX1 IDH1 ECH1 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 	 E2F TARGETS : SAC3D1 KIF11 KIF23 RACGAP1 NUMA1 KIF2C ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 	 ESTROGEN RESPONSE EARLY : JAG1 CTNNB1 GNAI1 FDFT1 DHCR7 FASN ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 	 APOPTOSIS : ATF3 IER3 BIRC3 JUN EGR3 IL1B ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 	 INTERFERON ALPHA RESPONSE : MX1 ISG15 IFIT3 IFI44 IFI35 IRF7 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 	 HEDGEHOG SIGNALING : VEGFA VLDLR MYH9 ERO1A DDIT4 STC2 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 	 APICAL JUNCTION : EGFR ADAM10 CLTC AP2M1 ARF1 MAPK1 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 	 TGF BETA SIGNALING : TGFB1 PMEPA1 SERPINE1 ID2 THBS1 PPP1R15A ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 	 IL6 JAK STAT3 SIGNALING : IL4R IFNGR1 IL1R2 IL3RA TNFRSF1B CSF1 ...</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

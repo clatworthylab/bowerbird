@@ -259,44 +259,56 @@
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>ktplots</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Loading required package: ggplot2</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>kidneyimmune</span><span class='op'>)</span>
-<span class='va'>gmt_file</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"h.all.v7.4.symbols.gmt"</span>, package <span class='op'>=</span> <span class='st'>"bowerbird"</span><span class='op'>)</span>
-<span class='va'>bwr</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bower.html'>bower</a></span><span class='op'>(</span><span class='va'>gmt_file</span><span class='op'>)</span>
-<span class='va'>bwr</span> <span class='op'>&lt;-</span> <span class='fu'><a href='snn_graph.html'>snn_graph</a></span><span class='op'>(</span><span class='va'>bwr</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: FNN</span></div><div class='input'><span class='va'>bwr</span> <span class='op'>&lt;-</span> <span class='fu'><a href='find_clusters.html'>find_clusters</a></span><span class='op'>(</span><span class='va'>bwr</span><span class='op'>)</span>
-<span class='va'>bwr</span> <span class='op'>&lt;-</span> <span class='fu'>summarize_clusters</span><span class='op'>(</span><span class='va'>bwr</span>, ncpus <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Downloading udpipe model from https://raw.githubusercontent.com/jwijffels/udpipe.models.ud.2.5/master/inst/udpipe-ud-2.5-191206/english-ewt-ud-2.5-191206.udpipe to ~/Library/Application Support/bowerbird/english-ewt-ud-2.5-191206.udpipe</span></div><div class='output co'>#&gt; <span class='message'> - This model has been trained on version 2.5 of data from https://universaldependencies.org</span></div><div class='output co'>#&gt; <span class='message'> - The model is distributed under the CC-BY-SA-NC license: https://creativecommons.org/licenses/by-nc-sa/4.0</span></div><div class='output co'>#&gt; <span class='message'> - Visit https://github.com/jwijffels/udpipe.models.ud.2.5 for model license details.</span></div><div class='output co'>#&gt; <span class='message'> - For a list of all models and their licenses (most models you can download with this package have either a CC-BY-SA or a CC-BY-SA-NC license) read the documentation at ?udpipe_download_model. For building your own models: visit the documentation by typing vignette('udpipe-train', package = 'udpipe')</span></div><div class='output co'>#&gt; <span class='message'>Downloading finished, model stored at '~/Library/Application Support/bowerbird/english-ewt-ud-2.5-191206.udpipe'</span></div><div class='input'><span class='va'>bwr</span> <span class='op'>&lt;-</span> <span class='fu'>enrich_genesets</span><span class='op'>(</span><span class='va'>kidneyimmune</span>, <span class='va'>bwr</span>, groupby <span class='op'>=</span> <span class='st'>'celltype'</span>, ncpus <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Loading required package: Seurat</span></div><div class='output co'>#&gt; <span class='message'>Registered S3 method overwritten by 'spatstat.geom':</span>
-#&gt; <span class='message'>  method     from</span>
-#&gt; <span class='message'>  print.boxx cli </span></div><div class='output co'>#&gt; <span class='message'>Attaching SeuratObject</span></div><div class='output co'>#&gt; <span class='message'>Loading required namespace: AUCell</span></div><div class='input'><span class='va'>bwr</span>
-</div><div class='output co'>#&gt; BOWER class
-#&gt; number of genesets:  50 
-#&gt; genesets kNN Graph: 
-#&gt; IGRAPH 9545acd UNW- 50 124 -- 
-#&gt; + attr: name (v/c), cluster (v/n), geneset_size (v/n), terms (v/c),
-#&gt; | labels (v/c), weight (e/n)
-#&gt; + edges from 9545acd (vertex names):
-#&gt; [1] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_HYPOXIA                
-#&gt; [2] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_TGF_BETA_SIGNALING     
-#&gt; [3] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_IL6_JAK_STAT3_SIGNALING
-#&gt; [4] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_APOPTOSIS              
-#&gt; [5] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_MYOGENESIS             
-#&gt; [6] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_COMPLEMENT             
-#&gt; + ... omitted several edges
-#&gt; number of geneset clusters:  10 
-#&gt; Core genes:
-#&gt; 	First six genes shown
-#&gt; 	 XENOBIOTIC METABOLISM : LIFR DNAJB9 CD36 ACOX1 IDH1 ECH1 ...
-#&gt; 	 E2F TARGETS : SAC3D1 KIF11 KIF23 RACGAP1 NUMA1 KIF2C ...
-#&gt; 	 ESTROGEN RESPONSE EARLY : JAG1 CTNNB1 GNAI1 FDFT1 DHCR7 FASN ...
-#&gt; 	 INTERFERON GAMMA RESPONSE : IL4R IRF9 CSF1 CXCL10 STAT2 IRF1 ...
-#&gt; 	 HEDGEHOG SIGNALING : VEGFA VLDLR MYH9 ERO1A DDIT4 STC2 ...
-#&gt; 	 APICAL JUNCTION : EGFR ADAM10 CLTC AP2M1 ARF1 MAPK1 ...
-#&gt; 	 TGF BETA SIGNALING : JUNB PPP1R15A SERPINE1 ID2 IFNGR2 PMEPA1 ...
-#&gt; 	 APOPTOSIS : SPTAN1 CDKN1A GSN GPX3 CLU GADD45B ...
-#&gt; 	 P53 PATHWAY : BTG2 TAP1 CDKN2B ATF3 BTG1 RRAD ...
-#&gt; 	 COMPLEMENT : C2 C1S CFB C1R SERPINE1 MMP14 ...</div></pre>
+    <pre class="examples"><span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>ktplots</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Loading required package: ggplot2</span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>kidneyimmune</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>gmt_file</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"h.all.v7.4.symbols.gmt"</span>, package <span class='op'>=</span> <span class='st'>"bowerbird"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>bwr</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bower.html'>bower</a></span><span class='op'>(</span><span class='va'>gmt_file</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>bwr</span> <span class='op'>&lt;-</span> <span class='fu'><a href='snn_graph.html'>snn_graph</a></span><span class='op'>(</span><span class='va'>bwr</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Loading required namespace: FNN</span>
+<span class='r-in'><span class='va'>bwr</span> <span class='op'>&lt;-</span> <span class='fu'><a href='find_clusters.html'>find_clusters</a></span><span class='op'>(</span><span class='va'>bwr</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>bwr</span> <span class='op'>&lt;-</span> <span class='fu'>summarize_clusters</span><span class='op'>(</span><span class='va'>bwr</span>, ncpus <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Downloading udpipe model from https://raw.githubusercontent.com/jwijffels/udpipe.models.ud.2.5/master/inst/udpipe-ud-2.5-191206/english-ewt-ud-2.5-191206.udpipe to ~/Library/Application Support/bowerbird/english-ewt-ud-2.5-191206.udpipe</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>  - This model has been trained on version 2.5 of data from https://universaldependencies.org</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>  - The model is distributed under the CC-BY-SA-NC license: https://creativecommons.org/licenses/by-nc-sa/4.0</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>  - Visit https://github.com/jwijffels/udpipe.models.ud.2.5 for model license details.</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>  - For a list of all models and their licenses (most models you can download with this package have either a CC-BY-SA or a CC-BY-SA-NC license) read the documentation at ?udpipe_download_model. For building your own models: visit the documentation by typing vignette('udpipe-train', package = 'udpipe')</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Downloading finished, model stored at '~/Library/Application Support/bowerbird/english-ewt-ud-2.5-191206.udpipe'</span>
+<span class='r-in'><span class='va'>bwr</span> <span class='op'>&lt;-</span> <span class='fu'>enrich_genesets</span><span class='op'>(</span><span class='va'>kidneyimmune</span>, <span class='va'>bwr</span>, groupby <span class='op'>=</span> <span class='st'>'celltype'</span>, ncpus <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Loading required package: Seurat</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Registered S3 method overwritten by 'spatstat.geom':</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>   method     from</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>   print.boxx cli </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Attaching SeuratObject</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Loading required namespace: AUCell</span>
+<span class='r-in'><span class='va'>bwr</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> BOWER class</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> number of genesets:  50 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> genesets kNN Graph: </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> IGRAPH b91852b UNW- 50 124 -- </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> + attr: name (v/c), cluster (v/n), geneset_size (v/n), terms (v/c),</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> | labels (v/c), weight (e/n)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> + edges from b91852b (vertex names):</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_HYPOXIA                </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [2] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_TGF_BETA_SIGNALING     </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [3] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_IL6_JAK_STAT3_SIGNALING</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [4] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_APOPTOSIS              </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [5] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_MYOGENESIS             </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [6] HALLMARK_TNFA_SIGNALING_VIA_NFKB--HALLMARK_COMPLEMENT             </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> + ... omitted several edges</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> number of geneset clusters:  9 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Core genes:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 	First six genes shown</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 	 XENOBIOTIC METABOLISM : LIFR DNAJB9 CD36 ACOX1 IDH1 ECH1 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 	 E2F TARGETS : SAC3D1 KIF11 KIF23 RACGAP1 NUMA1 KIF2C ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 	 ESTROGEN RESPONSE EARLY : JAG1 CTNNB1 GNAI1 FDFT1 DHCR7 FASN ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 	 APOPTOSIS : ATF3 IER3 BIRC3 JUN EGR3 IL1B ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 	 INTERFERON ALPHA RESPONSE : MX1 ISG15 IFIT3 IFI44 IFI35 IRF7 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 	 HEDGEHOG SIGNALING : VEGFA VLDLR MYH9 ERO1A DDIT4 STC2 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 	 APICAL JUNCTION : EGFR ADAM10 CLTC AP2M1 ARF1 MAPK1 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 	 TGF BETA SIGNALING : TGFB1 PMEPA1 SERPINE1 ID2 THBS1 PPP1R15A ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 	 IL6 JAK STAT3 SIGNALING : IL4R IFNGR1 IL1R2 IL3RA TNFRSF1B CSF1 ...</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
